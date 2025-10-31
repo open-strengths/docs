@@ -9,7 +9,7 @@
 
 **OpenStrengths in a sentence**
 
-An open, research‑grounded strengths system **in development**, with a planned free core and short, adaptive assessment, designed for trust and portability: results will travel through APIs and a user‑facing Integration Marketplace so real people (not just developers) can use strengths in jobs, tasks, HR, education, and services.
+An open, research‑grounded strengths system **in development**, with a planned free core and short, adaptive assessment, designed for trust and portability: results will travel through APIs (for technical integration) and a user‑facing Integration Marketplace (for direct use) so both developers and end-users can apply strengths in jobs, tasks, HR, education, and services.
 
 
 **Vision**  
@@ -76,14 +76,15 @@ Pages 2–3: **Model & Facets** • Pages 4–5: **Development Roadmap** • Pag
 
 OpenStrengths addresses two critical gaps in strengths assessment (detailed in Section 2): existing frameworks have overlapping constructs and limited granularity, while proprietary platforms trap user data without portability or AI-enhanced personalization. We respond with a **six‑domain, 36‑facet framework** (Sections 3-4) and an **open platform architecture** enabling portable results and safe AI use (Section 5).
 
-**Current Status: Seeking Expert Validation**
+**Framework Status: Seeking Expert Validation**
 
-We have operational infrastructure for user classification, facet-anchor management (3,814 calibrated items), and AI-powered item generation (75% complete), but are **seeking psychometric consultation** before implementing the adaptive assessment engine or deploying to users (Section 5.1 details full status). Critical questions requiring expert input (detailed in Section 6):
-- What **pilot sample sizes** and **calibration cadence** are required before promoting candidate items to the operational bank? What **linking/equating** design will we use around FRIs?
-- What pilot sample size is required before deploying AI-enhanced items?
-- Are our adaptive stopping rules appropriate for low-stakes personal development contexts?
+Our research-grounded framework is complete—six domains, 36 facets, each with documented empirical justification (Sections 3-4)—and ready for expert review (Section 6).
 
-**No user-facing assessment is currently available.** We will not deploy—even for low-stakes personal use—until pilot studies (N ≥ 1000) demonstrate acceptable reliability (α/ω ≥ .70, test-retest r ≥ .80) and construct validity (CFA confirming 6-domain structure).
+**Platform Status: Alpha Development with Early Validation Request**
+
+Platform development is actively underway with an extensible architecture designed for flexibility. We are seeking **early expert validation** on our novel technical approaches—AI-generated personalized items, facet-seeded generation with NLI verification, and adaptive assessment design—to ensure sound implementation before core systems are finalized (Sections 5-6 detail architecture and consultation questions).
+
+**No user-facing assessment is currently available.** We will not deploy—even for low-stakes personal use—until expert review is complete and pilot studies (N ≥ 1000) demonstrate acceptable reliability (α/ω ≥ .70, test-retest r ≥ .80) and construct validity (CFA confirming 6-domain structure).
 
 
 ---
