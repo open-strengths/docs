@@ -592,222 +592,169 @@ If successful, this provides a template for how AI can augment psychometric rigo
 
 ---
 
-## 6 · Current Challenges & Consultation Needs
+## 6 · Validation Priorities, Open Questions, and Study Design
 
-### 6.0 Facet-First Generation & Semantic Governance
-
-We treat the **facet description** as the canonical construct definition. Every candidate stem carries provenance (facet_id, description_version, generation prompt hash) and must pass a semantic gate before any fielding:
-
-- **Alignment:** embedding cosine to the target facet ≥ 0.35 (tunable per facet)
-- **Purity margin:** cosine(target) − max cosine(other facets) ≥ 0.08
-- **NLI checks:** target facet entails; non-target facets neutral/contradiction; negated target contradicts
-- **Diversity:** no near-duplicates within a facet (e.g., cosine < 0.92)
-- **Language QA:** single idea (no double-barrel), reading level approx. grades 7–10, no evaluative adjectives
-
-Only stems that pass these gates become **candidates for pilot** and subsequent calibration.
+This section prioritizes validation of our **novel approach** (facet-seeded generation, semantic governance, and replaceable Facet Reference Items) before routine measurement details. Each subsection includes: hypotheses, evidence we’ll gather, acceptance criteria, and any remaining expert questions. Priorities: **P1 (critical), P2 (important), P3 (nice-to-have)**.
 
 ---
 
+### 6.0 Facet-First Generation & Semantic Governance (P1)
 
-We are actively seeking expert consultation on the following psychometric challenges before proceeding to implementation. These represent critical questions that must be resolved to ensure scientific rigor and ethical deployment.
+**Hypotheses**
+- H1: Stems generated from the **facet description** (not legacy items) show strong semantic alignment and low cross-loading.
+- H2: Our semantic gate (embeddings + NLI) aligns with SME judgments and improves downstream psychometrics (fit, information, DIF).
 
----
+**Evidence to Gather**
+- SME rating study (3–5 experts/facet): relevance, clarity, single-idea, and non-overlap with adjacent facets.
+- Correlate SME scores with **alignment** (cosine to target), **purity** (cos target − max cos non-target), and NLI outcomes.
+- Ablation: regress item fit/information on semantic metrics to confirm predictive value.
 
-### 6.1 IRT Parameter Estimation for Deployed Items
+**Acceptance Criteria (initial)**
+- SME interrater agreement: κ ≥ .60 (or ICC ≥ .70).
+- Correlation of SME relevance with alignment ≥ .50; with purity ≥ .40.
+- NLI: high entailment to target facet; neutral/contradiction to non-targets; ≤ 5% false-positives on non-targets.
+- Gate thresholds (initial, tunable): alignment ≥ 0.35; purity ≥ 0.08; near-duplicate cosine < 0.92; reading level ≈ grades 7–10; no double-barrels.
 
-**Challenge**
-
-Our item pool is generated directly from versioned **facet descriptions** and screened via embeddings + NLI for semantic alignment and diversity. Public IPIP metadata provides **scale-level reliability (Cronbach’s α)** rather than **item-level IRT calibrations**. Therefore, we estimate **graded response model (GRM)** parameters—discrimination (*a*) and ordered thresholds (*b*)—only for items we deploy.
-
-**Impact**
-- **Item selection accuracy:** Without empirical calibrations, CAT cannot select the most informative items.
-- **Ability estimation precision:** θ estimates may carry inflated SEs and potential bias.
-- **Test efficiency:** More items may be needed to reach target precision.
-- **Calibration uncertainty:** Early parameters are provisional and must be matured with additional data.
-
-**Resolution**
-- **Anchorless concurrent calibration:** Planned-missing (matrix) forms with θ identified as N(0,1); no dependency on legacy anchors.
-- **Promotion rules:** Promote an item to the operational bank when threshold SEs < 0.15, item-fit acceptable, information covers θ≈[−1.5, +1.5], and no material local dependence/DIF.
-- **Retirement rules:** Retire items with misfit, local dependence, drift, or DIF concerns.
-
-**Questions for Consultation**
-1. What responses-per-item and per-facet yields stable GRM a/b across 36 facets?
-2. Recommended linking design using **Facet Reference Items (FRIs)** under rolling item updates?
-3. What floor/ceiling diagnostics should be pre-registered as retirement criteria?
-
-**Priority:** ⚠️ **Tier 1 (Critical - Blocking Production Launch)**
+**Expert Questions**
+- Q1: Are our thresholds reasonable across all 36 facets, or should some be facet-specific?
+- Q2: Preferred protocol for periodic gate re-tuning (change-point or drift tests)?
 
 ---
 
-### 6.2 AI-Generated Item Quality Control
+### 6.1 Facet Reference Items (FRIs) for Linking & Drift (P1)
 
-**Challenge**
+**Hypotheses**
+- H3: A small per-facet set of **FRIs** (2–4 items) enables stable score comparability across forms/waves without fixing item params forever.
+- H4: Drift monitoring with replaceable FRIs preserves comparability while permitting content refresh.
 
-The STEM Adapter pipeline generates novel assessment items using AI, but lacks rigorous psychometric validation before deployment. We are relying on Natural Language Inference (NLI) as a semantic filter, but have not established that semantic similarity guarantees psychometric equivalence.
+**Evidence to Gather**
+- Include FRIs on every calibration wave; run concurrent calibration or Stocking–Lord linking.
+- Track **Δa**, **Δb** per FRI; monitor linking error (θ mean/SD shifts, TCC RMSD).
 
-**Current Planned Process**
-1. **Generation Phase:** LLM creates stems from the **facet description** and style/valence constraints (no anchor dependency)
-2. **NLI Verification:** Check against the **facet specification** (construct fit), not prior items
-3. **Selection:** Items advance to the bank **only after pilot testing and calibration**
+**Acceptance Criteria**
+- Linking stability across waves: |Δμ_θ| ≤ 0.05; |Δσ_θ| ≤ 0.05; TCC RMSD ≤ 0.05.
+- Drift thresholds to demote/replace an FRI: |Δa| > 0.25 **or** any |Δb_k| > 0.30 **with** fit degradation (flag).
+- FRI coverage: each facet’s FRIs collectively informative on θ ≈ [−1.5, +1.5].
 
-**Risks**
-- **Construct validity drift:** Generated items may subtly shift away from intended facet constructs over multiple generation cycles
-- **Response pattern anomalies:** Items may exhibit unexpected ceiling/floor effects, response biases, or aberrant patterns
-- **Discrimination variability:** AI-generated items may not effectively differentiate between ability levels despite high NLI scores
-- **Demographic bias:** Items may introduce cultural, linguistic, or demographic biases not present in validated facet specification
-- **Temporal instability:** Item characteristics may drift as LLMs are updated or prompts are refined
-
-**Questions for Consultation**
-1. **Minimum Validation Requirements:** What psychometric validation is required before deploying AI-generated items, even in low-stakes contexts?
-2. **Pilot Testing:** Should we implement a mandatory pilot testing phase with real responses (N = ?) before items enter the operational pool?
-3. **Statistical Flags:** What performance metrics should trigger automatic item retirement or human review (e.g., item-total correlation < .30, DIF > threshold)?
-4. **NLI Validity:** Is NLI entailment/contradiction a sufficient proxy for psychometric equivalence, or must we empirically demonstrate that high-NLI items behave equivalently to the facet specification?
-5. **Ongoing Monitoring:** What constitutes adequate post-deployment monitoring? How frequently should items be recalibrated?
-6. **Empirical Calibration:** What minimum pilot sample size per item is required before promoting to the operational bank? Should calibration be facet-specific or pooled across domains?
-
-**Priority:** ⚠️ **Tier 1 (Critical - Blocking Production Launch)**
+**Expert Questions**
+- Q3: Is 2–4 FRIs/facet adequate under our content-balance rules? Target exposure/rotation recommendations?
 
 ---
 
-### 6.3 Adaptive Algorithm Stopping Rules
+### 6.2 Anchorless Calibration & Planned-Missing Design (P1)
 
-**Challenge**
+**Hypotheses**
+- H5: **Anchorless concurrent GRM** with θ identified as N(0,1) yields stable parameters when paired with planned-missing (matrix) forms.
+- H6: Our promotion/retirement rules produce a bank that meets precision targets with short tests.
 
-The current adaptive algorithm design uses simple stopping rules that may not optimize the efficiency-precision tradeoff, particularly across diverse ability levels and demographic groups.
+**Design**
+- Forms: 6 booklets × ~30 items each (content-balanced); each person answers ~30 items.
+- **Standard sample targets** (initial): **400–600 responses per item** (raise for sparse categories); total respondents for a 250–300 item pilot ≈ **4k–6k**.
+- Identification: θ ~ N(0,1) (no fixed item parameters).
 
-**Current Planned Implementation**
-- **Per-facet:** Stop when SEM ≤ 0.32 OR 10 items administered
-- **Global:** Stop when all 36 facets meet criteria OR 180 total items administered
+**Acceptance Criteria**
+- Item parameter precision: all threshold SEs < 0.15; SE(a) reasonable (e.g., < 0.15–0.20).
+- Item fit: acceptable S-X² (or equivalent), residual diagnostics acceptable; local dependence (Yen’s Q3) median ≤ .10, max ≤ .20.
+- Information coverage per facet: high information on θ ∈ [−1.5, +1.5] (or facet-specific).
+- Promotion rule: promote to **Operational** when precision + fit + coverage + no LD/DIF.
+- Retirement rule: misfit, LD, drift, or bias flags.
 
-**Concerns**
-1. **Uniform precision target:** Is SEM ≤ 0.32 appropriate across all facets and ability levels? Some facets may require tighter precision (e.g., clinically-relevant traits), while others may tolerate looser precision for screening purposes.
-2. **Hard item caps:** 10-item per-facet cap may be too restrictive for individuals at extreme ability levels (very high/low), where more items are needed for stable estimates.
-3. **Domain imbalance:** Users may experience highly unequal assessment lengths across the 6 domains (e.g., Creativity facets complete in 30 items, Connection facets require 60), creating potential fairness concerns.
-4. **Clinical utility:** Are these precision targets aligned with intended use cases? Personal development may tolerate higher SEM than clinical applications.
-5. **Stopping rule validation:** Have these thresholds been validated via simulation studies with realistic item pools and ability distributions?
-
-**Questions for Consultation**
-1. What precision targets (SEM thresholds) are psychometrically defensible for:
-   - **Personal development applications** (current primary use case)
-   - **Future clinical or coaching applications** (potential expansion)
-   - **Research applications** (group-level comparisons)
-2. Should stopping rules vary by facet based on measurement precision requirements or real-world consequences of measurement error?
-3. How should we handle facets where target precision is unattainable due to limited item pool size or poor item quality?
-4. What simulation studies are needed to validate stopping rules before deployment? (e.g., bias, efficiency, classification accuracy at different ability levels)
-5. How do we balance assessment efficiency (shorter tests) against measurement precision and user experience (not frustrating people with excessive items)?
-
-**Priority:** 🔶 **Tier 2 (High - Needed for Quality Assurance)**
+**Expert Questions**
+- Q4: Any facet-specific tweaks to form design to mitigate local dependence?
+- Q5: Recommended fit indices and thresholds for polytomous items in our use case?
 
 ---
 
-### 6.4 Content Balance and Representation
+### 6.3 CAT Safety, Efficiency, and Content Balance (P1)
 
-**Challenge**
+**Hypotheses**
+- H7: A content-balanced CAT with exposure control achieves domain-level precision with short tests, without overexposing items.
 
-Ensuring adequate and balanced representation of each facet construct while maintaining item pool diversity and avoiding content redundancy.
+**Evidence to Gather**
+- Monte Carlo CAT simulations with our calibrated bank and constraints; shadow testing in early production.
 
-**Current State**
-- **Reference items (FRIs):** Small, curated per-facet set used for linking and drift checks
-- **AI-generated items:** Generation success rates vary by facet complexity and abstractness (e.g., "Curiosity" generates easily, "Sense-Making" struggles)
-- **Content coverage:** No formal content specification defining what aspects of each facet should be assessed (behavioral indicators, cognitive components, emotional components, etc.)
+**Acceptance Criteria**
+- Average test length (per domain target): ≤ 8–12 items while achieving conditional SEM ≤ 0.35 on θ ∈ [−1.5, +1.5].
+- Exposure control (e.g., Sympson–Hetter or KL-based): max exposure ≤ 0.20 (tunable) with stable score precision.
+- Content balance: enforced per facet/domain; no facet starved of information.
 
-**Implications**
-- **Construct underrepresentation:** Facets may be narrowly defined by limited candidate content, missing important behavioral indicators
-- **Test fairness:** Users may receive different levels of construct coverage depending on which facet is being measured
-- **Item exposure:** Facets with small item pools may have high item re-use rates in adaptive testing, creating security and practice effect concerns
-- **Validity threats:** Narrow content coverage threatens content validity and may not generalize to the full facet construct
-
-**Questions for Consultation**
-1. What constitutes adequate content coverage for a multidimensional strength construct? Should we follow a formal content specification (e.g., test blueprint)?
-2. Should we develop explicit content specifications for each facet, defining domains of behavioral indicators to ensure comprehensive coverage?
-3. How can we audit AI-generated items for content balance within facets? (e.g., ensuring items tap cognitive, affective, and behavioral aspects)
-4. What minimum item pool size per facet is required for operational CAT without excessive item exposure?
-5. How do we handle facets that are conceptually broad (e.g., "Wisdom") vs. narrow (e.g., "Patience") in terms of item pool requirements?
-
-**Priority:** 🔶 **Tier 2 (High - Needed for Quality Assurance)**
+**Expert Questions**
+- Q6: Preferred exposure-control method and parameters in personality/strengths CAT contexts?
 
 ---
 
-### 6.5 Validation Evidence Priorities
+### 6.4 Fairness, Social Desirability, and Validity Checks (P1)
 
-**Challenge**
+**Hypotheses**
+- H8: Social-desirability influence is bounded; DIF across key groups is negligible or correctable.
 
-Limited empirical validation of the assessment's psychometric properties and construct validity. We have a comprehensive validation plan (Section 5.4), but need expert guidance on priorities and sequencing given resource constraints.
+**Design & Acceptance Criteria**
+- Include a brief SD scale during pilots; aim for |r(facet, SD)| ≤ .30. If exceeded, evaluate wording/keys or model adjustments.
+- DIF screens (e.g., IRT-LR, MH): group Ns ≥ 400–500; flag if |Δb| > 0.30 with fit change or ΔMH ≥ 1.0 (context-dependent).
+- Attention checks + response-time flags to ensure data quality.
 
-**Current Evidence Gaps**
-- **Reliability:** No coefficient alpha, omega, test-retest, or SEM estimates from real data
-- **Construct validity:** No factor analysis confirming the 6-domain/36-facet structure with actual items and responses
-- **Convergent validity:** No correlations with established strength measures (e.g., VIA-IS, CliftonStrengths) or personality measures (NEO-PI-R)
-- **Discriminant validity:** No evidence that facets are sufficiently distinct from each other or from general personality traits
-- **Predictive validity:** No data on relationships with meaningful real-world outcomes (job performance, well-being, academic achievement)
-- **Incremental validity:** No evidence that our six-domain model adds value beyond existing frameworks
-
-**Questions for Consultation**
-1. **Study Prioritization:** Given limited resources, which validation studies should be prioritized in Phase 2 (pilot)? What is the minimum validation needed before even low-stakes use?
-2. **Sample Characteristics:** What sample characteristics are essential for initial validation (demographics, ability range, clinical vs. non-clinical)?
-3. **Sample Size:** What is the minimum sample size for initial pilot validation? Our target is N ≥ 1000, but is this sufficient for 36 facets?
-4. **Reference-Item vs. Full Assessment:** Should initial validation focus on anchor items only (more psychometrically controlled) or the full adaptive assessment including AI-generated items?
-5. **Dynamic Item Pools:** How should we handle validation when items are continuously added/updated via AI generation? Do we need to "freeze" the item pool for validation studies?
-6. **CFA Approach:** With 36 correlated facets, what CFA approach is appropriate? Hierarchical model, bifactor model, ESEM? What fit indices are realistic for this complexity?
-
-**Priority:** 🟡 **Tier 3 (Important - Needed for Long-term Credibility)**
+**Expert Questions**
+- Q7: Recommended DIF method(s) for polytomous items with multiple covariates?
 
 ---
 
-### 6.6 Equating and Score Comparability
+### 6.5 Construct Validity: Convergent, Discriminant, Known-Groups (P2)
 
-**Challenge**
+**Evidence to Gather**
+- Convergent correlations with related constructs (expect r ≈ .30–.60).
+- Discriminant correlations with unrelated constructs (expect |r| ≤ .30).
+- Known-groups contrasts with preregistered hypotheses (expect d ≥ 0.5 where theory predicts).
 
-As **Facet Reference Items (FRIs)** are maintained and AI-generated items are continuously updated, we must ensure that ability estimates (θ) remain comparable across forms and over time (longitudinal users, cohort studies, A/B versions).
-
-**Solution**
-- **Common-item nonequivalent groups design:** Include 2–4 FRIs per facet on each calibration wave to support linking.
-- **Concurrent calibration or Stocking–Lord linking:** Use FRIs as the bridge when forms differ across waves.
-- **Drift monitoring:** Demote/replace an FRI if |Δa| > 0.25 or any |Δb_k| > 0.30 with degraded fit; promote better items as they emerge.
-
-**Open Questions for Consultation**
-1. How many FRIs per facet are sufficient for stable equating under our content balance rules?
-2. What target exposure and rotation should FRIs receive to balance linking precision and security?
-3. What thresholds for drift (Δa, Δb) and fit should trigger demotion of an FRI?
-
-**Priority:** ⚠️ **Tier 1 (Critical - Blocking Production Launch)**
+**Acceptance Criteria**
+- Pattern of correlations matches theory across domains/facets.
+- Known-groups results in predicted direction and magnitude.
 
 ---
 
-4. **Linking Items:** What proportion of **FRIs** should be retained across waves to support equating? Is 20% per facet sufficient?
-5. **Reporting Comparability:** How should we communicate score comparability to users? (e.g., "Scores from version 1.x and 2.x are comparable via equating; versions prior to 1.0 are not comparable")
-6. **Longitudinal Studies:** For research applications, should we offer a "research mode" that locks the item pool version for duration of study?
+### 6.6 Reliability & Precision Targets (P2)
 
-**Priority:** 🟡 **Tier 3 (Important - Needed for Long-term Credibility)**
+**Acceptance Criteria**
+- Marginal reliability (EAP) per **domain** ≥ .85; per **facet** ≥ .75 (initial).
+- Test–retest (≈ 2-week interval): ICC(2,1) domains ≥ .80; facets ≥ .70.
+- Score SEM curves published for θ ∈ [−2.0, +2.0].
 
 ---
 
-### 6.7 Summary & Consultation Request
+### 6.7 Documentation, Transparency, and Governance (P3)
 
-**Tier 1 (Critical - Blocking Production Launch):**
-1. IRT parameter estimation strategy for deployed items + FRI-based linking design
-2. AI-generated item validation requirements and minimum psychometric evidence
+**Requirements**
+- Pre-register gate thresholds, promotion/retirement rules, and FRI drift thresholds.
+- Publish calibration run sheets: N per item, SEs, fit, linking diagnostics.
+- Version every facet spec and item; maintain audit trails (facet spec → prompt → NLI decision → pilot → calibration → deployment).
+- Public changelog when FRIs are promoted/demoted and when gates are tuned.
 
-**Tier 2 (High - Needed for Quality Assurance):**
-3. Adaptive stopping rule refinement and simulation validation
-4. Content balance standards and item pool size requirements
+---
 
-**Tier 3 (Important - Needed for Long-term Credibility):**
-5. Validation study design and evidence priorities
-6. Equating procedures and longitudinal score comparability
+### 6.8 Standard Sample-Size References (Consolidated) (P3)
 
-**We are seeking consultation to:**
-- Review and critique our technical approach before implementation
-- Provide guidance on resolving Tier 1 challenges before any development begins
-- Co-author a revised validation protocol incorporating expert recommendations
-- Identify additional challenges or blind spots we may have missed
-- Recommend best practices from adaptive testing and AI-assisted assessment literature
+These are *defaults* unless experts advise facet-specific alternatives:
+- **Per item** (GRM, 5-point): **400–600 responses** to stabilize thresholds and a.
+- **Pilot total** (≈ 250–300 items): **4k–6k respondents** using planned-missing forms.
+- **DIF** (2-group): **≥ 400–500 per group** for stable polytomous DIF.
+- **Test–retest**: **≥ 200** respondents across key strata.
+- **External validity studies**: **≥ 500–1,000** depending on design and measures.
 
-**Documentation Available for Review:**
-- This whitepaper (comprehensive overview)
-- `stem-adapter-prd.md` (96-page technical specification)
-- `technical_architecture_overview.md` (system architecture and psychometric details)
-- `current_psychometric_challenges.md` (expanded version of this section)
+---
+
+### 6.9 Consolidated Questions for External Experts (ordered by priority)
+
+**P1 — Critical**
+1) Are our **semantic gate thresholds** and SME alignment plan appropriate across all facets? What re-tuning cadence do you recommend?
+2) Is the **FRI count/exposure** sufficient for robust linking? Any preferred linking diagnostics beyond TCC RMSD/θ μ,σ deltas?
+3) Any facet-specific guidance on **planned-missing design** to minimize local dependence while preserving coverage?
+4) Preferred **CAT exposure control** and content-balance strategy in strengths/personality banks?
+
+**P2 — Important**
+5) Recommended **fit indices/thresholds** for polytomous items (GRM) in our context.
+6) Preferred **DIF methodology** (IRT-LR vs MH vs ordinal logistic) under multiple covariates.
+
+**P3 — Nice-to-have**
+7) Publication-ready **reporting templates** (fit tables, information plots, drift dashboards) you’d like to see standardized.
 
 ---
 
