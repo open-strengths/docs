@@ -165,12 +165,12 @@ This section reviews existing frameworks to identify their strengths and limitat
 
 | Framework | Popular Usage | Core Idea | Strengths | Research‑Identified Limitations |
 |-----------|---------------|-----------|-----------|---------------------------------|
-| **CliftonStrengths® 34** | Corporate coaching | 34 themes in 4 buckets | Large normative dataset; engaging language | Proprietary; theme names trademarked; limited published validity evidence; no peer‑reviewed factor structure [CS‑Tech Report, 2022]. |
-| **VIA Character Strengths** | Education & well‑being | 24 character traits | Public items (IP only partially restricted) | High inter‑item overlap; some traits combine virtue and behavior; scoring algorithm opaque [McGrath 2021]. |
-| **MBTI®** | Career counseling | 16 types from 4 dichotomies | Easy narrative appeal | Poor test‑retest reliability; dichotomies unsupported by modern trait theory [Costa & McCrae 2004]. |
-| **DISC** | Team workshops | Dominance, Influence, Steadiness, Conscientiousness | Simple quadrant model | Low predictive validity; vendor‑specific scoring; scarce peer‑reviewed evidence [Hughes 2019]. |
+| **CliftonStrengths® 34** | Corporate coaching | 34 themes in 4 buckets | Large normative dataset; engaging language; robust coaching ecosystem | Proprietary content & scoring; trademarked theme names; limited independent peer-reviewed validation; contested factor structure (vendor tech reports vs. external replications). |
+| **VIA Character Strengths** | Education & well-being | 24 character traits | Public items; positive-psychology heritage; intervention-friendly; many translations | High inter-item redundancy; some traits conflate virtue labels with behaviors; scoring algorithm only partially documented; factor stability varies across samples [McGrath 2021]. |
+| **MBTI®** | Career counseling | 16 types from 4 dichotomies | Easy narrative appeal; ubiquitous in career workshops | Poor test-retest reliability; dichotomies unsupported by modern trait theory [Costa & McCrae 2004]. |
+| **DISC** | Team workshops | Dominance, Influence, Steadiness, Conscientiousness | Simple quadrant model; widely used training archetype | Low predictive validity; vendor-specific scoring; scarce peer-reviewed evidence [Hughes 2019]. |
 | **Big Five (IPIP‑NEO)** | Academic gold standard | O, C, E, A, N (30 facets) | Open items; robust validity | 30 facets can overwhelm lay users; no explicit focus on “strengths” framing. |
-| **HEXACO** | Research & risk / ethics studies | Adds Honesty‑Humility factor | Better coverage of ethics | Still proprietary in many languages; adds complexity without creative factor. |
+| **HEXACO** | Research & risk / ethics studies | Adds Honesty-Humility factor | Improved coverage of ethical behavior and counterproductive tendencies; cross-cultural evidence accumulating | Lower adoption in applied strengths settings; some translations proprietary; added complexity vs. Big Five; mapping to strengths framing is indirect. |
 
 *Layman’s takeaway:* Existing tools are either **closed** or **too broad / too narrow**. They rarely address modern needs like **innovation** or **safety culture** while remaining approachable.
 
