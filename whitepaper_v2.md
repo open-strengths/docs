@@ -129,7 +129,7 @@ A **six-domain, 36-facet model** providing clear construct boundaries, balanced 
 
 **Our Platform Solution (Section 5):**
 
-An **open, AI-enhanced assessment platform** providing portable results (APIs + Integration Marketplace), safe AI use (anchor-based generation with psychometric safeguards), personalization (trauma-informed, reading-level-appropriate items), and transparent methods (all algorithms and validation data publicly documented).
+An **open, AI-enhanced assessment platform** providing portable results (APIs + Integration Marketplace), safe AI use (facet-seeded generation with psychometric safeguards), personalization (trauma-informed, reading-level-appropriate items), and transparent methods (all algorithms and validation data publicly documented).
 
 ---
 
@@ -346,13 +346,13 @@ The STEM Adapter generates personalized assessment items using AI with multi-lay
 - LLM (GPT-4o-mini) creates 10-15 candidate items per facet based on:
   - **Profile flags from User Classification System**: `role_context` (work/school/daily_life), `trauma_sensitive` (boolean), `language_simplification` (boolean), `education_level` (vocabulary complexity)
   - Facet definition + domain context
-  - Anchor examples
+  - Style/valence/reading-level constraints (no anchor dependency)
 - **Constraints enforced**: Reading level (CEFR A2/B1/B2 based on user profile), word count (6-18), trauma-sensitive filters, valence (positive/reverse)
-- **Output**: Structured JSON with each item explicitly linked to source anchor
+- **Output**: Structured JSON with each item generated from the canonical facet specification
 - **Current status**: Fully functional, ~2-3 minutes to generate items for all 36 facets
 
 **Phase 2 - NLI Verification (✅ Operational)**
-- Natural Language Inference model validates semantic alignment between generated item and anchor
+- Natural Language Inference model validates semantic alignment between generated item and facet specification
 - **Decision logic**:
   - Positive-valence: `entailment - max(contradiction, neutral) ≥ 0.20` → KEEP
   - Reverse-valence: `contradiction - max(entailment, neutral) ≥ 0.20` → KEEP
@@ -365,7 +365,7 @@ The STEM Adapter generates personalized assessment items using AI with multi-lay
 - Embed all KEEP items
 - Compute pairwise similarity within facet
 - Apply diversity filter (exclude if similarity ≥ 0.90 to selected items)
-- Rank by composite score (NLI confidence × anchor quality × diversity)
+- Rank by composite score (NLI confidence × diversity)
 - Select top N items per facet (configurable, typically 5-8)
 - **Current status**: Algorithms designed, implementation underway
 
@@ -438,21 +438,23 @@ Traditional assessments use fixed item banks that:
 **The Risk:**
 
 The psychometric community has legitimate concerns about AI:
-- **Construct drift**: Do generated items measure what anchors measure?
-- **Bias introduction**: Can AI introduce demographic biases not in validated items?
+- **Construct drift**: Do generated items measure what the facet specification defines?
+- **Bias introduction**: Can AI introduce demographic biases not present in validated constructs?
 - **Parameter instability**: Can we trust IRT parameters if items change?
 
 **Our Approach: Facet-Seeded Generation with Semantic & Empirical Safeguards**
 
-1. **Facet-seeded prompts**: Items are generated from the canonical facet description (not prior items), with style/valence/reading-level constraints.
+1. **Facet-seeded prompts**: Items are generated from the canonical facet description (not from prior items), with style/valence/reading-level constraints.
 
-2. **NLI to the facet spec**: Natural Language Inference verifies that each stem entails the facet specification and does not entail competing facets.
+2. **NLI to facet spec**: Natural Language Inference verifies semantic fit to the facet specification (entailment↑ / contradiction↓), not to legacy items.
 
-3. **Embedding diversity prevents redundancy**: Cosine similarity checks ensure items aren't near-duplicates.
+3. **Diversity filter**: Embedding-space checks prevent near-duplicates within a facet.
 
-4. **Full audit trails enable accountability**: Every generation attempt logged with prompt, NLI scores, selection rationale.
+4. **Human governance**: Curators admit items only as candidates; a small, held-out FRI set per facet supports audits/DIF/equating.
 
-5. **Empirical validation before deployment**: Pilot studies (N ≥ 1000) will compare AI vs. human-written items on reliability, validity, bias metrics.
+5. **Pilot-before-production**: Items require field data (item-total, coverage flags) before entering operational pools.
+
+6. **Calibrate early/often**: Bank calibration (GRM) runs on pooled responses; FRIs provide link points for scale maintenance over time.
 
 **If successful, this demonstrates:**
 - AI can augment psychometric rigor through transparency and safeguards
@@ -568,7 +570,7 @@ Restrictions remain until extensive validation is published and independently re
 - **Open**: All methods, algorithms, validation data publicly documented
 - **Portable**: Results are user-owned data with APIs, not platform-locked
 - **AI-Enhanced**: Personalization (trauma-informed, culturally adapted) without compromising validity
-- **Transparent**: Full provenance from literature → anchors → AI generation → user results
+- **Transparent**: Full provenance from facet spec → AI generation → pilot → calibration → user results
 - **Accessible**: Free core assessment, pay-what-you-can detailed reports
 
 **vs. Open-Source Personality Tools (IPIP, Big Five tests):**
@@ -580,9 +582,9 @@ Restrictions remain until extensive validation is published and independently re
 **The Innovation:**
 
 Demonstrating that AI can be used safely in psychometrics through:
-1. **Anchor-based generation** (every item linked to validated source)
+1. **Facet-seeded generation** (with FRI-based audits & equating)
 2. **Multi-layer verification** (NLI, embeddings, diversity filters)
-3. **Full provenance** (audit trail from facet specification → prompt → NLI decision → deployment)
+3. **Full provenance** (audit trail from facet specification → prompt → NLI decision → pilot → calibration → deployment)
 4. **Open validation** (pre-registration, public data, peer review)
 5. **Ethical governance** (high-stakes prohibition, consent tiers, IRB oversight)
 
@@ -637,23 +639,6 @@ Our item pool is generated directly from versioned **facet descriptions** and sc
 
 ---
 
-**Impact**
-- **Item selection accuracy:** Suboptimal items may be selected during adaptive testing, reducing measurement efficiency
-- **Ability estimation precision:** θ estimates may be biased or have inflated standard errors
-- **Test efficiency:** More items may be required to reach target precision than necessary
-- **Calibration uncertainty:** AI-generated items that inherit parameters from anchors compound any initial estimation errors
-
-**Questions for Consultation**
-1. What minimum sample size is required for stable GRM parameter estimation across 36 facets with 5-8 items each?
-2. Should we use separate calibration samples per facet, or can we pool across domains while accounting for local dependence?
-3. How should we handle facets with limited anchor item pools (n < 5) during initial calibration?
-4. What are psychometrically defensible ranges for `a` (discrimination) and `b` (threshold) parameters in a strengths context where social desirability may affect responses?
-5. Can we use IPIP anchor items that were originally calibrated for Big Five factors, or do we need fresh calibration for our six-domain model?
-
-**Priority:** ⚠️ **Tier 1 (Critical - Blocking Production Launch)**
-
----
-
 ### 6.2 AI-Generated Item Quality Control
 
 **Challenge**
@@ -676,9 +661,9 @@ The STEM Adapter pipeline generates novel assessment items using AI, but lacks r
 1. **Minimum Validation Requirements:** What psychometric validation is required before deploying AI-generated items, even in low-stakes contexts?
 2. **Pilot Testing:** Should we implement a mandatory pilot testing phase with real responses (N = ?) before items enter the operational pool?
 3. **Statistical Flags:** What performance metrics should trigger automatic item retirement or human review (e.g., item-total correlation < .30, DIF > threshold)?
-4. **NLI Validity:** Is NLI entailment/contradiction a sufficient proxy for psychometric equivalence, or must we empirically demonstrate that high-NLI items have similar IRT parameters to their facet specification?
+4. **NLI Validity:** Is NLI entailment/contradiction a sufficient proxy for psychometric equivalence, or must we empirically demonstrate that high-NLI items behave equivalently to the facet specification?
 5. **Ongoing Monitoring:** What constitutes adequate post-deployment monitoring? How frequently should items be recalibrated?
-6. **IRT Parameter Inheritance:** Can we defensibly assign anchor IRT parameters to AI-generated items based solely on high NLI alignment (e.g., entailment > 0.85), or is this psychometrically indefensible without empirical calibration?
+6. **Empirical Calibration:** What minimum pilot sample size per item is required before promoting to the operational bank? Should calibration be facet-specific or pooled across domains?
 
 **Priority:** ⚠️ **Tier 1 (Critical - Blocking Production Launch)**
 
@@ -800,7 +785,7 @@ As **Facet Reference Items (FRIs)** are maintained and AI-generated items are co
 ### 6.7 Summary & Consultation Request
 
 **Tier 1 (Critical - Blocking Production Launch):**
-1. IRT parameter estimation strategy for anchor items
+1. IRT parameter estimation strategy for deployed items + FRI-based linking design
 2. AI-generated item validation requirements and minimum psychometric evidence
 
 **Tier 2 (High - Needed for Quality Assurance):**
