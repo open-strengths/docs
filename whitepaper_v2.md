@@ -74,34 +74,11 @@ Pages 2–3: **Model & Facets** • Pages 4–5: **Development Roadmap** • Pag
 
 ## 1 · Executive Summary
 
-**Two Problems, One Open Platform**
-
-OpenStrengths addresses two critical gaps in the strengths assessment landscape:
-
-1. **Framework Problem**: Existing models (VIA, CliftonStrengths) have overlapping constructs and lack the granularity needed for actionable insights. Our **six‑domain, 36‑facet framework** (Sections 3-4) provides clearer construct boundaries and better coverage of cognitive, motivational, emotional, and social strengths.
-
-2. **Platform Problem**: Assessment results are trapped in proprietary silos—you can't export your CliftonStrengths data to use in your job search platform or therapy app. Meanwhile, AI remains unused in psychometrics despite potential for trauma-informed, culturally adapted content. Our **open platform architecture** (Section 5) makes strengths data portable via APIs while demonstrating that AI can be used safely with proper safeguards.
-
-**What We've Built**
-
-✅ **Operational Infrastructure:**
-- **3,814 calibrated anchor items** with IRT parameters from validated sources (IPIP, research instruments)
-- **Semantic matching engine**: 3,786 anchor embeddings + 76 facet embeddings for intelligent item assignment
-- **STEM Adapter (75% complete)**: AI-powered item generation with NLI verification and backward retry logic
-- **Version control system**: Complete audit trails for facets, anchors, and generated items
-
-🔄 **In Development:**
-- Final selection phase of STEM Adapter pipeline (expected Q4 2025)
-- Adaptive assessment engine design (IRT-based, awaiting validation consultation)
-
-⏸️ **Pending Validation:**
-- User-facing assessment deployment
-- Public API layer for third-party integrations
-- Integration marketplace for data portability
+OpenStrengths addresses two critical gaps in strengths assessment (detailed in Section 2): existing frameworks have overlapping constructs and limited granularity, while proprietary platforms trap user data without portability or AI-enhanced personalization. We respond with a **six‑domain, 36‑facet framework** (Sections 3-4) and an **open platform architecture** enabling portable results and safe AI use (Section 5).
 
 **Current Status: Seeking Expert Validation**
 
-We have significant operational infrastructure but are **seeking psychometric consultation** before deploying to users. Critical questions requiring expert input (detailed in Section 6):
+We have operational infrastructure for user classification, facet-anchor management (3,814 calibrated items), and AI-powered item generation (75% complete), but are **seeking psychometric consultation** before implementing the adaptive assessment engine or deploying to users (Section 5.1 details full status). Critical questions requiring expert input (detailed in Section 6):
 - Can AI-generated items inherit IRT parameters from anchors based on NLI alignment?
 - What pilot sample size is required before deploying AI-enhanced items?
 - Are our adaptive stopping rules appropriate for low-stakes personal development contexts?
@@ -133,11 +110,7 @@ The strengths assessment landscape faces challenges at two levels: **what to mea
 
 **Our Framework Solution (Sections 3-4):**
 
-A **six-domain, 36-facet model** with:
-- **Clear construct boundaries**: Empirically-driven factor structure (ΔBIC = -214 vs. 4-factor model)
-- **Balanced coverage**: Cognitive (Insight/Creativity), motivational (Drive/Stability), and social (Connection/Influence) strengths equally represented
-- **Hierarchical organization**: 6 domains → 36 facets enables both broad patterns and specific insights
-- **Open science**: All facet definitions, item provenance, and validation data publicly documented
+A **six-domain, 36-facet model** providing clear construct boundaries, balanced coverage of cognitive/motivational/social strengths, hierarchical organization, and open science documentation (empirical justification in Section 4).
 
 ---
 
@@ -147,11 +120,7 @@ A **six-domain, 36-facet model** with:
 
 1. **Vendor Lock-In**: When you take CliftonStrengths, your results live in Gallup's ecosystem. There's no API, no data export, no way to use those results in your LinkedIn profile, job search platform, learning management system, or therapy app. Assessment data is trapped.
 
-2. **AI Unutilized**: Despite advances in AI, no major assessment uses Large Language Models to generate contextualized items. This means:
-   - **No trauma-informed adaptations**: Items can't avoid triggering language for PTSD survivors
-   - **No reading-level adjustments**: ESL users and those with varying education get the same complex language
-   - **No cultural adaptation**: Items remain Western-centric without localization beyond translation
-   - The reason: Legitimate psychometric concerns about construct validity and bias—but these are solvable problems.
+2. **AI Unutilized**: Despite advances in AI, no major assessment uses Large Language Models to generate contextualized items (trauma-informed, reading-level adjusted, culturally adapted) due to legitimate psychometric concerns—which we address in Section 5.3.
 
 3. **Static Item Banks**: Traditional assessments use fixed items, requiring massive pools to maintain security. This limits personalization and creates boring, repetitive user experiences.
 
@@ -159,11 +128,7 @@ A **six-domain, 36-facet model** with:
 
 **Our Platform Solution (Section 5):**
 
-An **open, AI-enhanced assessment platform** that:
-- **Makes results portable**: RESTful APIs + user-facing Integration Marketplace so your strengths data works wherever you need it
-- **Uses AI safely**: Anchor-based generation with multi-layer psychometric safeguards (NLI verification, embedding similarity, full provenance tracking)
-- **Enables personalization**: Trauma-informed, reading-level-appropriate, culturally relevant items without sacrificing construct validity
-- **Opens the black box**: All methods, algorithms, validation data, and even item generation prompts publicly documented
+An **open, AI-enhanced assessment platform** providing portable results (APIs + Integration Marketplace), safe AI use (anchor-based generation with psychometric safeguards), personalization (trauma-informed, reading-level-appropriate items), and transparent methods (all algorithms and validation data publicly documented).
 
 ---
 
@@ -175,9 +140,9 @@ An **open, AI-enhanced assessment platform** that:
 - A demonstration that AI can augment psychometric rigor through transparency and safeguards
 
 **What We're NOT Building:**
-- A high-stakes assessment for employment, clinical diagnosis, or consequential decisions (explicitly prohibited until extensive validation)
-- A replacement for established research instruments (we're building for applied contexts: personal development, coaching, education)
-- A closed platform (all methods, code, and data will be openly documented)
+- A high-stakes assessment (see governance restrictions below)
+- A replacement for established research instruments (focus: applied contexts like personal development, coaching, education)
+- A closed platform (all methods, code, and data openly documented)
 
 **Roadmap:**
 - **Sections 3-4** present our framework and its empirical justification
@@ -185,19 +150,14 @@ An **open, AI-enhanced assessment platform** that:
 - **Section 6** outlines critical psychometric challenges requiring expert consultation
 - **Section 7** invites collaboration to validate the approach before deployment
 
-High‑stakes decisions are **permanently out of scope** until scoring algorithms, fairness analyses, and validation evidence are published, peer-reviewed, and independently replicated.
+High‑stakes use (employment, clinical, admissions) is prohibited until extensive validation is published and independently replicated (governance framework in Section 5.5).
 
 
 ---
 
 ## 3 · State of the Art & Evidence Base
 
-**What it means**  
-
-Existing frameworks taught us what to keep (clarity, breadth) and what to avoid (closed scoring, overlapping traits). We chose **six domains** and **36 facets** to balance coverage with brevity and day‑to‑day usefulness.
-
-
-**How it works**  
+This section reviews existing frameworks to identify their strengths and limitations, informing our design choices (detailed framework specification in Section 4).
 
 
 ### 3.1  A Tour of Existing Frameworks  
@@ -225,38 +185,6 @@ Existing frameworks taught us what to keep (clarity, breadth) and what to avoid 
 | **Black‑box scoring** | Replication crisis in psychometrics [7] | Open IRT parameters, public code |
 | **Cultural bias** | DIF studies on proprietary tools [8] | Open item bank; community DIF audits |
 | **Faking susceptibility** | Social desirability research [9] | Forced‑choice & latency indices |
-
----
-
-### 3.3 Platform Limitations in Current Assessment Technology
-
-Beyond framework deficiencies, existing assessments exhibit **delivery** problems that limit their utility:
-
-| Platform Problem | Current State | Impact | OpenStrengths Response |
-|-----------------|---------------|--------|------------------------|
-| **Vendor Lock-In** | No APIs, no data export, results trapped in proprietary platforms | Users can't leverage results across job platforms, learning tools, therapy apps | RESTful APIs + Integration Marketplace (Section 5.6) |
-| **AI Unutilized** | No major assessment uses LLMs for item generation despite potential for personalization | No trauma-informed adaptations, reading-level adjustments, or cultural contextualization | STEM Adapter with anchor-based generation + NLI safeguards (Section 5.3) |
-| **Static Item Banks** | Fixed items requiring massive pools for security | Limited personalization, boring user experience, high test burden | Adaptive testing with on-demand AI generation (Section 5.4) |
-| **Closed Methods** | Proprietary scoring algorithms, unpublished validation data | Impossible to replicate, verify claims, or identify biases independently | Open algorithms, pre-registered studies, public datasets (Section 5.5) |
-| **High Cost Barriers** | CliftonStrengths ($50-200), VIA+ ($60-120) for full reports | Economic barriers limit access to insights | Free core assessment, pay-what-you-can for detailed reports |
-
-**Why AI Isn't Used:**
-
-The psychometric community has legitimate concerns about AI-generated items:
-- **Construct drift**: Do generated items measure what anchors measure?
-- **Bias introduction**: Can AI introduce demographic biases not present in validated items?
-- **Parameter instability**: Can we trust IRT parameters if items change?
-
-Our hypothesis: These are **solvable problems** through:
-1. **Anchor-based generation**: Every AI item linked to a validated anchor
-2. **Multi-layer verification**: NLI gating + embedding similarity + human review
-3. **Full provenance tracking**: Audit trail from anchor → prompt → generated item → user response
-4. **Empirical validation**: Pilot studies comparing AI vs. human-written items
-
-**Section 5 details our platform architecture** addressing these limitations while maintaining psychometric integrity.
-
----
-
 
 ---
 
@@ -431,7 +359,7 @@ The STEM Adapter generates personalized assessment items using AI with multi-lay
 - **Additional filters**: Word count validation, readability checks, diversity (cosine similarity < 0.90)
 - **Current status**: Fully functional with retry logic tested across multiple facet types
 
-**Phase 3 - Final Selection (🔄 In Development - Expected Q1 2025)**
+**Phase 3 - Final Selection (🔄 In Development - Expected Q4 2025 - Q1 2026)**
 - Embed all KEEP items
 - Compute pairwise similarity within facet
 - Apply diversity filter (exclude if similarity ≥ 0.90 to selected items)
@@ -534,7 +462,7 @@ The psychometric community has legitimate concerns about AI:
 
 ### 5.4 Roadmap: Consultation to Public Launch
 
-**Phase 0: Expert Validation (Q1 2025 - Current)**
+**Phase 0: Expert Validation (Q4 2025)**
 - **Status**: Actively seeking psychometric consultation
 - **Questions** (detailed in Section 6):
   - Can AI-generated items inherit IRT parameters from anchors based on NLI alignment (> 0.85)?
@@ -544,14 +472,14 @@ The psychometric community has legitimate concerns about AI:
   - What DIF analysis is needed for AI-generated content?
 - **Deliverable**: Revised validation protocol co-authored with psychometric experts
 
-**Phase 1: Complete Assessment Engine (Q2 2025 - Post-Consultation)**
+**Phase 1: Complete Assessment Engine (Q4 2025 - Q1 2026)**
 - Finish STEM Adapter Selection phase
 - Implement Adaptive Assessment Engine per validated specifications
 - Integrate all components (Facet-Anchors → STEM Adapter → Assessment Engine)
 - Internal testing with development team (N = 20-50)
 - **Deliverable**: End-to-end functioning assessment system
 
-**Phase 2: Pilot Study (Q3-Q4 2025)**
+**Phase 2: Pilot Study (Q1 2026)**
 - **Sample**: N ≥ 1000 diverse participants (age, education, cultural background)
 - **Measures**:
   - Reliability: α/ω ≥ .70 per facet, test-retest r ≥ .80 (2-4 week interval)
@@ -562,14 +490,14 @@ The psychometric community has legitimate concerns about AI:
 - **Deliverable**: Pilot study report with recommendation to proceed or revise
 - **Decision gate**: Only proceed to Phase 3 if reliability/validity thresholds met
 
-**Phase 3: Validation Studies (Q1-Q2 2026 - If Pilot Successful)**
+**Phase 3: Validation Studies (Q2 2026 - If Pilot Successful)**
 - Factor structure: CFA with fit indices (CFI > .90, RMSEA < .08)
 - Convergent validity: NEO-PI-R, VIA-IS, CliftonStrengths
 - Discriminant validity: Differentiation from personality, intelligence
 - DIF remediation: Remove/revise items showing meaningful bias
 - **Deliverable**: Peer-reviewed validation manuscript, public dataset release
 
-**Phase 4: Beta Launch + API Layer (Q3 2026 - If Validation Successful)**
+**Phase 4: Beta Launch + API Layer (Q2 - Q3 2026 - If Validation Successful)**
 - **Public beta**: Low-stakes personal development use only
 - **API layer**: Developer access for third-party integrations
 - **Restrictions**: Technical controls preventing high-stakes applications (employment, clinical, admissions)
@@ -944,16 +872,16 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 
 - **General public beta testers:** No public pilot until validation phase complete
 - **Commercial partnerships:** Focus is on research collaboration, not monetization
-- **High-stakes applications:** Explicitly prohibited until extensive validation published
+- **High-stakes applications:** Prohibited per Section 5.5 until extensive validation published
 - **Media attention:** Prefer to work quietly until we have robust evidence to share
 
 ---
 
 ### Contact & Next Steps
 
-**Current Status:** Actively seeking consultation (Phase 0: Expert Validation, Q1 2025)
+**Current Status:** Actively seeking consultation (Phase 0: Expert Validation, Q4 2025)
 
-**Timeline:** Not accepting general users until Q4 2025 at earliest (pending successful pilot study)
+**Timeline:** Not accepting general users until Q1 2026 at earliest (pending successful pilot study)
 
 **How to reach us:** [Contact information to be added]
 
@@ -964,12 +892,8 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - Current psychometric challenges (detailed consultation questions)
 
 **What happens next:**
-1. Initial consultation discussions (Q1 2025)
-2. Revised validation protocol incorporating feedback (Q2 2025)
-3. Pilot study partnerships finalized (Q2 2025)
-4. Development and calibration (Q2-Q3 2025)
-5. Pilot study launch (Q4 2025)
-6. Public beta launch contingent on pilot results (Q3 2026 earliest)
+
+See Section 5.4 for detailed roadmap. Summary: Phase 0 (Expert Validation, Q4 2025) → Phase 1 (Complete Assessment Engine, Q4 2025 - Q1 2026) → Phase 2 (Pilot Study, Q1 2026) → Phase 3 (Validation Studies, Q2 2026) → Public beta launch contingent on pilot results (Q2 - Q3 2026 earliest).
 
 ---
 
