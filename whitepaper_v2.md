@@ -208,14 +208,14 @@ Think of a **flower with six petals**—each domain covers ground the others don
 
 Think of a **flower with six petals**—each petal covers research‑backed ground the others don’t.
 
-| Domain | Plain‑Language Role | Empirical Factor | ΔBIC vs. 4‑factor | Key Source |
-|--------|--------------------|------------------|------------------|------------|
-| **Insight** | Strategic analysis & sense‑making | Analytic cognition / Openness‑Ideas | **‑214** | [1] |
-| **Creativity** | Divergent ideation & synthesis | Creative fluency factor | | [2] |
-| **Drive** | Goal pursuit & execution | Industriousness facet | | [3] |
-| **Stability** | Reliability & safety vigilance | Rule‑oriented Conscientiousness | | [4] |
-| **Connection** | Empathy & affiliation | Agreeableness‑affective | | [6] |
-| **Influence** | Persuasion & mobilization | Extraversion‑activation | | [6] |
+| Domain        | Plain-Language Role                 | Empirical Factor (approx. mapping)                                 | Key Sources (examples)                          |
+|---------------|-------------------------------------|---------------------------------------------------------------------|-------------------------------------------------|
+| **Insight**   | Strategic analysis & sense-making   | Openness–Ideas / need-for-cognition; sense-making/system thinking  | Weick (1995); Klein (1998); DeYoung (2014)      |
+| **Creativity**| Divergent ideation & synthesis      | Creative fluency/originality; associative/generative cognition      | Benedek et al. (2019); Beaty et al. (2021)      |
+| **Drive**     | Goal pursuit & execution            | Industriousness / achievement striving; grit                        | Payne et al. (2007); Duckworth et al. (2007)    |
+| **Stability** | Reliability & safety vigilance      | Conscientiousness (order/self-control); emotion regulation          | Christian et al. (2009); Baumeister et al. (2007)|
+| **Connection**| Empathy & affiliation               | Agreeableness–compassion/prosociality; psychological safety context | Davis (1983); Edmondson (1999/2019)             |
+| **Influence** | Persuasion & mobilization           | Extraversion–assertiveness/activation; leadership emergence          | Judge et al. (2002); Cialdini (2001); Bass (1985)|
 
 > **Why six?** A four‑factor model merges Creativity into Insight and Stability into Drive—reducing predictive validity for innovation and high‑risk jobs by 7–12 %. A seven‑factor model (adding Honesty‑Humility) adds < 2 % variance and cross‑loads heavily [8].
 
