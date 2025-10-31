@@ -270,11 +270,17 @@ Section 4 presented our **framework** (what to measure: 6 domains, 36 facets). T
 **User Journey Overview**
 
 ```
-1. Pre-Assessment (13 questions) → Captures demographics, trauma history, language needs, role context
-2. User Classification → Generates profile flags (role_context, trauma_sensitive, language_simplification, education_level)
-3. STEM Adapter → AI generates personalized items tailored to user profile with NLI verification
-4. Adaptive Assessment → IRT-based item selection optimizes precision with minimal test burden
-5. Results & Export → User receives detailed profile + API access for third-party integrations
+**Authoring Lifecycle (offline)**
+1) STEM Adapter (facet-seeded) → Draft candidate items from facet specs
+2) Semantic Gate (NLI + diversity) → Keep candidates that fit the spec
+3) Pilot & Calibration → Field candidates; estimate GRM params; QA fit/DIF
+4) Item Governance → Promote to Operational, designate FRIs, or Retire
+
+**End-User Assessment (operational)**
+1) Pre-Assessment (13 questions) → demographics, language needs, role context
+2) User Classification → profile flags (role_context, trauma_sensitive, language_simplification, education_level)
+3) Adaptive Assessment → selects **only Operational items** (calibrated) with content balance & exposure control
+4) Results & Export → profile + API access for third-party integrations
 ```
 
 **Current Implementation Status:**
@@ -309,6 +315,15 @@ Section 4 presented our **framework** (what to measure: 6 domains, 36 facets). T
 - **Controls**: version history, audit trails, cosine diversity checks, and status flags (candidate, piloted, calibrated, FRI).
 
 *Technical details: PostgreSQL with pgvector, Supabase Edge Functions, full RLS policies*
+
+### 5.1.1 Bank States & FRI Governance (new)
+
+- **Bank states:** *Candidate* → *Piloted* → *Operational* → (*FRI* optional) → *Retired*.
+- **Promotion (to Operational):** GRM precision (SEs(a,b) acceptable), item fit OK, information covers target θ range, no LD/DIF flags.
+- **FRIs (Facet Reference Items):** 2–4 per facet; appear on each wave for linking & drift checks; **replaceable** if drift/misfit.
+- **Demotion/Retire:** Drift beyond thresholds, misfit, LD, or DIF concerns; keep for provenance.
+
+
 
 ---
 
@@ -356,8 +371,11 @@ The STEM Adapter generates personalized assessment items using AI with multi-lay
 - Real-time ability estimation (θ) with MLE/EAP fallback
 - Adaptive stopping rules (target SEM ≤ 0.32 per facet)
 - Facet state tracking and progress management
-- **Why not started**: Awaiting expert validation of stopping rules, parameter inheritance strategy, simulation requirements
+- **Why not started**: Awaiting expert validation of stopping rules, simulation requirements, and **shadow-test plan** prior to full CAT
 - *Full specification: `assessment-engine.md`*
+- **Shadow-testing first:** run CAT in the background while fixed-form scores are primary until parameters stabilize.
+- **No inheritance:** items **do not** inherit parameters; all params come from pilot calibration.
+
 
 **Public API Layer**
 - RESTful endpoints for third-party integration
@@ -375,7 +393,6 @@ The STEM Adapter generates personalized assessment items using AI with multi-lay
 
 ### 5.2 Technical Architecture
 
-**System Overview:**
 **System Overview:**
 
 ```
@@ -421,6 +438,15 @@ The psychometric community has legitimate concerns about AI:
 - **Parameter instability**: Can we trust IRT parameters if items change?
 
 **Our Approach: Facet-Seeded Generation with Semantic & Empirical Safeguards**
+
+**Personalization Guardrails (to protect construct validity)**  
+- **What can vary:** reading level, simple scenario wording (work/school/daily life), trauma-sensitive phrasing.  
+- **What cannot vary:** the **construct core** (facet definition), scoring keys, or evaluative framing.  
+- **No per-user new items:** Operational delivery uses **only** calibrated bank items; generative steps occur offline during authoring.  
+- **Instructions vs items:** rich context belongs in **instructions/examples**, not in scored stems.  
+- **Audit:** log profile flags used and enforce a small, closed set of allowed prompt toggles.
+
+
 
 1. **Facet-seeded prompts**: Items are generated from the canonical facet description (not from prior items), with style/valence/reading-level constraints.
 
