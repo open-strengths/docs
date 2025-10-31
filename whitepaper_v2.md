@@ -67,8 +67,6 @@ Pages 2–3: **Model & Facets** • Pages 4–5: **Development Roadmap** • Pag
 
 8. [References](#8-references)
 
-**Appendices** A–D  
-
 
 ---
 
@@ -871,47 +869,6 @@ See Section 5.4 for detailed roadmap. Summary: Phase 0 (Expert Validation, Q4 20
 
 ---
 
-## Appendix A — Canonical 36 Facets (one‑liners + anti‑cross‑loading notes)
-
-_Insert the full canonical list from the current spec here. Include a short “not to be confused with…” line for each facet._
-
-
----
-
-## Appendix B — Study Summaries (1‑page syntheses)
-
-- B1. Higher‑order structure & cross‑cultural evidence → Six domains.
-
-- B2. Reliability vs Item Count → Target 5–8 items/facet; adaptive delivery.
-
-- B3. Criterion Validity → Domain separations (Drive, Influence, Connection, Insight, Creativity, Stability).
-
-- B4. Cross‑cultural viability → Behavior‑anchored wording; invariance plan.
-
-
----
-
-## Appendix C — Validation Protocol (draft)
-
-- Phase‑1 (CTT) → Phase‑2 (IRT/CAT) → Phase‑3 (Fairness & DIF).
-
-- Pre‑registration, code release, parameter tables, living change log.
-
-
----
-
-## Appendix D — Change Log (v0.3 → v2.0)
-
-- Adopted **six domains** informed by higher‑order structure.
-
-- Finalized **36 facets**; rewrote definitions to minimize cross‑loading.
-
-- Completed **stem adapter** and **anchor upload & management** systems.
-
-- Added **scoring roadmap** and **AI‑stem reliability plan**.
-
----
-
 ## Appendix A: Glossary
 
 - **Facet Description (Spec):** Canonical construct definition used for generation and NLI; versioned to prevent cross-loading.
@@ -919,14 +876,3 @@ _Insert the full canonical list from the current spec here. Include a short “n
 - **Operational Item:** Candidate promoted after passing pilot + calibration gates.
 - **FRI (Facet Reference Item):** Calibrated, human-curated per-facet items used for audits, DIF, and linking/equating; replaceable.
 - **Retired Item:** Item removed due to misfit, bias, or drift; retained for provenance.
-
----
-
-## Changelog
-
-- **2025-10-30 — Measurement architecture update:**
-  - Replaced *anchor-based generation* with **facet-seeded generation**.
-  - Introduced **Facet Reference Items (FRIs)** for audits/DIF/equating.
-  - Clarified **IPIP imports = classical α only; no item-level IRT**.
-  - Added **Pilot & Calibration** phase prior to operational use.
-  - Updated system diagram, provenance chain, and consultation questions.
