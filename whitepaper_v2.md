@@ -269,23 +269,34 @@ Section 4 presented our **framework** (what to measure: 6 domains, 36 facets). T
 
 **User Journey Overview**
 
-```
-**Authoring Lifecycle (offline)**
-1) STEM Adapter (facet-seeded) → Draft candidate items from facet specs
-2) Semantic Gate (NLI + diversity) → Keep candidates that fit the spec
-3) Pilot & Calibration → Field candidates; estimate GRM params; QA fit/DIF
-4) Item Governance → Promote to Operational, designate FRIs, or Retire
+**Item Development — back-office**
+1) STEM Adapter (facet-seeded) → draft candidate items from facet specs  
+2) Semantic Gate (NLI + diversity) → keep candidates that fit the spec  
+3) Pilot & Calibration → field candidates; estimate GRM params; QA fit/DIF  
+4) Item Governance → promote to Operational, designate FRIs, or retire
 
-**End-User Assessment (operational)**
-1) Pre-Assessment (13 questions) → demographics, language needs, role context
-2) User Classification → profile flags (role_context, trauma_sensitive, language_simplification, education_level)
-3) Adaptive Assessment → selects **only Operational items** (calibrated) with content balance & exposure control
+**Assessment Delivery — live to users**
+1) Pre-Assessment (13 questions) → demographics, language needs, role context  
+2) User Classification → profile flags (role_context, trauma_sensitive, language_simplification, education_level)  
+3) Adaptive Assessment → selects **only Operational items** (calibrated) with content balance & exposure control  
 4) Results & Export → profile + API access for third-party integrations
-```
 
-**Current Implementation Status:**
-- Steps 1-3: ✅ Operational or 75% complete
-- Steps 4-5: ⏸️ Not started (awaiting validation consultation)
+---
+
+**Current Implementation Status (at a glance)**
+
+**Item Development — back-office**
+- STEM Adapter — generation: ✅ Implemented
+- STEM Adapter — NLI verification: ✅ Implemented
+- STEM Adapter — final selection & diversity ranking: 🔄 In development
+- Pilot & calibration (GRM): ⏸️ Not started (awaiting consultation/samples)
+- Item governance (bank states + FRI designation): ✅ Framework in place; FRI tagging begins post-pilot
+
+**Assessment Delivery — live to users**
+- Pre-Assessment (13 Q): ✅ Implemented
+- User Classification: ✅ Implemented
+- Adaptive Assessment (CAT/GRM): ⏸️ Not started (shadow-test plan pending)
+- Results & Export / Public API: ⏸️ Not started (depends on CAT)
 
 ---
 
