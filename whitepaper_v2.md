@@ -221,6 +221,39 @@ Think of a **flower with six petals**—each petal covers research‑backed grou
 
 ### 4.2  Facet-by-Facet Justification
 
+#### Design Principle: Inner Orientation → Outer Response
+
+When we curated the 36 facets, we aimed for each domain to include facets that reflect an **inner orientation** (how a person tends to think/feel) and complementary **outer responses** (what they tend to do in the world). This is a communication aid, not a modeling constraint: we do **not** force these pairs in factor analysis or scoring. It simply explains the everyday logic behind the facet set while helping prevent cross-loading in our definitions.
+
+**Examples by domain (non-exhaustive):**
+
+- **Insight**
+  - *Inner:* Self-Reflection (metacognitive awareness), Curiosity (exploration drive)
+  - *Outer:* Perspective (applied sense-making), Foresight (planning/anticipation)
+
+- **Creativity**
+  - *Inner:* Imagination (mental simulation), Flexibility (cognitive set-shifting)
+  - *Outer:* Innovation (implementation/adoption), Expression (externalizing ideas)
+
+- **Drive**
+  - *Inner:* Motivation (goal-directed energy), Self-Discipline (self-control/routines)
+  - *Outer:* Achievement (pursuit of high standards), Perseverance (sustained effort)
+
+- **Stability**
+  - *Inner:* Composure (calm under stress), Self-Regulation (impulse/emotion control)
+  - *Outer:* Resilience (bounce-back/growth), Adaptability (behavioral adjustment)
+
+- **Connection**
+  - *Inner:* Empathy (understanding/feeling with others), Gratitude (felt appreciation)
+  - *Outer:* Kindness/Caring (prosocial acts, support), Justice (fairness in action)
+
+- **Influence**
+  - *Inner:* Self-Confidence (self-efficacy/approach), Initiative (self-starting intent)
+  - *Outer:* Assertiveness (respectful advocacy), Leadership/Communication (mobilizing others)
+
+> **Why include this?** It clarifies why two facets that seem “close” aren’t redundant: e.g., *Imagination* (inner ideation) vs *Innovation* (outer adoption), or *Composure* (calm during) vs *Resilience* (recovery after). We keep this as narrative guidance only; empirical distinctiveness is still judged by loadings, fit, and criterion prediction.
+
+
 We retain the facet **definitions** exactly as written. “**Why this facet?**” explains (a) how the facet is **distinct** from its nearest neighbors (to reduce cross-loading), and (b) the **behavioral/criterion signals** we expect it to predict in applied settings.
 
 | Domain | Facet | Definition | Why This Facet? | Representative Studies |
