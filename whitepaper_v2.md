@@ -172,7 +172,7 @@ This section reviews existing frameworks to identify their strengths and limitat
 | **Big Five (IPIP‑NEO)** | Academic gold standard | O, C, E, A, N (30 facets) | Open items; robust validity | 30 facets can overwhelm lay users; no explicit focus on “strengths” framing. |
 | **HEXACO** | Research & risk / ethics studies | Adds Honesty-Humility factor | Improved coverage of ethical behavior and counterproductive tendencies; cross-cultural evidence accumulating | Lower adoption in applied strengths settings; some translations proprietary; added complexity vs. Big Five; mapping to strengths framing is indirect. |
 
-*Layman’s takeaway:* Existing tools are either **closed** or **too broad / too narrow**. They rarely address modern needs like **innovation** or **safety culture** while remaining approachable.
+ *Layman’s takeaway:* Most popular models are either **proprietary and hard to audit** or **descriptive rather than strengths-based**. We’re aiming for an **open, strengths-first** approach that is **short**, **transparent**, and **validated**, and that maps results to **clear, actionable behaviors** (including creativity and safety/stability) instead of just labels.
 
 ---
 
@@ -223,66 +223,46 @@ Think of a **flower with six petals**—each petal covers research‑backed grou
 
 ### 4.2  Facet-by-Facet Justification
 
-Below we **"think out loud."** Each facet was selected if (a) meta-analyses show predictive utility, and (b) it loaded uniquely in our EFA (λ > .40).
+We retain the facet **definitions** exactly as written. “**Why this facet?**” explains (a) how the facet is **distinct** from its nearest neighbors (to reduce cross-loading), and (b) the **behavioral/criterion signals** we expect it to predict in applied settings.
 
 | Domain | Facet | Definition | Why This Facet? | Representative Studies |
 |--------|-------|------------|-----------------|------------------------|
-| **Insight** | Curiosity | Actively seeks out new knowledge and experiences. | Core curiosity literature; drives knowledge exploration & job crafting | Kashdan 2018 |
-| | Perspective | Understands situations from a broad or different point of view. | Predicts complex decision-making via sense-making & systems thinking | Weick 1995; Klein 1998; Eng Mgmt 2019–24 |
-| | Learning | Quickly acquires and applies new skills or knowledge. | Metacognition boosts skill transfer (d = 0.45) | Sitzmann 2015 |
-| | Foresight | Anticipates future needs and likely outcomes. | Future-time orientation improves planning outcomes | Zimbardo 2017 |
-| | Wisdom | Balances knowledge, judgment, and values in decisions. | Supported via reasoning & sense-making literature | DeYoung 2014; Chuderski 2020; Weick 1995 |
-| | Self-Reflection | Examines one's own thoughts, feelings, and behavior. | Self-awareness via reflective learning correlates with adaptive performance | Sitzmann 2015 |
-| **Creativity** | Creativity | Generates novel and imaginative ideas. | Ideation + associative/synthesizing; fluency predicts patent counts | Benedek 2019; Beaty 2021 |
-| | Innovation | Transforms ideas into practical, adopted solutions. | Adoption-innovation focus; implementation of ideas into practice (r ≈ .41) | Rogers diffusion |
-| | Resourcefulness | Finding effective ways to solve problems with what is available. | Improvisation/experimentation under constraints; lean problem-solving | Vera 2018; Ries 2011 |
-| | Imagination | Envisions possibilities beyond present reality. | Aesthetic/creative cognition supports envisioning beyond present | Feist 2020 |
-| | Flexibility | Adjusts thinking or approach when circumstances change. | Adaptive switching/pivoting; cognitive flexibility mitigates stress | Vera 2018; Ries 2011 |
-| | Expression | Communicates inner ideas or emotions through words, art, or action. | Aesthetic/expressive channels; creative output supports well-being | Feist 2020 |
-| **Drive** | Achievement | Strives toward high standards and significant results. | High standards → performance via goal-setting (r ≈ .45) | Payne 2007 |
-| | Motivation | Inner drive that energizes action toward goals. | Motivational energizing via goal striving & proactivity | Payne 2007; Bateman 2003 |
-| | Self-Discipline | Maintains consistent routines and self-control. | Self-control outperforms IQ in predicting GPA & life outcomes | Moffitt 2011 |
-| | Perseverance | Keeps going despite obstacles, setbacks, or fatigue. | Sustained effort despite setbacks; grit predicts retention (r ≈ .34) | Duckworth 2016 |
-| | Vitality | Approaches tasks with energy, enthusiasm, and stamina. | Energy/vigor correlates with job engagement | *(Unmapped; future: vigor/engagement lit)* |
-| | Focus | Sustains attention on priorities without distraction. | Sustained attention inferred from execution under changing demands | J Appl Psych 2023 |
-| **Stability** | Composure | Remaining calm and steady under stress or pressure. | Calm under pressure via patience/stress-safety; reduces workplace accidents | Schouwenburg 2020; Christian 2009 |
-| | Tolerance | Accepts differences and endures discomfort without hostility. | Non-hostility/fair regard; adjacent support via ethics literature | Ashton 2024 |
-| | Adaptability | Adjusts behavior to function effectively in new conditions. | Behavioral adjustment; adaptive performance evidence | J Appl Psych 2023 |
-| | Optimism | Expects favorable outcomes and looks for opportunities. | Positive expectations buffer stress effects | *(Unmapped; future: Scheier & Carver)* |
-| | Resilience | Recovers quickly and grows from stress or loss. | Recovery/growth from adversity; overlaps with grit/perseverance | Duckworth 2016 |
-| | Self-Regulation | Controls impulses and emotions to stay aligned with values. | Impulse/emotion control; delay-of-gratification predicts outcomes | Moffitt 2011; Schouwenburg 2020 |
-| **Connection** | Kindness | Shows warmth through small, everyday prosocial acts. | Everyday prosociality via mentorship/helping behaviors | Allen 2004 |
-| | Empathy | Understands and shares the feelings of others. | Affective empathy r ≈ .46 with team climate; cognitive perspective-taking | PLOS ONE 2015; Epley 2014 |
-| | Forgiveness | Lets go of resentment and offers second chances. | Predicts relationship satisfaction | *(Unmapped; add in v2)* |
-| | Caring | Provides sustained support and concern for others' well-being. | Sustained concern aligned with mentoring/provision of support | Allen 2004 |
-| | Gratitude | Appreciates and acknowledges what others contribute. | Gratitude interventions improve social bonds | *(Unmapped; future: Emmons & McCullough)* |
-| | Justice | Acts to ensure fairness and equal treatment in groups. | Fairness/equal voice supported via inclusion/psychological safety | Edmondson 2019 |
-| **Influence** | Leadership | Guides and motivates others toward shared goals. | Guiding/motivating via transformational leadership & affect contagion | Bass 1985; Barsade 2015 |
-| | Communication | Expresses ideas clearly and appropriately. | Clarity via narrative transport; storytelling effectiveness | Green 2020 |
-| | Self-Confidence | Believes in one's ability to succeed. | Core self-evaluations predict performance (meta k = 26) | Judge 2002 |
-| | Initiative | Takes proactive action without waiting for direction. | Taking action without prompting; proactive personality (λ ≈ .62) | Bateman 2003 |
-| | Assertiveness | Stands up for one's own needs, rights, or views directly and respectfully. | Assertive negotiation outcomes; advocacy effectiveness | Curhan 2022 |
-| | Influence | Persuades and shapes decisions or attitudes. | Shaping attitudes/decisions via persuasion mechanisms | Petty 2019 |
-
----
-
-**Note on Study Mappings:**
-- **Direct coverage**: Facet explicitly measured in cited studies
-- **Partial coverage**: Conceptual overlap or nearest-neighbor constructs provide supporting evidence
-- **Unmapped**: No explicit study in v1; pilot validation will address these gaps
-- All 36 facets showed λ > .40 loading on intended domains in exploratory factor analysis (N = 847)
-
----
-
-
----
-
-
-> **Note:** Tables reflect our current six‑domain model; facet phrasing and placement follow the anti‑cross‑loading standard.
-
-
----
-
+| **Insight** | Curiosity | Actively seeks out new knowledge and experiences. | Distinct from **Learning** (acquisition speed) by emphasizing **exploration drive** (question asking, information seeking). Predicts exploratory behavior, job crafting, and idea input that fuels Creativity. | Kashdan & Silvia (2009); Zhang et al. (2020) |
+|  | Perspective | Understands situations from a broad or different point of view. | Distinct from **Empathy** (affective understanding) and **Wisdom** (value-balanced judgment). Captures **sense-making** across frames, reducing blind spots in complex decisions. | Weick (1995); Klein (1998/2008) |
+|  | Learning | Quickly acquires and applies new skills or knowledge. | Distinct from **Curiosity** (explore) by focusing on **acquisition/transfer** (ramp time, skill generalization). Predicts training ROI and time-to-competence. | Sitzmann & Ely (2011); Keith et al. (2010) |
+|  | Foresight | Anticipates future needs and likely outcomes. | Distinct from **Perspective** (current framing) by emphasizing **anticipation and temporal projection**. Predicts proactive planning, risk mitigation, and reduced rework. | Zimbardo & Boyd (1999); Steel & König (2006) |
+|  | Wisdom | Balances knowledge, judgment, and values in decisions. | Distinct from **Foresight** (prediction) by emphasizing **value-aligned trade-offs** and judgment under ambiguity. Predicts ethical, high-stakes choices. | Grossmann (2017); DeYoung (2014) |
+|  | Self-Reflection | Examines one's own thoughts, feelings, and behavior. | Distinct from **Learning** (external skill gain) via **metacognitive self-monitoring** (error noticing, after-action review). Predicts adaptive performance and growth. | Sitzmann (2015); Grant et al. (2017) |
+| **Creativity** | Creativity | Generates novel and imaginative ideas. | Distinct from **Insight** (analysis) by targeting **novel idea generation** (fluency/originality). Predicts idea count/quality, patents/proposals. | Benedek et al. (2019); Beaty et al. (2021) |
+|  | Innovation | Transforms ideas into practical, adopted solutions. | Distinct from **Influence** (persuasion) by focusing on **implementation/adoption** (from pilot to routine use). Predicts process change and diffusion. | Rogers (2003); Crossan & Apaydin (2010) |
+|  | Resourcefulness | Finding effective ways to solve problems with what is available. | Distinct from **Innovation** (adoption) by targeting **constraint-based improvisation** and workaround design. Predicts continuity under constraints. | Vera & Crossan (2005); Stokes (2014) |
+|  | Imagination | Envisions possibilities beyond present reality. | Distinct from **Creativity** (output) by emphasizing **mental simulation** and envisioning alternatives. Predicts concepting, prototyping, and strategy vision. | Feist (2019); Abraham (2016) |
+|  | Flexibility | Adjusts thinking or approach when circumstances change. | Distinct from **Adaptability** (behavioral change) by focusing on **cognitive shifting/set-switching**. Predicts pivot speed and reduced switch costs under stress. | Monsell (2003); Martin & Rubin (1995) |
+|  | Expression | Communicates inner ideas or emotions through words, art, or action. | Distinct from **Communication** (audience-fit clarity) by focusing on **creative expression** and externalization. Predicts creative output/portfolio and well-being. | Kaufman & Beghetto (2009); Forgeard (2013) |
+| **Drive** | Achievement | Strives toward high standards and significant results. | Distinct from **Motivation** (energy) by emphasizing **standards and goal level**. Predicts stretch goals, quality thresholds, and performance awards. | Payne et al. (2007); Judge & Ilies (2002) |
+|  | Motivation | Inner drive that energizes action toward goals. | Distinct from **Vitality** (stamina) by capturing **goal-directed energy** and initiation of effort. Predicts discretionary effort and task initiation. | Kanfer (1990); Grant (2008) |
+|  | Self-Discipline | Maintains consistent routines and self-control. | Distinct from **Focus** (momentary attention) by emphasizing **habit/routine adherence** and delay of gratification. Predicts completion and rule adherence. | Moffitt et al. (2011); Duckworth & Gross (2014) |
+|  | Perseverance | Keeps going despite obstacles, setbacks, or fatigue. | Distinct from **Resilience** (recovery) and **Self-Discipline** (routines) by targeting **sustained effort under adversity**. Predicts completion rates and retention. | Duckworth et al. (2007/2016) |
+|  | Vitality | Approaches tasks with energy, enthusiasm, and stamina. | Distinct from **Motivation** (wanting) by emphasizing **energetic arousal/stamina**. Predicts engagement and sustained output under load. | Schaufeli et al. (2006); Sonnentag (2003) |
+|  | Focus | Sustains attention on priorities without distraction. | Distinct from **Self-Discipline** (routine) by targeting **moment-to-moment attentional control**. Predicts error rate, deep-work time, and task switch discipline. | Unsworth & Robison (2017); Gazzaley & Rosen (2016) |
+| **Stability** | Composure | Remaining calm and steady under stress or pressure. | Distinct from **Resilience** (post-event bounce-back) by focusing on **during-event calm**. Predicts incident rates and safety-critical performance. | Christian et al. (2009); Schouwenburg (2020) |
+|  | Tolerance | Accepts differences and endures discomfort without hostility. | Distinct from **Justice** (fairness action) by emphasizing **non-hostility and forbearance**. Predicts lower conflict and inclusion climate. | Ashton & Lee (2007); Bohannon (2018) |
+|  | Adaptability | Adjusts behavior to function effectively in new conditions. | Distinct from **Flexibility** (cognitive) by emphasizing **behavioral adjustment** (strategy change, role shift). Predicts transition success. | Pulakos et al. (2000); J Appl Psych (2023) |
+|  | Optimism | Expects favorable outcomes and looks for opportunities. | Distinct from **Self-Confidence** (self-efficacy) by focusing on **general positive expectancy**. Predicts persistence and stress buffering. | Scheier & Carver (1985/1993); Carver & Scheier (2014) |
+|  | Resilience | Recovers quickly and grows from stress or loss. | Distinct from **Perseverance** (keep going during) and **Composure** (calm during). Predicts **time-to-recovery** and return-to-baseline. | Bonanno (2004); Hobfoll et al. (2018) |
+|  | Self-Regulation | Controls impulses and emotions to stay aligned with values. | Distinct from **Self-Discipline** (routine adherence) by emphasizing **in-the-moment control** of impulses/emotions. Predicts safety compliance and fewer counterproductive acts. | Baumeister et al. (2007); Tangney et al. (2004) |
+| **Connection** | Kindness | Shows warmth through small, everyday prosocial acts. | Distinct from **Caring** (sustained support) by focusing on **everyday prosocial micro-behaviors**. Predicts helping frequency and team warmth. | Grant & Gino (2010); Allen (2004) |
+|  | Empathy | Understands and shares the feelings of others. | Distinct from **Perspective** (cognitive frame) by targeting **affective/cognitive understanding of people**. Predicts team climate and customer ratings. | Davis (1983); Decety & Jackson (2004) |
+|  | Forgiveness | Lets go of resentment and offers second chances. | Distinct from **Justice** (fair process) by focusing on **relationship repair** and forbearance. Predicts cooperation and retention after conflict. | McCullough et al. (1997/2000) |
+|  | Caring | Provides sustained support and concern for others' well-being. | Distinct from **Kindness** (episodic) by emphasizing **enduring, resource-backed support**. Predicts mentoring time and support provision. | Allen (2004); Dutton et al. (2014) |
+|  | Gratitude | Appreciates and acknowledges what others contribute. | Distinct from **Kindness** (giving) by focusing on **recognition/acknowledgment** that increases reciprocity and cohesion. Predicts prosocial reciprocity. | Emmons & McCullough (2003); Algoe (2012) |
+|  | Justice | Acts to ensure fairness and equal treatment in groups. | Distinct from **Tolerance** (forbearance) by emphasizing **fairness norms and voice**. Predicts psychological safety and inclusion. | Colquitt (2001); Edmondson (1999/2019) |
+| **Influence** | Leadership | Guides and motivates others toward shared goals. | Distinct from **Influence** (individual persuasion) and **Assertiveness** (self-advocacy) by focusing on **direction-setting and motivation of groups**. Predicts team outcomes and climate. | Bass (1985); Judge & Piccolo (2004) |
+|  | Communication | Expresses ideas clearly and appropriately. | Distinct from **Expression** (creative externalization) by emphasizing **audience-fit clarity and structure**. Predicts comprehension and adoption decisions. | Green & Brock (2000); Heath & Heath (2007) |
+|  | Self-Confidence | Believes in one's ability to succeed. | Distinct from **Optimism** (general expectancy) by targeting **self-efficacy and approach behavior**. Predicts stretch goals and initiative taking. | Judge et al. (2002); Bandura (1997) |
+|  | Initiative | Takes proactive action without waiting for direction. | Distinct from **Perseverance** (sustaining effort) by emphasizing **self-starting and ownership**. Predicts improvement suggestions and issue ownership. | Bateman & Crant (1993); Parker et al. (2006) |
+|  | Assertiveness | Stands up for one's own needs, rights, or views directly and respectfully. | Distinct from **Leadership** (group direction) by focusing on **self-advocacy and boundary setting**. Predicts negotiation outcomes and voice. | Ames & Flynn (2007); Curhan et al. (2014/2022) |
+|  | Influence | Persuades and shapes decisions or attitudes. | Distinct from **Leadership** (guidance) and **Communication** (clarity) by targeting **conversion/mobilization**. Predicts sales/win rate and adoption. | Petty & Cacioppo (1986/2019); Cialdini (2001) |
 ## 5 · OpenStrengths Platform: Solving Portability & AI Safety
 
 **From Framework to Platform**
