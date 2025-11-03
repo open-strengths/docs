@@ -548,7 +548,7 @@ We separate **item development (back-office)** from **assessment delivery (live 
 - Define bank governance (Candidate → Piloted → Operational → FRI → Retired) and equating strategy.
 
 **Deliverables**
-- **Expert Validation Blueprint:** A methodological plan covering:
+- **Expert Validation Blueprint:** *(Details: see Appendix B)* A methodological plan covering:
   - *Scope & intended use:* low-stakes only; high-stakes excluded.
   - *Sampling & planned-missing design:* per-item response targets; group Ns for DIF.
   - *Calibration (GRM):* estimation, fit indices, local dependence checks, drift thresholds.
@@ -557,7 +557,7 @@ We separate **item development (back-office)** from **assessment delivery (live 
   - *Fairness/bias plan:* DIF methods, social desirability controls, accessibility checks.
   - *Monitoring & governance:* drift dashboards; kill switch; feature flags.
   - *Pre-registration & data:* sharing plan, anonymization, reporting templates.
-- **Certification Level 0 — Protocol Readiness Opinion:** Independent letter stating the protocol is fit for implementation under stated limits; conditions and limitations explicitly listed.
+- **Certification Level 0 — Protocol Readiness Opinion:** *(Letter outline: see Appendix C)* Independent letter stating the protocol is fit for implementation under stated limits; conditions and limitations explicitly listed.
 
 **Decision gate**
 - Proceed to Phase 1 when Level 0 is issued and preregistration is live.
@@ -579,7 +579,7 @@ We separate **item development (back-office)** from **assessment delivery (live 
   - *Provenance & auditability:* end-to-end logs; reproducible pipelines.
   - *Testing:* unit/integration tests; shadow-test plan and initial results.
   - *Security & privacy:* authentication, RLS policies, access controls.
-- **Certification Level 1 — Build Conformance Opinion:** Independent letter confirming functionality, scoring, and routing align with the Phase-0 design; any conditions noted (e.g., metrics to monitor during shadow testing).
+- **Certification Level 1 — Build Conformance Opinion:** *(Letter outline: see Appendix C)* Independent letter confirming functionality, scoring, and routing align with the Phase-0 design; any conditions noted (e.g., metrics to monitor during shadow testing).
 
 **Acceptance criteria (abbrev.)**
 - Provenance paths active; CAT runs in shadow mode without impacting delivery; feature flags verified.
@@ -598,14 +598,14 @@ We separate **item development (back-office)** from **assessment delivery (live 
 - Evaluate stopping rules and promote/demote items per bank governance; designate FRIs.
 
 **Deliverables**
-- **Pilot Calibration Report:** Detailed results including:
+- **Pilot Calibration Report:** *(Reporting templates: see Appendix B)* Detailed results including:
   - *Sample & design:* demographics; form matrix; data quality checks.
   - *Item parameters:* a and b thresholds with SEs; information curves.
   - *Fit & diagnostics:* S-X² (or equivalent), residuals; LD (Yen’s Q3).
   - *Fairness & bias:* DIF results; social desirability correlations and mitigations.
   - *Bank actions:* items promoted to Operational, FRI selections, demotions/retirements with rationale.
   - *Stopping rules:* empirical evaluation and any revisions.
-- **Certification Level 2 — Pilot Results Opinion:** Independent letter confirming pilot meets minimum reliability/validity thresholds and is ready for validation studies; conditions noted.
+- **Certification Level 2 — Pilot Results Opinion:** *(Letter outline: see Appendix C)* Independent letter confirming pilot meets minimum reliability/validity thresholds and is ready for validation studies; conditions noted.
 
 **Acceptance criteria (abbrev.)**
 - Facet reliability α/ω ≥ .70; test–retest ICC ≥ .80 (interval study).
@@ -624,13 +624,13 @@ We separate **item development (back-office)** from **assessment delivery (live 
 - Verify linking stability using FRIs; monitor drift across waves.
 
 **Deliverables**
-- **Validation Report & Peer-Reviewed Manuscript:** Comprehensive evidence including:
+- **Validation Report & Peer-Reviewed Manuscript:** *(Reporting templates: see Appendix B)* Comprehensive evidence including:
   - *Structure:* CFA/SEM fit indices (e.g., CFI, RMSEA); cross-loadings reviewed.
   - *Validity:* convergent/discriminant patterns; known-groups effects.
   - *Linking & stability:* θ μ/σ deltas; TCC RMSD; FRI drift metrics.
   - *Fairness & robustness:* DIF re-checks; subgroup precision; SD sensitivity.
 - **Public Validation Dataset:** De-identified dataset with data dictionary, codebook, and analysis scripts for reproducibility.
-- **Certification Level 3 — Validation Opinion:** Independent letter stating the inventory meets professional standards (for the stated use), with limits and conditions.
+- **Certification Level 3 — Validation Opinion:** *(Letter outline: see Appendix C)* Independent letter stating the inventory meets professional standards (for the stated use), with limits and conditions.
 
 **Decision gate**
 - Proceed to **public beta** only after (a) publication or external peer confirmation **and** (b) Level 3 is issued.
