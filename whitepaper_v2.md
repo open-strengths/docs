@@ -532,6 +532,8 @@ This ensures a reliable, portable assessment is always available while AI featur
 ---
 
 ### 5.4 Roadmap & Decision Gates (restructured)
+*_Cross-reference:_ See **Appendix B** (Validation Blueprint & reporting templates) and **Appendix C** (Independent opinion letter outline).*
+
 
 We separate **item development (back-office)** from **assessment delivery (live to users)**, and move forward only when pre-registered acceptance criteria are met. All AI features are feature-flagged so we can de-risk by degree (freeze generation; deliver only calibrated items; run CAT as a shadow test) if anything falls short.
 
