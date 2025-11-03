@@ -540,60 +540,129 @@ We separate **item development (back-office)** from **assessment delivery (live 
 ---
 
 #### Phase 0 — Protocol Design & Readiness (Validation Setup)
-**Objective:** Define how we will validate; secure external readiness opinion.  
-**Key activities:** Co-author protocol; preregister; finalize acceptance criteria and drift/DIF thresholds.  
-**Deliverables:**  
-- **Expert Validation Blueprint** (protocol for sampling, GRM calibration, FRIs/equating, DIF, CAT sims, monitoring, reporting)  
-- **Certification Level 0 — Protocol Readiness Opinion** (independent letter: protocol is fit for implementation under stated limits)  
-**Decision gate:** Proceed to Phase 1 when Level 0 is issued and preregistration is live.
+**Objective:** Define how we will validate; secure an external readiness opinion.
+
+**Key activities**
+- Co-author a complete validation protocol; set acceptance criteria and drift/DIF thresholds.
+- Pre-register the protocol and reporting plan (e.g., OSF).
+- Define bank governance (Candidate → Piloted → Operational → FRI → Retired) and equating strategy.
+
+**Deliverables**
+- **Expert Validation Blueprint:** A methodological plan covering:
+  - *Scope & intended use:* low-stakes only; high-stakes excluded.
+  - *Sampling & planned-missing design:* per-item response targets; group Ns for DIF.
+  - *Calibration (GRM):* estimation, fit indices, local dependence checks, drift thresholds.
+  - *Linking/equating with FRIs:* FRI count/exposure per facet; Stocking–Lord/TCC diagnostics.
+  - *CAT simulations:* stopping rules, exposure control, content balance constraints.
+  - *Fairness/bias plan:* DIF methods, social desirability controls, accessibility checks.
+  - *Monitoring & governance:* drift dashboards; kill switch; feature flags.
+  - *Pre-registration & data:* sharing plan, anonymization, reporting templates.
+- **Certification Level 0 — Protocol Readiness Opinion:** Independent letter stating the protocol is fit for implementation under stated limits; conditions and limitations explicitly listed.
+
+**Decision gate**
+- Proceed to Phase 1 when Level 0 is issued and preregistration is live.
 
 ---
 
 #### Phase 1 — System Build & Conformance (Implementation)
-**Objective:** Implement engine and confirm the build matches the validated design.  
-**Key activities:** Finish selection/diversity ranking; implement CAT engine; instrument provenance; enable feature flags; run **shadow tests** alongside fixed forms.  
-**Deliverables:**  
-- Implementation Conformance Report (architecture, scoring logic, routing, audit trails)  
-- **Certification Level 1 — Build Conformance Opinion** (independent letter: functionality, scoring, and routing align with Phase-0 design)  
-**Acceptance criteria (abbrev.):** All provenance paths active; CAT can run in shadow mode; feature flags tested.  
-**Decision gate:** Proceed to Phase 2 when Level 1 is issued and shadow tests are green.
+**Objective:** Implement the engine and confirm the build matches the validated design.
+
+**Key activities**
+- Complete selection/diversity ranking in the STEM Adapter; implement CAT engine.
+- Instrument full provenance (facet spec → prompt → NLI → pilot → calibration → bank state).
+- Enable feature flags and run **CAT shadow tests** alongside fixed forms.
+
+**Deliverables**
+- **Implementation Conformance Report:** Evidence that the system matches the protocol, including:
+  - *Scoring logic & routing:* exact θ estimation method(s), item selection policy, content balance rules.
+  - *Exposure control:* configuration, limits, and test results.
+  - *Provenance & auditability:* end-to-end logs; reproducible pipelines.
+  - *Testing:* unit/integration tests; shadow-test plan and initial results.
+  - *Security & privacy:* authentication, RLS policies, access controls.
+- **Certification Level 1 — Build Conformance Opinion:** Independent letter confirming functionality, scoring, and routing align with the Phase-0 design; any conditions noted (e.g., metrics to monitor during shadow testing).
+
+**Acceptance criteria (abbrev.)**
+- Provenance paths active; CAT runs in shadow mode without impacting delivery; feature flags verified.
+
+**Decision gate**
+- Proceed to Phase 2 when Level 1 is issued and shadow tests are green.
 
 ---
 
 #### Phase 2 — Pilot Study (Parameterization)
-**Objective:** Calibrate items (GRM), test stopping rules, screen DIF/fairness.  
-**Key activities:** Planned-missing forms; per-item response targets; DIF groups; social-desirability control; drift monitors.  
-**Deliverables:**  
-- Pilot Calibration Report (a/b params, fit, LD, DIF, information coverage; revised stopping rules)  
-- **Certification Level 2 — Pilot Results Opinion** (independent letter: pilot meets minimum reliability/validity; ready for validation studies)  
-**Acceptance criteria (abbrev.):** Facet reliability α/ω ≥ .70; test–retest ICC ≥ .80 (interval study); acceptable GRM fit; LD/DIF within thresholds; operational bank promoted; FRIs designated.  
-**Decision gate:** Proceed to Phase 3 when Level 2 is issued and promotion rules are met.
+**Objective:** Calibrate items (GRM), test stopping rules, and screen DIF/fairness.
+
+**Key activities**
+- Run planned-missing forms to meet per-item response targets; ensure representative DIF groups.
+- Estimate GRM parameters; evaluate fit, local dependence, and information coverage.
+- Evaluate stopping rules and promote/demote items per bank governance; designate FRIs.
+
+**Deliverables**
+- **Pilot Calibration Report:** Detailed results including:
+  - *Sample & design:* demographics; form matrix; data quality checks.
+  - *Item parameters:* a and b thresholds with SEs; information curves.
+  - *Fit & diagnostics:* S-X² (or equivalent), residuals; LD (Yen’s Q3).
+  - *Fairness & bias:* DIF results; social desirability correlations and mitigations.
+  - *Bank actions:* items promoted to Operational, FRI selections, demotions/retirements with rationale.
+  - *Stopping rules:* empirical evaluation and any revisions.
+- **Certification Level 2 — Pilot Results Opinion:** Independent letter confirming pilot meets minimum reliability/validity thresholds and is ready for validation studies; conditions noted.
+
+**Acceptance criteria (abbrev.)**
+- Facet reliability α/ω ≥ .70; test–retest ICC ≥ .80 (interval study).
+- GRM fit acceptable; LD/DIF within thresholds; Operational bank promoted; FRIs designated.
+
+**Decision gate**
+- Proceed to Phase 3 when Level 2 is issued and promotion rules are met.
 
 ---
 
 #### Phase 3 — Validation & Transparency (Evidence)
-**Objective:** Establish external validity and comparability; publish evidence.  
-**Key activities:** CFA/SEM, convergent/discriminant tests, known-groups, linking stability with FRIs, drift monitoring.  
-**Deliverables:**  
-- Validation Report **and** (submitted/accepted) **peer-reviewed manuscript**  
-- **Public Validation Dataset** (de-identified; detailed data dictionary)  
-- **Certification Level 3 — Validation Opinion** (independent letter: inventory meets professional standards for the stated use)  
-**Decision gate:** Proceed to **public beta** only after (a) publication or external peer confirmation, and (b) Level 3 is issued.
+**Objective:** Establish external validity and comparability; publish evidence.
+
+**Key activities**
+- Run CFA/SEM; convergent/discriminant validity; known-groups tests.
+- Verify linking stability using FRIs; monitor drift across waves.
+
+**Deliverables**
+- **Validation Report & Peer-Reviewed Manuscript:** Comprehensive evidence including:
+  - *Structure:* CFA/SEM fit indices (e.g., CFI, RMSEA); cross-loadings reviewed.
+  - *Validity:* convergent/discriminant patterns; known-groups effects.
+  - *Linking & stability:* θ μ/σ deltas; TCC RMSD; FRI drift metrics.
+  - *Fairness & robustness:* DIF re-checks; subgroup precision; SD sensitivity.
+- **Public Validation Dataset:** De-identified dataset with data dictionary, codebook, and analysis scripts for reproducibility.
+- **Certification Level 3 — Validation Opinion:** Independent letter stating the inventory meets professional standards (for the stated use), with limits and conditions.
+
+**Decision gate**
+- Proceed to **public beta** only after (a) publication or external peer confirmation **and** (b) Level 3 is issued.
 
 ---
 
 #### Phase 4 — Public Beta & API (Low-Stakes Use)
-**Objective:** Offer a reliable, portable assessment while continuing monitoring.  
-**Key activities:** Enable API; restrict high-stakes uses; continuous bias/drift audits; CAT exposure control; content balance.  
-**Deliverables:** Public beta with developer docs; monitoring dashboards; kill-switch procedures.  
-**Decision gate:** Maintain beta until stability targets and audit thresholds are met across cohorts.
+**Objective:** Offer a reliable, portable assessment while continuous monitoring runs.
+
+**Key activities**
+- Launch API with rate limits and scopes; restrict high-stakes uses by policy and code.
+- Operate drift/bias monitoring; maintain exposure control and content balance; retain kill-switches.
+
+**Deliverables**
+- **Public Beta Package:** Developer docs, SDKs, endpoints, and example integrations.
+- **Operational Monitoring:** Live dashboards for reliability, drift, DIF alerts, and exposure metrics; incident response & rollback procedures.
+- **Usage Governance:** Terms & acceptable-use; high-stakes prohibitions enforced in code and contracts.
+
+**Decision gate**
+- Maintain beta until stability targets and monitoring thresholds are met across cohorts.
 
 ---
 
 #### Phase 5 — Integration Marketplace
-**Objective:** Make strengths data portable and user-controlled.  
-**Key activities:** Build connectors; permissioning; audit logs; revocation flows.  
-**Deliverables:** User-facing marketplace; partner guidelines; recurring transparency reports.
+**Objective:** Make strengths data portable and user-controlled.
+
+**Key activities**
+- Build partner connectors; consent flows; permission scopes; revocation and audit trails.
+
+**Deliverables**
+- **Marketplace:** User-facing connection manager; partner guidelines; transparency report template (usage, outages, audits).
+- **Controls:** Fine-grained permissions; audit logs; one-click revocation; periodic third-party audits.
 
 ---
 
