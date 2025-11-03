@@ -531,7 +531,7 @@ This ensures a reliable, portable assessment is always available while AI featur
 
 ---
 
-### 5.4 Roadmap & Decision Gates (restructured)
+### 5.4 Roadmap & Decision Gates
 *_Cross-reference:_ See **Appendix B** (Validation Blueprint & reporting templates) and **Appendix C** (Independent opinion letter outline).*
 
 
