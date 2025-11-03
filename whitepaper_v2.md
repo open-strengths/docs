@@ -12,14 +12,14 @@
 An open, research‑grounded strengths system **in development**, with a planned free core and short, adaptive assessment, designed for trust and portability: results will travel through APIs (for technical integration) and a user‑facing Integration Marketplace (for direct use) so both developers and end-users can apply strengths in jobs, tasks, HR, education, and services.
 
 
-**Vision**  
+**Vision**
 
-Make strengths science open, trusted, and portable—so anyone can use it meaningfully across life, education, and work.
+Make strengths science open, trusted, and portable so anyone can discover, develop, and apply their strengths across learning, work, and relationships.
 
 
 **Mission**
 
-Design and validate a transparent, research‑grounded strengths system that: (1) balances breadth with brevity via adaptive delivery, (2) documents the why behind every item and version, and (3) makes profiles first‑class, portable data through APIs and an Integration Marketplace.
+Design and validate a transparent, research-grounded strengths system that: (1) balances depth with speed through adaptive assessment technology, (2) openly shows you how it was built and why it works, and (3) makes your strengths profile truly yours so you can apply it wherever it matters through APIs and our Integration Marketplace.
 
 
 **Packet map**
@@ -481,6 +481,8 @@ The psychometric community has legitimate concerns about AI:
 - **Bias introduction**: Can AI introduce demographic biases not present in validated constructs?
 - **Parameter instability**: Can we trust IRT parameters if items change?
 
+All AI-driven features are feature-flagged and can be disabled without interrupting delivery from the calibrated bank.
+
 **Our Approach: Facet-Seeded Generation with Semantic & Empirical Safeguards**
 
 **Personalization Guardrails (to protect construct validity)**  
@@ -504,12 +506,28 @@ The psychometric community has legitimate concerns about AI:
 
 6. **Calibrate early/often**: Bank calibration (GRM) runs on pooled responses; FRIs provide link points for scale maintenance over time.
 
+**Contingencies & Feature Flags**
+
+If signals fail any gate (semantic, fit, DIF, drift), we:
+- **Freeze generation** and keep delivery to **Operational items** only.
+- **Tighten gates** (higher NLI/embedding thresholds; stricter diversity).
+- **Constrain personalization** to instructions & reading level only.
+- **Switch delivery mode** (fixed-form ↔ content-balanced CAT) as needed.
+- **Run additional pilot waves**; recalibrate; demote/retire items that don't recover.
+- **Maintain a non-generative baseline** so partners can deploy safely while R&D continues.
+
 **If successful, this demonstrates:**
 - AI can augment psychometric rigor through transparency and safeguards
 - Personalization (trauma-informed, reading-level-appropriate, culturally relevant) is achievable without sacrificing validity
 - Open methods enable independent verification and replication
 
-**If unsuccessful, we document openly and revise or shelve the approach.**
+**If any element does not meet acceptance criteria (fit, DIF, drift, precision), we de-risk by degree rather than stopping work:**
+1. Freeze new generation
+2. Deliver only from the Operational, calibrated bank
+3. Limit personalization to instructions/reading level (no scored wording changes)
+4. Continue pilot waves until thresholds are cleared
+
+This ensures a reliable, portable assessment is always available while AI features mature behind feature flags.
 
 ---
 
@@ -530,6 +548,7 @@ The psychometric community has legitimate concerns about AI:
 - Implement Adaptive Assessment Engine per validated specifications
 - Integrate all components (STEM Adapter → Item Governance → Adaptive Engine)
 - Internal testing with development team (N = 20-50)
+- **Contingency**: If CAT readiness is delayed, ship a fixed-form with FRI linking while CAT runs as a shadow test
 - **Deliverable**: End-to-end functioning assessment system
 
 **Phase 2: Pilot Study (Q1 2026)**
@@ -598,6 +617,7 @@ The psychometric community has legitimate concerns about AI:
 - Annual third-party privacy audits
 - IRB approval for all research use
 - < 72-hour breach notification
+- A "kill switch" disables generative wording or CAT if monitoring flags drift or bias
 
 **High-Stakes Prohibition:**
 
@@ -826,7 +846,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Research opportunities:** Explore intersection of LLMs and psychometric measurement
 - **Transparent methodology:** All code, data, and methods openly documented
 
-**How to engage:** Contact us to discuss specific consultation areas or research collaborations.
+**How to engage:** Contact us at team@openstrengths.org to discuss specific consultation areas or research collaborations.
 
 ---
 
@@ -844,7 +864,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Methodological transparency:** Full access to item banks, scoring algorithms, and technical architecture
 - **Funding support:** Where possible, grant support for pilot sites and data collection
 
-**How to engage:** Propose pilot study designs or specialized validation projects.
+**How to engage:** Propose pilot study designs or specialized validation projects at team@openstrengths.org.
 
 ---
 
@@ -862,7 +882,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Broad societal benefit:** Enable equitable access to strengths assessment across socioeconomic contexts
 - **Research acceleration:** Contribute to open datasets advancing strengths science
 
-**How to engage:** Contact us to discuss funding priorities and partnership structures.
+**How to engage:** Contact us at team@openstrengths.org to discuss funding priorities and partnership structures.
 
 ---
 
@@ -880,7 +900,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Policy input:** Real-world data on challenges of operationalizing ethical AI assessment
 - **Stakeholder engagement:** Ongoing dialogue about appropriate use boundaries
 
-**How to engage:** Participate in advisory board or provide policy consultation.
+**How to engage:** Contact us at team@openstrengths.org to participate in advisory board or provide policy consultation.
 
 ---
 
@@ -899,7 +919,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 
 **Timeline:** Not accepting general users until Q1 2026 at earliest (pending successful pilot study)
 
-**How to reach us:** [Contact information to be added]
+**How to reach us:** team@openstrengths.org
 
 **Documentation for review:**
 - This whitepaper (overview)
