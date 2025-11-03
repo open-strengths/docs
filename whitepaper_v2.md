@@ -531,63 +531,69 @@ This ensures a reliable, portable assessment is always available while AI featur
 
 ---
 
-### 5.4 Roadmap: Consultation to Public Launch
+### 5.4 Roadmap & Decision Gates (restructured)
 
-**Phase 0: Expert Validation (Q4 2025)**
-- **Status**: Actively seeking psychometric consultation
-- **Questions** (detailed in Section 6):
-- What **pilot sample sizes** and **calibration cadence** are required before promoting candidate items to the operational bank? What **linking/equating** design will we use around FRIs?
-  - What pilot sample size required before deploying AI items (even low-stakes)?
-  - Are our stopping rules (SEM ≤ 0.32) appropriate for personal development contexts?
-  - How do we detect construct drift over time?
-  - What DIF analysis is needed for AI-generated content?
-- **Deliverable**: Revised validation protocol co-authored with psychometric experts
+We separate **item development (back-office)** from **assessment delivery (live to users)**, and move forward only when pre-registered acceptance criteria are met. All AI features are feature-flagged so we can de-risk by degree (freeze generation; deliver only calibrated items; run CAT as a shadow test) if anything falls short.
 
-**Phase 1: Complete Assessment Engine (Q4 2025 - Q1 2026)**
-- Finish STEM Adapter Selection phase
-- Implement Adaptive Assessment Engine per validated specifications
-- Integrate all components (STEM Adapter → Item Governance → Adaptive Engine)
-- Internal testing with development team (N = 20-50)
-- **Contingency**: If CAT readiness is delayed, ship a fixed-form with FRI linking while CAT runs as a shadow test
-- **Deliverable**: End-to-end functioning assessment system
+> **Note on “Psychometric Certification”**: In this document, “Certification Level 1/2/3” refers to an **independent expert opinion letter** (authored by an external psychometrician) stating readiness under stated use limits. It is **not** an accreditation by a standards body.
 
-**Phase 2: Pilot Study (Q1 2026)**
-- **Sample**: N ≥ 1000 diverse participants (age, education, cultural background)
-- **Measures**:
-  - Reliability: α/ω ≥ .70 per facet, test-retest r ≥ .80 (2-4 week interval)
-  - Validity: CFA confirming 6-domain structure, convergent correlations with NEO-PI-R/VIA
-  - Bias: DIF analysis across gender, age, SES, language
-  - User experience: Completion rates, response times, feedback
-- **Analysis**: Identify problem items, refine stopping rules, assess algorithmic bias
-- **Deliverable**: Pilot study report with recommendation to proceed or revise
-- **Decision gate**: Only proceed to Phase 3 if reliability/validity thresholds met
+---
 
-**Phase 3: Validation Studies (Q2 2026 - If Pilot Successful)**
-- Factor structure: CFA with fit indices (CFI > .90, RMSEA < .08)
-- Convergent validity: NEO-PI-R, VIA-IS, CliftonStrengths
-- Discriminant validity: Differentiation from personality, intelligence
-- DIF remediation: Remove/revise items showing meaningful bias
-- **Deliverable**: Peer-reviewed validation manuscript, public dataset release
+#### Phase 0 — Protocol Design & Readiness (Validation Setup)
+**Objective:** Define how we will validate; secure external readiness opinion.  
+**Key activities:** Co-author protocol; preregister; finalize acceptance criteria and drift/DIF thresholds.  
+**Deliverables:**  
+- **Expert Validation Blueprint** (protocol for sampling, GRM calibration, FRIs/equating, DIF, CAT sims, monitoring, reporting)  
+- **Certification Level 0 — Protocol Readiness Opinion** (independent letter: protocol is fit for implementation under stated limits)  
+**Decision gate:** Proceed to Phase 1 when Level 0 is issued and preregistration is live.
 
-**Phase 4: Beta Launch + API Layer (Q2 - Q3 2026 - If Validation Successful)**
-- **Public beta**: Low-stakes personal development use only
-- **API layer**: Developer access for third-party integrations
-- **Restrictions**: Technical controls preventing high-stakes applications (employment, clinical, admissions)
-- **Monitoring**: Ongoing reliability checks, user feedback, bias audits
-- **Deliverable**: Public beta, developer documentation, API SDKs
+---
 
-**Phase 5: Integration Marketplace (Q4 2026+)**
-- User-facing marketplace for managing data connections
-- Pre-built connectors (LinkedIn, job platforms, learning tools, coaching apps)
-- User-controlled permissions, audit logging, one-click revocation
-- **Deliverable**: Fully operational open assessment platform
+#### Phase 1 — System Build & Conformance (Implementation)
+**Objective:** Implement engine and confirm the build matches the validated design.  
+**Key activities:** Finish selection/diversity ranking; implement CAT engine; instrument provenance; enable feature flags; run **shadow tests** alongside fixed forms.  
+**Deliverables:**  
+- Implementation Conformance Report (architecture, scoring logic, routing, audit trails)  
+- **Certification Level 1 — Build Conformance Opinion** (independent letter: functionality, scoring, and routing align with Phase-0 design)  
+**Acceptance criteria (abbrev.):** All provenance paths active; CAT can run in shadow mode; feature flags tested.  
+**Decision gate:** Proceed to Phase 2 when Level 1 is issued and shadow tests are green.
 
-**Critical Decision Points:**
-- Phase 0 → 1: Requires expert approval of technical approach
-- Phase 1 → 2: Requires completed implementation
-- Phase 2 → 3: Requires pilot meeting reliability (α ≥ .70, r ≥ .80) and validity thresholds
-- Phase 3 → 4: Requires published validation evidence
-- Phase 4 → 5: Requires stable beta operations
+---
+
+#### Phase 2 — Pilot Study (Parameterization)
+**Objective:** Calibrate items (GRM), test stopping rules, screen DIF/fairness.  
+**Key activities:** Planned-missing forms; per-item response targets; DIF groups; social-desirability control; drift monitors.  
+**Deliverables:**  
+- Pilot Calibration Report (a/b params, fit, LD, DIF, information coverage; revised stopping rules)  
+- **Certification Level 2 — Pilot Results Opinion** (independent letter: pilot meets minimum reliability/validity; ready for validation studies)  
+**Acceptance criteria (abbrev.):** Facet reliability α/ω ≥ .70; test–retest ICC ≥ .80 (interval study); acceptable GRM fit; LD/DIF within thresholds; operational bank promoted; FRIs designated.  
+**Decision gate:** Proceed to Phase 3 when Level 2 is issued and promotion rules are met.
+
+---
+
+#### Phase 3 — Validation & Transparency (Evidence)
+**Objective:** Establish external validity and comparability; publish evidence.  
+**Key activities:** CFA/SEM, convergent/discriminant tests, known-groups, linking stability with FRIs, drift monitoring.  
+**Deliverables:**  
+- Validation Report **and** (submitted/accepted) **peer-reviewed manuscript**  
+- **Public Validation Dataset** (de-identified; detailed data dictionary)  
+- **Certification Level 3 — Validation Opinion** (independent letter: inventory meets professional standards for the stated use)  
+**Decision gate:** Proceed to **public beta** only after (a) publication or external peer confirmation, and (b) Level 3 is issued.
+
+---
+
+#### Phase 4 — Public Beta & API (Low-Stakes Use)
+**Objective:** Offer a reliable, portable assessment while continuing monitoring.  
+**Key activities:** Enable API; restrict high-stakes uses; continuous bias/drift audits; CAT exposure control; content balance.  
+**Deliverables:** Public beta with developer docs; monitoring dashboards; kill-switch procedures.  
+**Decision gate:** Maintain beta until stability targets and audit thresholds are met across cohorts.
+
+---
+
+#### Phase 5 — Integration Marketplace
+**Objective:** Make strengths data portable and user-controlled.  
+**Key activities:** Build connectors; permissioning; audit logs; revocation flows.  
+**Deliverables:** User-facing marketplace; partner guidelines; recurring transparency reports.
 
 ---
 
@@ -846,7 +852,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Research opportunities:** Explore intersection of LLMs and psychometric measurement
 - **Transparent methodology:** All code, data, and methods openly documented
 
-**How to engage:** Contact us at team@openstrengths.org to discuss specific consultation areas or research collaborations.
+**How to engage:** Contact us to discuss specific consultation areas or research collaborations.
 
 ---
 
@@ -864,7 +870,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Methodological transparency:** Full access to item banks, scoring algorithms, and technical architecture
 - **Funding support:** Where possible, grant support for pilot sites and data collection
 
-**How to engage:** Propose pilot study designs or specialized validation projects at team@openstrengths.org.
+**How to engage:** Propose pilot study designs or specialized validation projects.
 
 ---
 
@@ -882,7 +888,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Broad societal benefit:** Enable equitable access to strengths assessment across socioeconomic contexts
 - **Research acceleration:** Contribute to open datasets advancing strengths science
 
-**How to engage:** Contact us at team@openstrengths.org to discuss funding priorities and partnership structures.
+**How to engage:** Contact us to discuss funding priorities and partnership structures.
 
 ---
 
@@ -900,7 +906,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Policy input:** Real-world data on challenges of operationalizing ethical AI assessment
 - **Stakeholder engagement:** Ongoing dialogue about appropriate use boundaries
 
-**How to engage:** Contact us at team@openstrengths.org to participate in advisory board or provide policy consultation.
+**How to engage:** Participate in advisory board or provide policy consultation.
 
 ---
 
@@ -919,7 +925,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 
 **Timeline:** Not accepting general users until Q1 2026 at earliest (pending successful pilot study)
 
-**How to reach us:** team@openstrengths.org
+**How to reach us:** [Contact information to be added]
 
 **Documentation for review:**
 - This whitepaper (overview)
@@ -966,3 +972,30 @@ See Section 5.4 for detailed roadmap. Summary: Phase 0 (Expert Validation, Q4 20
 - **Operational Item:** Candidate promoted after passing pilot + calibration gates.
 - **FRI (Facet Reference Item):** Calibrated, human-curated per-facet items used for audits, DIF, and linking/equating; replaceable.
 - **Retired Item:** Item removed due to misfit, bias, or drift; retained for provenance.
+
+## Appendix B — Expert Validation Blueprint (Table of Contents)
+1. Scope & Intended Use (low-stakes; high-stakes excluded)
+2. Standards Referenced (AERA/APA/NCME; SIOP Principles)
+3. Design Overview (facet-seeded gen; FRIs; pilot→calibrate; no parameter inheritance)
+4. Sampling Plan (planned-missing forms; per-item response targets; DIF group Ns)
+5. Calibration (GRM estimation; fit indices; local dependence checks; drift thresholds)
+6. Linking/Equating (FRI count & exposure; Stocking–Lord/TCC metrics)
+7. CAT Simulations (stopping rules; exposure control; content balance)
+8. Fairness & Bias (DIF methods; social-desirability controls; accessibility)
+9. Monitoring (drift dashboards; kill switch; feature flags)
+10. Pre-registration & Data (OSF prereg; sharing plan; anonymization)
+11. Acceptance Criteria & Decision Gates (go/no-go rules)
+12. Reporting Templates (fit tables; information plots; drift reports)
+
+*Status:* outline subject to SME co-author review; versioned publicly.
+
+## Appendix C — Independent Protocol Readiness Opinion (Outline)
+- Who & Independence (qualifications; conflicts statement)
+- Documents Reviewed (blueprint version; specs; risk controls)
+- Standards Applied (AERA/APA/NCME; SIOP)
+- Opinion (protocol is adequate for planned pilot/implementation under stated limits)
+- Conditions (minimum sample sizes; specific DIF methods; shadow testing first)
+- Limitations (not certifying outcomes; expires upon material changes)
+- Follow-ups (evidence to review post-pilot; triggers for re-opinion)
+
+*Status:* example outline; final content authored by external psychometrician.
