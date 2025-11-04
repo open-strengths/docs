@@ -300,6 +300,8 @@ We retain the facet **definitions** exactly as written. “**Why this facet?**�
 
 Section 4 presented our **framework** (what to measure: 6 domains, 36 facets). This section addresses the **platform problem**: how to deliver strengths assessments with portability (APIs, data ownership) and safe AI use (contextualization without compromising validity).
 
+**Two-minute summary.** Section 4 defined *what* we measure (6 domains, 36 facets). Section 5 explains *how* we deliver it responsibly: we author items in a controlled back-office pipeline (generation → semantic gating → pilot → calibration → governance), and we deliver assessments live using **only** calibrated items with explicit guardrails for personalization and AI safety. A phased roadmap with independent expert opinions (Certification Levels 0–3) and decision gates ensures we always have a reliable baseline—even when R&D features are paused behind feature flags.
+
 **User Journey Overview**
 
 **Item Development — back-office**
@@ -318,18 +320,19 @@ Section 4 presented our **framework** (what to measure: 6 domains, 36 facets). T
 
 **Current Implementation Status (at a glance)**
 
-**Item Development — back-office**
-- STEM Adapter — generation: ✅ Implemented
-- STEM Adapter — NLI verification: ✅ Implemented
-- STEM Adapter — final selection & diversity ranking: 🔄 In development
-- Pilot & calibration (GRM): ⏸️ Not started (awaiting consultation/samples)
-- Item governance (bank states + FRI designation): ✅ Framework in place; FRI tagging begins post-pilot
+| Subsystem                          | Build/Impl. | Pilot/Params | Validation | Public Beta |
+|-----------------------------------|-------------|--------------|------------|-------------|
+| Pre-Assessment & Classification   | ✅ Implemented | —            | —          | —           |
+| STEM Adapter — Generation         | ✅ Implemented | —            | —          | —           |
+| STEM Adapter — NLI Verification   | ✅ Implemented | —            | —          | —           |
+| STEM Adapter — Final Selection    | 🔄 In development | —      | —          | —           |
+| Pilot & Calibration (GRM)         | ⏸️ Not started | —            | —          | —           |
+| Item Governance & FRIs            | ✅ Framework in place | —    | —          | —           |
+| Adaptive Engine (CAT/GRM)         | 🔄 Shadow-test design | ⏸️ Not started | — | — |
+| Results & API Layer               | ⏸️ Not started | —            | —          | —           |
+| Monitoring & Guardrails           | ✅ Design documented | —     | —          | —           |
 
-**Assessment Delivery — live to users**
-- Pre-Assessment (13 Q): ✅ Implemented
-- User Classification: ✅ Implemented
-- Adaptive Assessment (CAT/GRM): ⏸️ Not started (shadow-test plan pending)
-- Results & Export / Public API: ⏸️ Not started (depends on CAT)
+*Legend:* ✅ Implemented · 🔄 In development · ⏸️ Not started · "Shadow-test" = runs in parallel without affecting users.
 
 ---
 
@@ -433,6 +436,8 @@ The STEM Adapter generates personalized assessment items using AI with multi-lay
 - Granular permission management, audit logging
 - **Dependency**: Requires API layer
 
+*Glossary:* **Candidate** (passes semantic gate), **Piloted** (has field data), **Operational** (calibrated; eligible for delivery), **FRI** (operational item used for linking/drift checks), **Retired** (removed from delivery, retained for provenance), **Shadow Test** (CAT runs in parallel; not used for decisions).
+
 ---
 
 ### 5.2 Technical Architecture
@@ -485,12 +490,12 @@ All AI-driven features are feature-flagged and can be disabled without interrupt
 
 **Our Approach: Facet-Seeded Generation with Semantic & Empirical Safeguards**
 
-**Personalization Guardrails (to protect construct validity)**  
-- **What can vary:** reading level, simple scenario wording (work/school/daily life), trauma-sensitive phrasing.  
-- **What cannot vary:** the **construct core** (facet definition), scoring keys, or evaluative framing.  
-- **No per-user new items:** Operational delivery uses **only** calibrated bank items; generative steps occur offline during authoring.  
-- **Instructions vs items:** rich context belongs in **instructions/examples**, not in scored stems.  
-- **Audit:** log profile flags used and enforce a small, closed set of allowed prompt toggles.
+> **Personalization & AI Safety Guardrails**
+> - Delivery uses **only calibrated items**; generation happens in the authoring pipeline, not per user.
+> - Personalization varies **reading level** and **light scenario wording** only; construct core and scoring keys never change.
+> - Feature flags let us **freeze generation** and run a **non-generative baseline** at any time.
+> - **Shadow testing** runs CAT in parallel until parameters stabilize.
+> - **FRIs** appear in each wave for linking and drift checks; misfitting items are demoted or retired with provenance kept.
 
 
 
@@ -520,14 +525,6 @@ If signals fail any gate (semantic, fit, DIF, drift), we:
 - AI can augment psychometric rigor through transparency and safeguards
 - Personalization (trauma-informed, reading-level-appropriate, culturally relevant) is achievable without sacrificing validity
 - Open methods enable independent verification and replication
-
-**If any element does not meet acceptance criteria (fit, DIF, drift, precision), we de-risk by degree rather than stopping work:**
-1. Freeze new generation
-2. Deliver only from the Operational, calibrated bank
-3. Limit personalization to instructions/reading level (no scored wording changes)
-4. Continue pilot waves until thresholds are cleared
-
-This ensures a reliable, portable assessment is always available while AI features mature behind feature flags.
 
 ---
 
@@ -923,7 +920,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Research opportunities:** Explore intersection of LLMs and psychometric measurement
 - **Transparent methodology:** All code, data, and methods openly documented
 
-**How to engage:** Contact us to discuss specific consultation areas or research collaborations.
+**How to engage:** Contact us at team@openstrengths.org to discuss specific consultation areas or research collaborations.
 
 ---
 
@@ -941,7 +938,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Methodological transparency:** Full access to item banks, scoring algorithms, and technical architecture
 - **Funding support:** Where possible, grant support for pilot sites and data collection
 
-**How to engage:** Propose pilot study designs or specialized validation projects.
+**How to engage:** Propose pilot study designs or specialized validation projects at team@openstrengths.org.
 
 ---
 
@@ -959,7 +956,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Broad societal benefit:** Enable equitable access to strengths assessment across socioeconomic contexts
 - **Research acceleration:** Contribute to open datasets advancing strengths science
 
-**How to engage:** Contact us to discuss funding priorities and partnership structures.
+**How to engage:** Contact us at team@openstrengths.org to discuss funding priorities and partnership structures.
 
 ---
 
@@ -977,7 +974,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 - **Policy input:** Real-world data on challenges of operationalizing ethical AI assessment
 - **Stakeholder engagement:** Ongoing dialogue about appropriate use boundaries
 
-**How to engage:** Participate in advisory board or provide policy consultation.
+**How to engage:** Contact us at team@openstrengths.org to participate in advisory board or provide policy consultation.
 
 ---
 
@@ -996,7 +993,7 @@ OpenStrengths is a pre-launch project seeking expert partners to validate and re
 
 **Timeline:** Not accepting general users until Q1 2026 at earliest (pending successful pilot study)
 
-**How to reach us:** [Contact information to be added]
+**How to reach us:** team@openstrengths.org
 
 **Documentation for review:**
 - This whitepaper (overview)
