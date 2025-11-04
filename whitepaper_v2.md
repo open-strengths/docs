@@ -1,6 +1,6 @@
 # OpenStrengths  
 ### *An Open‑Source Framework for Mapping Human Potential*  
-**White Paper · Version 2.0 (October 2025)**
+**White Paper · Version 2.0 (November 2025)**
 
 
 ---
@@ -294,443 +294,172 @@ We retain the facet **definitions** exactly as written. “**Why this facet?**�
 |  | Initiative | Takes proactive action without waiting for direction. | Distinct from **Perseverance** (sustaining effort) by emphasizing **self-starting and ownership**. Predicts improvement suggestions and issue ownership. | Bateman & Crant (1993); Parker et al. (2006) |
 |  | Assertiveness | Stands up for one's own needs, rights, or views directly and respectfully. | Distinct from **Leadership** (group direction) by focusing on **self-advocacy and boundary setting**. Predicts negotiation outcomes and voice. | Ames & Flynn (2007); Curhan et al. (2014/2022) |
 |  | Influence | Persuades and shapes decisions or attitudes. | Distinct from **Leadership** (guidance) and **Communication** (clarity) by targeting **conversion/mobilization**. Predicts sales/win rate and adoption. | Petty & Cacioppo (1986/2019); Cialdini (2001) |
-## 5 · OpenStrengths Platform: Solving Portability & AI Safety
-
-**From Framework to Platform**
-
-Section 4 presented our **framework** (what to measure: 6 domains, 36 facets). This section addresses the **platform problem**: how to deliver strengths assessments with portability (APIs, data ownership) and safe AI use (contextualization without compromising validity).
-
-**Two-minute summary.** Section 4 defined *what* we measure (6 domains, 36 facets). Section 5 explains *how* we deliver it responsibly: we author items in a controlled back-office pipeline (generation → semantic gating → pilot → calibration → governance), and we deliver assessments live using **only** calibrated items with explicit guardrails for personalization and AI safety. A phased roadmap with independent expert opinions (Certification Levels 0–3) and decision gates ensures we always have a reliable baseline—even when R&D features are paused behind feature flags.
-
-**User Journey Overview**
-
-**Item Development — back-office**
-1) STEM Adapter (facet-seeded) → draft candidate items from facet specs  
-2) Semantic Gate (NLI + diversity) → keep candidates that fit the spec  
-3) Pilot & Calibration → field candidates; estimate GRM params; QA fit/DIF  
-4) Item Governance → promote to Operational, designate FRIs, or retire
-
-**Assessment Delivery — live to users**
-1) Pre-Assessment (13 questions) → demographics, language needs, role context  
-2) User Classification → profile flags (role_context, trauma_sensitive, language_simplification, education_level)  
-3) Adaptive Assessment → selects **only Operational items** (calibrated) with content balance & exposure control  
-4) Results & Export → profile + API access for third-party integrations
 
 ---
 
-**Current Implementation Status (at a glance)**
+## 5 · OpenStrengths Platform — how we deliver safely
 
-| Subsystem                          | Build/Impl. | Pilot/Params | Validation | Public Beta |
-|-----------------------------------|-------------|--------------|------------|-------------|
-| Pre-Assessment & Classification   | ✅ Implemented | —            | —          | —           |
-| STEM Adapter — Generation         | ✅ Implemented | —            | —          | —           |
-| STEM Adapter — NLI Verification   | ✅ Implemented | —            | —          | —           |
-| STEM Adapter — Final Selection    | 🔄 In development | —      | —          | —           |
-| Pilot & Calibration (GRM)         | ⏸️ Not started | —            | —          | —           |
-| Item Governance & FRIs            | ✅ Framework in place | —    | —          | —           |
-| Adaptive Engine (CAT/GRM)         | 🔄 Shadow-test design | ⏸️ Not started | — | — |
-| Results & API Layer               | ⏸️ Not started | —            | —          | —           |
-| Monitoring & Guardrails           | ✅ Design documented | —     | —          | —           |
+**Two-minute summary.** Section 4 defined *what* we measure (6 domains, 36 strengths). Section 5 shows *how* we deliver it safely from day one and keep improving. Think of two spaces:
+- **The kitchen:** where questions are created and checked.
+- **The dining room:** where assessments are served.
 
-*Legend:* ✅ Implemented · 🔄 In development · ⏸️ Not started · "Shadow-test" = runs in parallel without affecting users.
+We run a short **cold start** to create a **reliable first menu** (our initial calibrated set). After that, new AI-generated questions enter gradually—**small trial → behind-the-scenes check → counts a little → counts fully**. Most scoring always comes from the calibrated set, and any new question can be **paused instantly** if a safety signal fires. Independent expert **opinion letters (L0–L3)** and **decision gates** keep us honest—without requiring a full re-pilot every time we add a question.
 
----
-
-### 5.1 Current Development Status
-
-**✅ Operational Infrastructure (100% Complete):**
-
-**User Classification System**
-- **13-question pre-assessment**: Demographics (age, country, sex, language), socioeconomic (education, financial difficulty, main role), wellbeing (trauma history, recent flashbacks, current stress), technical (device, prior survey experience)
-- **Classification objects**: Structured JSONB with versioned taxonomies (os.sex.v1, os.education.v1, os.financial.v1, os.role.v1, os.device.v1)
-- **Profile summaries**: Derived flags for prompt injection into STEM Adapter:
-  - `role_context`: work/school/daily_life (determines scenario framing)
-  - `language_simplification`: boolean (based on English proficiency + education level)
-  - `trauma_sensitive`: boolean (from lifetime trauma + recent flashbacks questions)
-  - `education_level`: education code for vocabulary complexity tuning
-- **Trauma-informed design**: Optional sensitive questions, "prefer not to say" options, skip capability
-- **Database triggers**: Automatic classification object generation (<2s) on pre-assessment submission
-- **Post-assessment hook**: Orchestrates assessment job creation + immediate STEM generation
-- **Privacy-first**: PII segregation (birth_date stored separately), strict RLS policies, admin-only reset
-
-*Technical details: React Hook Form + Zod validation, 100% completion validation, Supabase Edge Functions*
-
-**Facet Repository & Item Governance**
-- **External item library (≈3,800 items)** imported from open sources (e.g., IPIP families) with **classical reliability (scale-level α)** where available; **no item-level IRT parameters are assumed**.
-- **Embeddings**: facet descriptions + items embedded for semantic operations and drift monitoring.
-- **Governance**: curators designate a small **Facet Reference Item (FRI)** set per facet (human-screened, versioned). FRIs are not used as seeds for generation; they support audits, DIF checks, and equating.
-- **Controls**: version history, audit trails, cosine diversity checks, and status flags (candidate, piloted, calibrated, FRI).
-
-*Technical details: PostgreSQL with pgvector, Supabase Edge Functions, full RLS policies*
-
-### 5.1.1 Bank States & FRI Governance (new)
-
-- **Bank states:** *Candidate* → *Piloted* → *Operational* → (*FRI* optional) → *Retired*.
-- **Promotion (to Operational):** GRM precision (SEs(a,b) acceptable), item fit OK, information covers target θ range, no LD/DIF flags.
-- **FRIs (Facet Reference Items):** 2–4 per facet; appear on each wave for linking & drift checks; **replaceable** if drift/misfit.
-- **Demotion/Retire:** Drift beyond thresholds, misfit, LD, or DIF concerns; keep for provenance.
-
-
+**Quick definitions.**
+- **Strength (facet):** one specific quality we measure (e.g., Perseverance).  
+- **Question (item/stem):** one short statement you respond to.  
+- **Draft question:** a new, not-yet-tested question.  
+- **Operational question:** a tested, calibrated question we use for scoring.  
+- **Reference questions (FRIs):** a small, stable subset of operational questions we keep showing to keep scores consistent over time.  
+- **Classification profile:** a simple profile from the pre-assessment (e.g., reading level, work/school/daily-life framing, trauma sensitivity) used only to adjust wording—not scoring.  
+- **Adaptive test:** the computer chooses your next question based on your previous answers (fewer, smarter questions).  
+- **Behind-the-scenes check:** we calculate what your score *would* be with a new question but don’t show or use it yet.
 
 ---
 
----
+### 5.0 Cold start — from zero to a first reliable bank
 
-**🔄 In Development (75% Complete):**
+**Analogy:** Opening night. Before daily specials, you set a **core menu** everyone can trust.
 
-**STEM Adapter Pipeline**
+**Step 0 · Seed & screen (in the kitchen).**  
+We generate 12–20 draft questions per strength from the strength’s description (we do **not** copy legacy tests). Automatic checks confirm meaning, reading level, and sensitive-language safety. *(The rules for these checks are pre-approved by experts; no human signs off on individual questions.)*
 
-The STEM Adapter generates personalized assessment items using AI with multi-layer psychometric safeguards.
+**Step 1 · First trial run (short versions, no official score yet).**  
+- **What users see:** a normal-looking strengths assessment, just shorter, with a banner: *“Calibration mode — preview only.”* Different people see different mixes so we cover the whole pool.  
+- **What counts:** **nothing yet**. New questions are tried but do **not** affect anyone’s official score.  
+- **What the system does:** gathers enough responses to judge clarity, fit with the intended strength, and **fairness across groups and across classification profiles** (easier wording vs. standard, work vs. school framing, etc.). When targets are met, the platform runs a **promotion cycle**.
 
-**Phase 1 - Generation (✅ Operational)**
-- LLM (GPT-4o-mini) creates 10-15 candidate items per facet based on:
-  - **Profile flags from User Classification System**: `role_context` (work/school/daily_life), `trauma_sensitive` (boolean), `language_simplification` (boolean), `education_level` (vocabulary complexity)
-  - Facet definition + domain context
-  - Style/valence/reading-level constraints (no anchor dependency)
-- **Constraints enforced**: Reading level (CEFR A2/B1/B2 based on user profile), word count (6-18), trauma-sensitive filters, valence (positive/reverse)
-- **Output**: Structured JSON with each item generated from the canonical facet specification
-- **Current status**: Fully functional, ~2-3 minutes to generate items for all 36 facets
+**Promotion cycle — moving from trial to bank.**  
+1) **Basic hygiene:** clear wording, sensible use of answer choices, low “this is confusing/inappropriate” reports.  
+2) **Right thing measured:** the question moves with the **intended strength**, not some other idea.  
+3) **Fair for everyone—and across profiles:** two people with the **same underlying strength** should get the **same score**, even if one saw simpler wording or a different everyday example. Personalization is like a ramp instead of stairs—better access, not bonus points.  
+4) **Coverage:** a small **varied set** per strength so we’re not asking the same thing three ways.  
+5) **Pick the keepers:** select **4–8 questions** per strength, mark them **Operational**, and tag a few as **FRIs** to keep the scale steady over time.  
+6) **Version & lock:** save as **the first bank** with a version number and changelog. Official scoring starts here.
 
-**Phase 2 - NLI Verification (✅ Operational)**
-- Natural Language Inference model validates semantic alignment between generated item and facet specification
-- **Decision logic**:
-  - Positive-valence: `entailment - max(contradiction, neutral) ≥ 0.20` → KEEP
-  - Reverse-valence: `contradiction - max(entailment, neutral) ≥ 0.20` → KEEP
-  - Unclear: REWRITE or DROP
-- **Backward retry**: If KEEP count < 70% target, regenerate with adjusted prompts (max 3 attempts)
-- **Additional filters**: Word count validation, readability checks, diversity (cosine similarity < 0.90)
-- **Current status**: Fully functional with retry logic tested across multiple facet types
+> **Exit rule:** Move to Step 2 when **each strength** has **enough good questions** (usually 4–8). If a strength falls short, the system auto-rewrites a few questions and runs another tiny trial.
 
-**Phase 3 - Final Selection (🔄 In Development - Expected Q4 2025 - Q1 2026)**
-- Embed all KEEP items
-- Compute pairwise similarity within facet
-- Apply diversity filter (exclude if similarity ≥ 0.90 to selected items)
-- Rank by composite score (NLI confidence × diversity)
-- Select top N items per facet (configurable, typically 5-8)
-- **Current status**: Algorithms designed, implementation underway
+**Step 2 · Promote the first bank (create the first stable core).**  
+The selected set becomes the **Operational** bank; FRIs are designated for ongoing stability.
+
+**Step 3 · Turn on adaptive testing carefully.**  
+The adaptive engine first runs **behind the scenes** to confirm it matches the short fixed forms, then goes live.
+
+*Technical details (for experts):* GRM via planned-missing short forms; no parameter inheritance. Promotion requires acceptable fit (e.g., S-X² or equivalent), information coverage (target SEM ≤ .32 in −1 to +1 θ), LD/DIF within thresholds, and designated FRIs. Modest hierarchical priors may stabilize early a/b; full provenance retained.
 
 ---
 
-**⏸️ Not Started (Awaiting Validation Consultation):**
+### 5.1 Item development — the kitchen
 
-**Adaptive Assessment Engine**
-- IRT-based item selection using Graded Response Model (GRM)
-- Real-time ability estimation (θ) with MLE/EAP fallback
-- Adaptive stopping rules (target SEM ≤ 0.32 per facet)
-- Facet state tracking and progress management
-- **Why not started**: Awaiting expert validation of stopping rules, simulation requirements, and **shadow-test plan** prior to full CAT
-- *Full specification: `assessment-engine.md`*
-- **Shadow-testing first:** run CAT in the background while fixed-form scores are primary until parameters stabilize.
-- **No inheritance:** items **do not** inherit parameters; all params come from pilot calibration.
+New questions are drafted from each strength’s description, checked for meaning and clarity, tried in tiny doses, and only then added to the everyday set.
 
+- **Draft →** AI writes short questions from the strength description—never by copying old tests.  
+- **Automatic checks →** meaning match, readability, sensitive-language safety, de-duplication.  
+- **Small trials →** a few people see the question; it **doesn’t** affect scores yet.  
+- **Promote or pause →** the platform lets it **count a little**, then **count fully**—or **auto-pauses** it.
 
-**Public API Layer**
-- RESTful endpoints for third-party integration
-- Webhook support for real-time result delivery
-- OAuth 2.0 authentication, rate limiting, use-case verification
-- **Dependency**: Requires completed Assessment Engine
+**Who approves questions?**  
+**Experts approve the rules; the system approves the questions.** An independent psychometrician signs an opinion letter on our Validation Blueprint (what to check, how to check it, and the thresholds). After that, the platform admits, trials, promotes, or pauses questions **automatically**, with humans only on exception. Every decision is logged for audit.
 
-**Integration Marketplace**
-- User-facing UI for managing data connections
-- Pre-built integrations (LinkedIn, job platforms, learning tools)
-- Granular permission management, audit logging
-- **Dependency**: Requires API layer
-
-*Glossary:* **Candidate** (passes semantic gate), **Piloted** (has field data), **Operational** (calibrated; eligible for delivery), **FRI** (operational item used for linking/drift checks), **Retired** (removed from delivery, retained for provenance), **Shadow Test** (CAT runs in parallel; not used for decisions).
+*Technical details (for experts):* Facet-seeded prompts; NLI alignment to spec; cosine diversity thresholds. Bank states: **Draft → Piloted → Operational → (FRI) → Retired** with audit trails. Governance: exposure caps, content balance, per-strength coverage; demotion/retire rules on drift/misfit; end-to-end provenance.
 
 ---
 
-### 5.2 Technical Architecture
+### 5.2 Assessment delivery — the dining room
 
-**System Overview:**
+1) **Pre-assessment (13 questions):** sets reading level, chooses simple examples (work/school/daily life), avoids insensitive wording.  
+2) **Adaptive assessment:** **once the first calibrated bank exists,** the computer picks your next question so you answer **fewer, smarter questions**. Only **tested, calibrated** questions affect your score.  
+3) **Results & export:** you get a clear profile; developers can export via API (once available).
 
-```
-Pre-Assessment → User Classification → STEM Adapter (facet-seeded) → Item Governance (FRIs + candidate pool) → Pilot & Calibration → Adaptive Engine → Results API → Marketplace
-  (Operational)      (Operational)                   (Operational)                              (Operational)             (Planned)        (Planned)       (Planned)     (Planned)
-       ↓                   ↓                                ↓                                         ↓                        ↓                ↓              ↓             ↓
-  13-Question      Profile Flags                    Semantic spec/NLI                      Governance + FRIs             GRM estimation   REST/Webhooks   User-managed
-  Survey           (role_context, trauma,           alignment + diversity                  (audit, drift, equating)      & item fit       (exposure)      Connections
-                   language_level)
-```
-
-
-**Core Infrastructure (Operational):**
-- **Database**: PostgreSQL with pgvector (facet and item embeddings)
-- **Vector Search**: Cosine similarity for semantic matching (sub-100ms queries)
-- **Edge Functions**: Supabase serverless compute for embedding generation, NLI verification
-- **AI Integration**: OpenAI API (text-embedding-3-small for embeddings, GPT-4o-mini for generation)
-- **Authentication**: Supabase Auth with Row-Level Security (RLS) policies on all tables
-
-**Design Principles:**
-- **Transparency**: All algorithms, prompts, NLI thresholds openly documented
-- **Traceability**: Full provenance from facet specification → generation prompt → NLI decision → pilot metrics → calibration → user response
-- **Versioning**: Items and facets version-controlled with timestamps and change logs
-- **Observability**: Comprehensive logging of generation attempts, quality metrics, selection decisions
+*Technical details (for experts):* CAT with GRM, content balance, exposure control; initially shadowed against fixed forms. Personalization guardrails: wording can change (reading level, light scenario), **construct meaning and scoring keys do not**. No per-user generation at runtime; delivery uses banked items.
 
 ---
 
-### 5.3 Why AI-Generated Items? (The Safe AI Thesis)
+### 5.2.1 Fair personalization — what changes vs. what never changes
 
-**The Opportunity:**
+We adjust wording so questions are easier to read and feel relevant, but we **never** change what the question means or how it’s scored.
 
-Traditional assessments use fixed item banks that:
-- Cannot adapt to individual reading levels (problematic for ESL users, varying education)
-- May trigger trauma with insensitive language
-- Lack cultural relevance for diverse populations
-- Require massive item pools to maintain security (expensive, slow to develop)
+| Personalization knobs (allowed) | What never changes (locked) |
+|---|---|
+| Reading level (simpler words) | The underlying strength being measured |
+| Light scenario framing (work / school / daily life) | The scoring key and the scale |
+| Trauma-sensitive phrasing (avoid triggering language) | Difficulty and discrimination targets we validate |
+| Contextual examples (“class project” vs “work project”) | How results are interpreted and compared |
 
-**The Risk:**
+**How we check.**  
+- **Swap tests:** a small group sees the “out-of-profile” wording to confirm scores don’t shift.  
+- **FRIs for linkage:** everyone sees a few reference questions regularly; they act like a ruler so measurements stay the same over time.
 
-The psychometric community has legitimate concerns about AI:
-- **Construct drift**: Do generated items measure what the facet specification defines?
-- **Bias introduction**: Can AI introduce demographic biases not present in validated constructs?
-- **Parameter instability**: Can we trust IRT parameters if items change?
-
-All AI-driven features are feature-flagged and can be disabled without interrupting delivery from the calibrated bank.
-
-**Our Approach: Facet-Seeded Generation with Semantic & Empirical Safeguards**
-
-> **Personalization & AI Safety Guardrails**
-> - Delivery uses **only calibrated items**; generation happens in the authoring pipeline, not per user.
-> - Personalization varies **reading level** and **light scenario wording** only; construct core and scoring keys never change.
-> - Feature flags let us **freeze generation** and run a **non-generative baseline** at any time.
-> - **Shadow testing** runs CAT in parallel until parameters stabilize.
-> - **FRIs** appear in each wave for linking and drift checks; misfitting items are demoted or retired with provenance kept.
-
-
-
-1. **Facet-seeded prompts**: Items are generated from the canonical facet description (not from prior items), with style/valence/reading-level constraints.
-
-2. **NLI to facet spec**: Natural Language Inference verifies semantic fit to the facet specification (entailment↑ / contradiction↓), not to legacy items.
-
-3. **Diversity filter**: Embedding-space checks prevent near-duplicates within a facet.
-
-4. **Human governance**: Curators admit items only as candidates; a small, held-out FRI set per facet supports audits/DIF/equating.
-
-5. **Pilot-before-production**: Items require field data (item-total, coverage flags) before entering operational pools.
-
-6. **Calibrate early/often**: Bank calibration (GRM) runs on pooled responses; FRIs provide link points for scale maintenance over time.
-
-**Contingencies & Feature Flags**
-
-If signals fail any gate (semantic, fit, DIF, drift), we:
-- **Freeze generation** and keep delivery to **Operational items** only.
-- **Tighten gates** (higher NLI/embedding thresholds; stricter diversity).
-- **Constrain personalization** to instructions & reading level only.
-- **Switch delivery mode** (fixed-form ↔ content-balanced CAT) as needed.
-- **Run additional pilot waves**; recalibrate; demote/retire items that don't recover.
-- **Maintain a non-generative baseline** so partners can deploy safely while R&D continues.
-
-**If successful, this demonstrates:**
-- AI can augment psychometric rigor through transparency and safeguards
-- Personalization (trauma-informed, reading-level-appropriate, culturally relevant) is achievable without sacrificing validity
-- Open methods enable independent verification and replication
+*Technical details (for experts):* Variants grouped into **families** and equated via FRI anchors. Multiple-group GRM/CFA for configural/metric thresholds (ΔCFI/ΔRMSEA within tolerance). DIF checks (IRT-LR, MH-DIF) across protected groups **and** classification strata. Low-rate counterfactual sampling to estimate include/exclude \( \theta \); require median \|Δθ\| ≤ .05. Classification never enters the scoring model; it only routes presentation.
 
 ---
 
-### 5.4 Roadmap & Decision Gates
-*_Cross-reference:_ See **Appendix B** (Validation Blueprint & reporting templates) and **Appendix C** (Independent opinion letter outline).*
+### 5.3 Why AI-generated questions
 
+**Analogy:** Seasonal dishes keep the menu fresh and locally relevant—but only after the kitchen and a few tasters approve.
 
-We separate **item development (back-office)** from **assessment delivery (live to users)**, and move forward only when pre-registered acceptance criteria are met. All AI features are feature-flagged so we can de-risk by degree (freeze generation; deliver only calibrated items; run CAT as a shadow test) if anything falls short.
+**What AI helps with**
+- **Fit the reader:** match reading level and everyday context.  
+- **Be sensitive:** avoid wording that could re-trigger or exclude.  
+- **Stay relevant:** keep examples fresh without changing what’s measured.
 
-> **Note on “Psychometric Certification”**: In this document, “Certification Level 1/2/3” refers to an **independent expert opinion letter** (authored by an external psychometrician) stating readiness under stated use limits. It is **not** an accreditation by a standards body.
+**Guardrails at a glance**
+- Only **calibrated** questions affect scores.  
+- Generation lives in the **kitchen**, not per user at runtime.  
+- **Instant freeze** if any safety signal fires.  
+- FRIs anchor the scale and check drift.  
+- Personalization changes **words**, not **scores** (variants must pass invariance/DIF checks).
 
----
-
-#### Phase 0 — Protocol Design & Readiness (Validation Setup)
-**Objective:** Define how we will validate; secure an external readiness opinion.
-
-**Key activities**
-- Co-author a complete validation protocol; set acceptance criteria and drift/DIF thresholds.
-- Pre-register the protocol and reporting plan (e.g., OSF).
-- Define bank governance (Candidate → Piloted → Operational → FRI → Retired) and equating strategy.
-
-**Deliverables**
-- **Expert Validation Blueprint:** *(Details: see Appendix B)* A methodological plan covering:
-  - *Scope & intended use:* low-stakes only; high-stakes excluded.
-  - *Sampling & planned-missing design:* per-item response targets; group Ns for DIF.
-  - *Calibration (GRM):* estimation, fit indices, local dependence checks, drift thresholds.
-  - *Linking/equating with FRIs:* FRI count/exposure per facet; Stocking–Lord/TCC diagnostics.
-  - *CAT simulations:* stopping rules, exposure control, content balance constraints.
-  - *Fairness/bias plan:* DIF methods, social desirability controls, accessibility checks.
-  - *Monitoring & governance:* drift dashboards; kill switch; feature flags.
-  - *Pre-registration & data:* sharing plan, anonymization, reporting templates.
-- **Certification Level 0 — Protocol Readiness Opinion:** *(Letter outline: see Appendix C)* Independent letter stating the protocol is fit for implementation under stated limits; conditions and limitations explicitly listed.
-
-**Decision gate**
-- Proceed to Phase 1 when Level 0 is issued and preregistration is live.
+*Technical details (for experts):* NLI alignment to the facet spec (not legacy items), cosine diversity, DIF checks, drift monitoring, thresholds per the Validation Blueprint (Appendix **B**). All AI features are feature-flagged.
 
 ---
 
-#### Phase 1 — System Build & Conformance (Implementation)
-**Objective:** Implement the engine and confirm the build matches the validated design.
+### 5.3.1 Rolling out new questions — from trial to full use
 
-**Key activities**
-- Complete selection/diversity ranking in the STEM Adapter; implement CAT engine.
-- Instrument full provenance (facet spec → prompt → NLI → pilot → calibration → bank state).
-- Enable feature flags and run **CAT shadow tests** alongside fixed forms.
+**Analogy:** A rookie joins the team: practice → scrimmage → limited minutes → starter, only if they play well.
 
-**Deliverables**
-- **Implementation Conformance Report:** Evidence that the system matches the protocol, including:
-  - *Scoring logic & routing:* exact θ estimation method(s), item selection policy, content balance rules.
-  - *Exposure control:* configuration, limits, and test results.
-  - *Provenance & auditability:* end-to-end logs; reproducible pipelines.
-  - *Testing:* unit/integration tests; shadow-test plan and initial results.
-  - *Security & privacy:* authentication, RLS policies, access controls.
-- **Certification Level 1 — Build Conformance Opinion:** *(Letter outline: see Appendix C)* Independent letter confirming functionality, scoring, and routing align with the Phase-0 design; any conditions noted (e.g., metrics to monitor during shadow testing).
+1) **Small trial** — shows up rarely; **never** affects results.  
+2) **Behind-the-scenes check** — we compute scores with/without the question but **don’t use** them yet.  
+3) **Counts a little** — begins to influence results a small amount while we keep watching.  
+4) **Counts fully** — joins the everyday set; any problem later auto-pauses it.
 
-**Acceptance criteria (abbrev.)**
-- Provenance paths active; CAT runs in shadow mode without impacting delivery; feature flags verified.
-
-**Decision gate**
-- Proceed to Phase 2 when Level 1 is issued and shadow tests are green.
+*Technical details (for experts):* Promotion requires minimum unique N across strata (e.g., ≥300), acceptable GRM fit, SE(a) ≤ .20, TCC RMSD within bounds vs FRI-linked scale, DIF within thresholds, and median \|Δθ\| ≤ .05 include/exclude. Auto-pause: complaint rate, readability fails, misfit, DIF, drift.
 
 ---
 
-#### Phase 2 — Pilot Study (Parameterization)
-**Objective:** Calibrate items (GRM), test stopping rules, and screen DIF/fairness.
+### 5.4 Status & roadmap
 
-**Key activities**
-- Run planned-missing forms to meet per-item response targets; ensure representative DIF groups.
-- Estimate GRM parameters; evaluate fit, local dependence, and information coverage.
-- Evaluate stopping rules and promote/demote items per bank governance; designate FRIs.
+**Status & Roadmap Tracker (as of Nov 2025)**  
+*Gates L0–L3 are independent expert opinion letters at phase transitions.*
 
-**Deliverables**
-- **Pilot Calibration Report:** *(Reporting templates: see Appendix B)* Detailed results including:
-  - *Sample & design:* demographics; form matrix; data quality checks.
-  - *Item parameters:* a and b thresholds with SEs; information curves.
-  - *Fit & diagnostics:* S-X² (or equivalent), residuals; LD (Yen’s Q3).
-  - *Fairness & bias:* DIF results; social desirability correlations and mitigations.
-  - *Bank actions:* items promoted to Operational, FRI selections, demotions/retirements with rationale.
-  - *Stopping rules:* empirical evaluation and any revisions.
-- **Certification Level 2 — Pilot Results Opinion:** *(Letter outline: see Appendix C)* Independent letter confirming pilot meets minimum reliability/validity thresholds and is ready for validation studies; conditions noted.
+| Component | Status | Current Phase | Next Gate | Target Window |
+|---|---|---|---|---|
+| Pre-assessment & classification | ✅ Live | Phase 1 complete | — | Delivered |
+| AI drafting (from strength descriptions) | ✅ Live | Phase 1 complete | — | Delivered |
+| Meaning & diversity checks | ✅ Live | Phase 1 complete | — | Delivered |
+| Audit trails & governance | ✅ Live | Phase 1 complete | — | Delivered |
+| Final selection & ranking for new questions | 🔄 In progress | Phase 1 → 2 | **L2** (Pilot results) | Q1 2026 |
+| Cold-start plan & first calibrated bank | 🔄 In progress | Phase 2 | **L2** (Pilot results) | Q1 2026 |
+| Adaptive test (shadow mode) | 🔄 In progress | Phase 1 → 2 | **L1** (Build), then **L2** | Q4 2025–Q1 2026 |
+| Public API & integration marketplace | ⏸️ Not started | Phases 4–5 | After **L3** (Validation) | Q2–Q4 2026 |
 
-**Acceptance criteria (abbrev.)**
-- Facet reliability α/ω ≥ .70; test–retest ICC ≥ .80 (interval study).
-- GRM fit acceptable; LD/DIF within thresholds; Operational bank promoted; FRIs designated.
+> **Legend:** **L0** Protocol readiness · **L1** Build conformance · **L2** Pilot results · **L3** Validation
 
-**Decision gate**
-- Proceed to Phase 3 when Level 2 is issued and promotion rules are met.
+**Phases & gates (compact timeline)**
 
----
+| Phase | Window | Gate to next |
+|---|---|---|
+| **0** Protocol design & readiness | **Q4 2025** | **L0** issued |
+| **1** Build & conformance | **Q4 2025–Q1 2026** | **L1** issued + shadow checks green |
+| **2** Pilot & first bank | **Q1 2026** | Reliability/validity met + **L2** issued |
+| **3** Validation & transparency | **Q2 2026** | Publication/peer confirm + **L3** issued |
+| **4** Public beta & API | **Q2–Q3 2026** | Stability/fairness steady |
+| **5** Integration marketplace | **Q4 2026+** | Ongoing audits & reports |
 
-#### Phase 3 — Validation & Transparency (Evidence)
-**Objective:** Establish external validity and comparability; publish evidence.
+**Timeline:** P0 (Q4’25) → P1 (Q4’25–Q1’26) → P2 (Q1’26) → P3 (Q2’26) → P4 (Q2’26–Q3’26) → P5 (Q4’26+)  
+**Gates:** L0 → L1 → L2 → L3
 
-**Key activities**
-- Run CFA/SEM; convergent/discriminant validity; known-groups tests.
-- Verify linking stability using FRIs; monitor drift across waves.
 
-**Deliverables**
-- **Validation Report & Peer-Reviewed Manuscript:** *(Reporting templates: see Appendix B)* Comprehensive evidence including:
-  - *Structure:* CFA/SEM fit indices (e.g., CFI, RMSEA); cross-loadings reviewed.
-  - *Validity:* convergent/discriminant patterns; known-groups effects.
-  - *Linking & stability:* θ μ/σ deltas; TCC RMSD; FRI drift metrics.
-  - *Fairness & robustness:* DIF re-checks; subgroup precision; SD sensitivity.
-- **Public Validation Dataset:** De-identified dataset with data dictionary, codebook, and analysis scripts for reproducibility.
-- **Certification Level 3 — Validation Opinion:** *(Letter outline: see Appendix C)* Independent letter stating the inventory meets professional standards (for the stated use), with limits and conditions.
-
-**Decision gate**
-- Proceed to **public beta** only after (a) publication or external peer confirmation **and** (b) Level 3 is issued.
-
----
-
-#### Phase 4 — Public Beta & API (Low-Stakes Use)
-**Objective:** Offer a reliable, portable assessment while continuous monitoring runs.
-
-**Key activities**
-- Launch API with rate limits and scopes; restrict high-stakes uses by policy and code.
-- Operate drift/bias monitoring; maintain exposure control and content balance; retain kill-switches.
-
-**Deliverables**
-- **Public Beta Package:** Developer docs, SDKs, endpoints, and example integrations.
-- **Operational Monitoring:** Live dashboards for reliability, drift, DIF alerts, and exposure metrics; incident response & rollback procedures.
-- **Usage Governance:** Terms & acceptable-use; high-stakes prohibitions enforced in code and contracts.
-
-**Decision gate**
-- Maintain beta until stability targets and monitoring thresholds are met across cohorts.
-
----
-
-#### Phase 5 — Integration Marketplace
-**Objective:** Make strengths data portable and user-controlled.
-
-**Key activities**
-- Build partner connectors; consent flows; permission scopes; revocation and audit trails.
-
-**Deliverables**
-- **Marketplace:** User-facing connection manager; partner guidelines; transparency report template (usage, outages, audits).
-- **Controls:** Fine-grained permissions; audit logs; one-click revocation; periodic third-party audits.
-
----
-
-### 5.5 Data Privacy & Governance
-
-**Current Status**: Framework designed, implementation pending user-facing deployment
-
-**Core Principles:**
-- **Purpose Limitation**: Data collected only for assessment and research
-- **Consent Tiers**: Granular control (essential, de-identified research, identified research, third-party)
-- **Minimization**: No tracking, advertising, or data sales
-- **Security**: TLS in transit, AES-256 at rest, Row-Level Security in database
-- **User Rights**: Data export, deletion, audit logging
-
-**Planned Consent Structure:**
-
-| Tier | Purpose | Retention | Default | Opt-Out? |
-|------|---------|-----------|---------|----------|
-| **Essential** | Assessment functionality | Account + 90 days | Required | No |
-| **De-identified Research** | Psychometric validation, open datasets | 7 years | Yes | Yes |
-| **Identified Research** | Longitudinal studies | Study + 3 years | No | Yes |
-| **Third-Party** | Marketplace connections | Per partner | User-initiated | Yes (revocable) |
-
-**Governance:**
-- Independent Research Ethics Advisory Board (forming)
-- Quarterly public transparency reports
-- Annual third-party privacy audits
-- IRB approval for all research use
-- < 72-hour breach notification
-- A "kill switch" disables generative wording or CAT if monitoring flags drift or bias
-
-**High-Stakes Prohibition:**
-
-Technical and policy controls preventing use for:
-- Employment screening/hiring
-- Clinical diagnosis/treatment
-- Educational admissions
-- Insurance underwriting
-- Any consequential decision affecting livelihood, health, opportunity
-
-Restrictions remain until extensive validation is published and independently reviewed.
-
----
-
-### 5.6 Why This Platform Is Different
-
-**vs. Proprietary Assessments (CliftonStrengths, VIA+, MBTI):**
-- **Open**: All methods, algorithms, validation data publicly documented
-- **Portable**: Results are user-owned data with APIs, not platform-locked
-- **AI-Enhanced**: Personalization (trauma-informed, culturally adapted) without compromising validity
-- **Transparent**: Full provenance from facet spec → AI generation → pilot → calibration → user results
-- **Accessible**: Free core assessment, pay-what-you-can detailed reports
-
-**vs. Open-Source Personality Tools (IPIP, Big Five tests):**
-- **Comprehensive**: 36 facets across 6 domains (vs. Big Five's 5-30 facets)
-- **Adaptive**: IRT-based selection reduces test length by 40-60% (vs. fixed-length)
-- **Contextualized**: AI-generated items match user's reading level, cultural background, trauma sensitivity
-- **Applied**: Designed for real-world use (APIs, marketplace) not just research
-
-**The Innovation:**
-
-Demonstrating that AI can be used safely in psychometrics through:
-1. **Facet-seeded generation** (with FRI-based audits & equating)
-2. **Multi-layer verification** (NLI, embeddings, diversity filters)
-3. **Full provenance** (audit trail from facet specification → prompt → NLI decision → pilot → calibration → deployment)
-4. **Open validation** (pre-registration, public data, peer review)
-5. **Ethical governance** (high-stakes prohibition, consent tiers, IRB oversight)
-
-If successful, this provides a template for how AI can augment psychometric rigor—enabling personalization and accessibility while maintaining scientific standards.
 
 ---
 
@@ -1028,7 +757,7 @@ See Section 5.4 for detailed roadmap. Summary: Phase 0 (Expert Validation, Q4 20
 
 ---
 
-*Prepared by the OpenStrengths Working Group · June 2025*  
+*Prepared by the OpenStrengths Team · November 2025*  
 
 
 ---
