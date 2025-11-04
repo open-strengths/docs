@@ -377,20 +377,48 @@ New questions are drafted from each strength’s description, checked for meanin
 
 ### 5.2.1 Fair personalization — what changes vs. what never changes
 
-We adjust wording so questions are easier to read and feel relevant, but we **never** change what the question means or how it’s scored.
+We adjust wording so questions are easier to read and feel relevant, but we **never** change what the question means or how it's scored.
 
 | Personalization knobs (allowed) | What never changes (locked) |
 |---|---|
 | Reading level (simpler words) | The underlying strength being measured |
 | Light scenario framing (work / school / daily life) | The scoring key and the scale |
 | Trauma-sensitive phrasing (avoid triggering language) | Difficulty and discrimination targets we validate |
-| Contextual examples (“class project” vs “work project”) | How results are interpreted and compared |
+| Contextual examples ("class project" vs "work project") | How results are interpreted and compared |
 
-**How we check.**  
-- **Swap tests:** a small group sees the “out-of-profile” wording to confirm scores don’t shift.  
+**Examples in practice**
+
+Below are two strengths showing how wording adapts while the **construct and scoring stay identical**. Every variant scores the same way; personalization only changes accessibility and relevance.
+
+**Innovation (Creativity domain)**
+*Invariant intent: tests new approaches and adopts what works.*
+
+- **Base (B2):** I try new ways to solve problems and keep what works. [score↑ = agree]
+- **Simplified (A2/B1):** I test new ways and keep the ones that help. [same scoring]
+- **Work framing:** On the job, I pilot new methods and adopt the ones that improve results. [same scoring]
+- **School framing:** In class projects, I try new approaches and keep the best one. [same scoring]
+- **Daily-life framing:** At home, I experiment with better ways to do chores and stick with what works. [same scoring]
+- **Trauma-sensitive:** I make small, low-risk trials before changing to a new method. [same scoring]
+- **Reverse-coded:** I use the same approach even when it isn't working well. [score↑ = disagree]
+
+**Empathy (Connection domain)**
+*Invariant intent: understands others' feelings before responding.*
+
+- **Base (B2):** I try to understand how others feel before I respond. [score↑ = agree]
+- **Simplified (A2/B1):** I try to see how someone feels before I answer. [same scoring]
+- **Work framing:** With teammates or customers, I check how they're feeling before I reply. [same scoring]
+- **School framing:** With classmates, I think about their feelings before I speak. [same scoring]
+- **Daily-life framing:** With friends or family, I try to understand their feelings first. [same scoring]
+- **Trauma-sensitive:** When someone shares big feelings, I listen first and keep my tone gentle. [same scoring]
+- **Reverse-coded:** I respond quickly without thinking about how the other person feels. [score↑ = disagree]
+
+> **The key principle:** Different people see different words, but two people with the **same Innovation or Empathy** get the **same score**—whether they saw simple wording, work examples, or trauma-sensitive phrasing. Personalization is about access, not advantage.
+
+**How we check.**
+- **Swap tests:** a small group sees the "out-of-profile" wording to confirm scores don't shift.
 - **FRIs for linkage:** everyone sees a few reference questions regularly; they act like a ruler so measurements stay the same over time.
 
-*Technical details (for experts):* Variants grouped into **families** and equated via FRI anchors. Multiple-group GRM/CFA for configural/metric thresholds (ΔCFI/ΔRMSEA within tolerance). DIF checks (IRT-LR, MH-DIF) across protected groups **and** classification strata. Low-rate counterfactual sampling to estimate include/exclude \( \theta \); require median \|Δθ\| ≤ .05. Classification never enters the scoring model; it only routes presentation.
+*Technical details (for experts):* Variants grouped into **families** and equated via FRI anchors. Multiple-group GRM/CFA for configural/metric thresholds (ΔCFI/ΔRMSEA within tolerance). DIF checks (IRT-LR, MH-DIF) across protected groups **and** classification strata. Low-rate counterfactual sampling to estimate include/exclude θ; require median |Δθ| ≤ .05. Classification never enters the scoring model; it only routes presentation.
 
 ---
 
