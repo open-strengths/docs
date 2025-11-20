@@ -4,7 +4,7 @@
 
 **An Open-Source Framework for Understanding Human Potential**
 
-Version 2.0 (Combined Edition) · November 2025
+Version 3.1 · November 2025
 
 ---
 
@@ -1868,7 +1868,7 @@ Full bibliography available in technical documentation.
 
 **Prepared by:** The OpenStrengths Working Group
 
-**Version:** 2.0 (Combined Edition)
+**Version:** 3.1
 
 **Date:** November 2025
 
