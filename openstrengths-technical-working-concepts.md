@@ -149,12 +149,15 @@ The core design principle:
 ### 2. Current Implementation Reality
 
 - Implemented:
-  - 6-domain, 36-facet strengths model with canonical descriptions.
+  - The six-domain, thirty-six-facet strengths model with canonical descriptions.
   - LLM generation of stems from facet descriptions in the TypeScript app.
-  - Embeddings for facet descriptions and anchors are stored in Supabase.
+  - NLI-based construct-fidelity checks at generation time (facet description as premise, stem as hypothesis).
+  - Embeddings for facet descriptions and anchors stored in Supabase.
+  - Extensive pipeline logging at the task level (CIDs, network calls, task state tracking).
+
 - Not yet implemented:
-  - A full item-level semantic gate (NLI + embedding) that is applied to all generated stems.
-  - A complete, logged pipeline from “construct spec → generation → semantic screening → candidate pool.”
+  - Embedding-based screening and cross-construct checks as part of a standard semantic gate for every generated item.
+  - A reviewer-facing audit view that surfaces the full semantic gate (NLI + embeddings) and associated logs for human inspection.
 
 ### 3. Questions / Validation Needed from Experts
 
@@ -274,13 +277,12 @@ Goal: Ensure items are **on-construct** before they ever enter a pilot.
 Planned components:
 
 - **NLI-based construct fidelity (already implemented for generation)**  
-  - Premise: the canonical facet description (what people high on the facet look like).  
-  - Hypothesis: the generated stem.  
+  - Premise: the canonical facet description (what people high on the facet look like).
+  - Hypothesis: the generated stem.
   - For **positive stems**:
-    - Keep if entailment is high and contradiction is low (e.g., entailment ≥ 0.70, contradiction ≤ 0.20).  
+    - We keep items where entailment is substantially stronger than contradiction. The intent is that, if the facet description is true of a person, the positive stem should logically follow.
   - For **reverse stems**:
-    - Keep if contradiction is high and entailment is low (e.g., contradiction ≥ 0.60, entailment ≤ 0.30).  
-  - Interpretation: positive stems should follow logically from the facet description; reverse stems should contradict it while still referring to the same underlying construct.
+    - We keep items where the NLI model assigns substantially higher probability to contradiction than to entailment (for example, pCon > pEnt with additional minimum thresholds as we refine the gate). The intent is that reverse stems clearly oppose the facet description while staying on the same underlying construct.
 
 - **Embedding-based checks (design target)**  
   - Embed the facet description and (eventually) a curated set of semantic anchors (see C-02).  
@@ -347,9 +349,9 @@ The overall idea:
 ### 2. Current Implementation Reality
 
 - **Semantic layer:**
-  - Facet descriptions exist and are used as the premise in an NLI-based construct fidelity check for generated stems (positive and reverse).
+  - Facet descriptions exist and are used as the premise in an NLI-based construct-fidelity gate for generated stems (positive and reverse). Items that fail this NLI gate do not enter the candidate pool.
   - Embeddings for facet descriptions and anchors are stored in Supabase.
-  - Anchors exist conceptually and technically but are not yet used in a principled semantic-neighborhood workflow (see C-02).
+  - Embedding-based cross-construct screening and anchor-based semantic neighborhoods (as described in C-02) are not yet implemented in the production pipeline.
 
 - **Statistical layer:**
   - No large-scale pilot has been run yet.  
@@ -441,7 +443,7 @@ Throughout all stages:
 
 ### 2. Current Implementation Reality
 
-- No adaptive engine is implemented today.
+- A scoring engine that can track provisional θ and SEM exists in the codebase, but it is not yet used to drive information-based item selection or exposure control. All current flows are effectively fixed-form or scripted rather than truly adaptive.
 - Profile flags and pre-assessment logic exist conceptually and in parts of the prototype.
 - The staged design (0 → 1 → 2) is a working plan, influenced by expert advice to start with simpler designs and analyses before full CAT.
 
