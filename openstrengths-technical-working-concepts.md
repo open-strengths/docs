@@ -123,17 +123,17 @@ At a high level:
      - help compare frameworks,
      - draft candidate formulations.
    - We then converged manually on a six-domain, 36-facet ontology and wrote canonical facet descriptions.
-   - Regardless of tooling, these canonical definitions are now treated as **human-owned ground truth** for what each construct means.
+   - Regardless of tooling, these canonical definitions are treated as the human defined reference point for each construct, subject to revision as SME review and empirical validation come in.
 
 2. **The AI is asked to work _within_ those definitions.**  
    - The LLM receives the construct description and explicit rules (first-person, present tense, one behavior per item, etc.).
    - The LLM’s job is to propose possible wordings of behaviors that exemplify the construct.
    - It does **not** decide which constructs exist or what they mean; it suggests phrasing for constructs that have already been defined.
 
-3. **We screen what the AI proposes.**  
-   - NLI checks: “Does this item describe someone high (or low) on this construct?”  
-   - Cross-construct checks: “Is it more aligned with some other construct instead?”  
-   - Embedding checks: item vectors should be near the construct’s semantic neighborhood (see C-02).  
+3. **We screen what the AI proposes.**
+   - **NLI validates construct fidelity:** positive stems should be entailed by the facet description; reverse stems should contradict it while staying on-construct.
+   - Cross-construct checks: "Is it more aligned with some other construct instead?"
+   - Embedding checks: item vectors should be near the construct's semantic neighborhood (see C-02).
    - Clear failure cases (off-topic, cross-loading, unclear wording) are rejected before pilot.
 
 4. **Only then do we move to empirical evaluation.**  
@@ -174,46 +174,80 @@ We are specifically interested in whether this division of labor is **psychometr
 
 **Area:** Item Generation  
 **Status:** Draft  
-**Related White Paper Sections:** Part 2 – “Safety Question” (implicitly); future technical notes
+**Related White Paper Sections:** Part 2 – “The Safety Question” (implicitly); future technical notes
 
 ### 1. Concept Summary
 
-Represent each construct as a **semantic neighborhood** defined by:
+The long-term goal is to represent each construct as a **semantic neighborhood** defined by:
 
 - The canonical construct description (and, where applicable, a low-pole description).
-- A curated set of **anchor statements** that sound like realistic behaviors or self-descriptions at different intensities.
+- A small, curated set of **anchor statements** that sound like realistic behaviors or self-descriptions at different intensities and that have passed semantic and, eventually, psychometric checks.
 
-We then:
+The intended use is:
 
-- Embed the construct descriptions and anchors into a vector space.
-- Treat this cluster as the **“on-construct” region** for the construct.
-- Embed candidate items and check:
-  - Are they sufficiently close (above a threshold) to the construct’s neighborhood?
-  - Are they not closer to some other construct’s neighborhood?
+1. Embed the construct description and anchors into a vector space.
+2. Treat this cluster as the **“on-construct” region** for the facet.
+3. Embed candidate items and check:
+   - Are they sufficiently close (above a threshold) to the construct’s neighborhood?
+   - Are they not closer to some other construct’s neighborhood?
+4. Use those signals as part of a first-line **content plausibility screen**, not as a substitute for SME review or empirical validation.
 
-The goal is to use embeddings as an **early, automated content plausibility check**, not as the final arbiter of validity.
+Anchors here are semantic exemplars: sentences you would be comfortable handing to a new item writer as “this is what high (or low) on this facet looks like.”
 
 ### 2. Current Implementation Reality
 
-- Implemented:
-  - Data structures for anchors in the TypeScript app.
-  - Embeddings for construct descriptions and anchors stored in Supabase.
-  - Ability to compute cosine similarity between an anchor and its construct description.
-- Not yet implemented:
-  - Embedding of all items (stems) with systematic thresholds for acceptance/rejection.
-  - A multi-construct “semantic map” where overlap and distance across many constructs are monitored routinely.
+- Implemented today:
+  - Data structures for anchors exist in the TypeScript app.
+  - Facet (construct) descriptions are embedded and stored in Supabase.
+  - Anchors can be embedded and their cosine similarity to the facet description can be computed.
+- Not implemented / not in use yet:
+  - A principled workflow for **selecting and promoting** anchors from the general item pool.
+  - Routine use of anchors as part of an “on-construct neighborhood” check for every generated item.
+  - Any psychometric criteria (for example, item–total correlations, factor loadings) for promoting anchors to dual roles as Facet Reference Items (see C-03).
+
+Right now, anchors are defined and can be embedded, but they are not actively used in the item-generation or screening workflow.
+
+### 2.1 Planned Anchor Workflow (Design Target)
+
+We expect the anchor selection and promotion process to look roughly like this:
+
+1. **Candidate pool**  
+   Start from items that have already passed:
+   - NLI-based construct-fidelity checks against the facet description (positive stems entailed, reverse stems contradicted), and
+   - Basic embedding screens against the facet description.
+
+2. **AI-assisted proposal**  
+   Use NLI scores and embeddings to propose a small set of items per facet that are:
+   - Highly aligned with the facet description.
+   - Distant from other facets (low cross-loading risk).
+   - Non-redundant with existing anchors.
+
+3. **SME/content review**  
+   Human reviewers select a few of these as **semantic anchors** using a clear rubric, for example:
+   - Would I use this sentence to explain the facet to a new item writer?
+   - Is it clearly on-construct, behaviorally concrete, and not overly context-bound?
+   - Does the set of anchors capture the main ways the facet shows up, rather than repeating one narrow behavior?
+
+   Approved items are promoted to semantic anchors and marked as such in the system.
+
+4. **Optional empirical promotion**  
+   After pilots, some semantic anchors may also be promoted to **Facet Reference Items (FRIs)** if they show desirable psychometric properties (for example, strong loadings on the intended facet, low loadings on others, stable behavior across subsamples, acceptable DIF).
+
+One explicit research question for the project is how far we can safely push AI in steps (2) and (part of) (3): for example, by comparing AI-proposed anchors to SME-selected anchors and evaluating whether AI-based criteria can reliably approximate SME judgements over time.
 
 ### 3. Questions / Validation Needed from Experts
 
-We assume embeddings are only a **screening tool**. We want help scoping their responsible use:
+We assume embeddings and anchors are only **supporting tools** for content work, not replacements for SMEs. We want help scoping their responsible use:
 
-- Where have you seen semantic/embedding tools usefully support content validity work, and where do you see red flags (e.g., overfitting to surface wording, instability across models)?
-- If we adopt embedding-based screening, what would you want to see in a **documentation or audit trail** to be comfortable that it is not substituting for SME judgement?
+- From your experience, where have semantic or embedding-based tools been useful in supporting content validity work, and where do you see clear red flags (for example, overfitting to surface wording, instability across models, false confidence)?
+- If we adopt this anchor-based semantic neighborhood approach, what would you want to see in a **documentation or audit trail** (for example, how anchors were selected, thresholds used, SME review logs) to be comfortable that it is not substituting for expert judgement?
+- How many anchors per facet, and what diversity of behaviors, would you consider “enough” to define a stable semantic neighborhood for screening AI-generated items?
 
 ### 4. Promotion Criteria
 
-- Expert consensus that embeddings are acceptable as a first-line screening tool, with clear caveats.
-- A documented set of thresholds/rules, tested on at least one pilot dataset, showing how semantic screening correlates with SME judgements.
+- Expert consensus that anchors and embeddings are acceptable as a first-line screening and support tool, with clear caveats and governance.
+- A documented anchor-selection workflow (including SME review and, where relevant, empirical checks) tested on at least one pilot dataset.
+- Evidence that the semantic neighborhood defined by description plus anchors correlates sensibly with SME assessments of on- vs off-construct items across multiple facets.
 
 ---
 
@@ -221,70 +255,144 @@ We assume embeddings are only a **screening tool**. We want help scoping their r
 
 **Area:** Consistency & Linking  
 **Status:** Draft  
-**Related White Paper Sections:** Part 2 – “Safety Question”; Roadmap – Phase 1 & 2
+**Related White Paper Sections:** Part 2 – “The Safety Question”; Roadmap – Phase 1 & 2
 
 ### 1. Concept Summary
 
-A central question for our advisors is: **“How will you know your AI-generated items behave consistently across forms, domains, and facets?”**
+Our advisors posed a central question: **"How will you know your AI-generated items behave consistently across forms, domains, and facets?"**
 
-Our working answer is a three-layer framework:
+Our working answer is a three-layer framework that connects:
 
-1. **Semantic Consistency (layer 1)**  
-   - Use NLI and embeddings relative to construct descriptions and anchors to ensure that items:
-     - Assert something consistent with the intended construct.
-     - Do not align more strongly with another construct.
-   - This is about **content alignment** _before_ any data is collected.
+1. **Semantic consistency (layer 1)** – Does the wording of each item actually reflect the intended construct?
+2. **Statistical consistency (layer 2)** – Do items behave as expected in data, within and across facets?
+3. **Operational consistency (layer 3)** – As the bank evolves, can scores still be compared over time and across forms?
 
-2. **Statistical Consistency (layer 2 – classical first, IRT later)**  
-   - Start with **fixed or planned-missing designs** and **classical test theory (CTT)** analyses:
-     - Item–total correlations,
-     - Internal consistency (e.g., omega/alpha) per facet,
-     - Exploratory and confirmatory factor analyses to see whether items load where the ontology says they should.
-   - As the data matures, move to **polytomous IRT models** (e.g., graded response or partial credit), in line with expert guidance:
-     - Estimate item parameters and information curves,
-     - Check whether items behave similarly across calibration waves and subgroups.
-   - This layer addresses consistency in **how items function** psychometrically.
+#### 1.1 Semantic Consistency (Layer 1)
 
-3. **Operational Consistency (layer 3)**  
-   - Only items that pass layers 1 and 2 become **operational items** available to any adaptive or fixed-form administration.
-   - Introduce **Facet Reference Items (FRIs)**:
-     - A small, stable subset of items per facet that remain in use over time.
-     - FRIs anchor the scale so that new items and new forms can be linked back to previous calibrations.
-   - Monitor item performance (e.g., fit statistics, information) and test-level information over time to detect drift.
+Goal: Ensure items are **on-construct** before they ever enter a pilot.
 
-The overall idea is:
+Planned components:
 
-> Semantic gates decide which items even _enter_ the candidate pool.  
-> Classical/IRT analyses decide which items are worth keeping.  
-> Operational rules (including FRIs) decide which items are trusted for live use and how we maintain comparability over time.
+- **NLI-based construct fidelity (already implemented for generation)**  
+  - Premise: the canonical facet description (what people high on the facet look like).  
+  - Hypothesis: the generated stem.  
+  - For **positive stems**:
+    - Keep if entailment is high and contradiction is low (e.g., entailment ≥ 0.70, contradiction ≤ 0.20).  
+  - For **reverse stems**:
+    - Keep if contradiction is high and entailment is low (e.g., contradiction ≥ 0.60, entailment ≤ 0.30).  
+  - Interpretation: positive stems should follow logically from the facet description; reverse stems should contradict it while still referring to the same underlying construct.
+
+- **Embedding-based checks (design target)**  
+  - Embed the facet description and (eventually) a curated set of semantic anchors (see C-02).  
+  - Embed candidate items.  
+  - Use cosine similarity to:
+    - Check that items sit close to their own facet’s semantic neighborhood.  
+    - Detect potential cross-loading items that are closer to some other facet.
+
+Together, NLI and embeddings define a **semantic gate**: items that fail are not even allowed into the candidate pool for pilots.
+
+#### 1.2 Statistical Consistency (Layer 2 – Classical First, IRT Later)
+
+Goal: Ensure items that pass the semantic gate also behave sensibly in data.
+
+Planned progression:
+
+- **Step 1: Classical test theory (CTT) with fixed or planned-missing forms**  
+  - Item–total correlations within facet.  
+  - Internal consistency (e.g., omega/alpha) for each facet/domain.  
+  - Exploratory and confirmatory factor analyses to check:
+    - Do items load primarily on their intended facet?
+    - Do facets cluster into domains in a plausible way?
+
+- **Step 2: Polytomous IRT models once data supports it**  
+  - Candidate models: graded response or partial credit, chosen with expert input.  
+  - Estimate item parameters and information curves.  
+  - Check:
+    - Item fit and discrimination.  
+    - Stability across calibration waves and key subgroups.  
+    - Whether the added complexity is justified relative to CTT.
+
+The idea is to move from **CTT → IRT** only when we have enough data and a clear reason, rather than starting in IRT by default.
+
+#### 1.3 Operational Consistency (Layer 3 – FRIs and Linking)
+
+Goal: Maintain comparability as items are added, retired, or assembled into different forms.
+
+Key concept:
+
+- **Facet Reference Items (FRIs)**  
+  - A small, stable subset of items per facet that:
+    - Have strong semantic alignment (layer 1).  
+    - Show good psychometric performance (layer 2).  
+  - FRIs stay in use longer than typical items and serve as **anchors** for:
+    - Linking new calibrations back to older ones.  
+    - Monitoring drift in the facet over time.  
+
+Operational rules (design target):
+
+- Only items that pass layers 1 and 2 become eligible as FRIs.  
+- FRIs must be present in each new calibration wave or in carefully designed overlapping forms.  
+- The bank is monitored over time:
+  - Track item and test information functions.  
+  - Watch for changes in FRI parameters that may signal drift in usage or population.
+
+The overall idea:
+
+> **Layer 1** (semantic) decides which items even enter the candidate pool.  
+> **Layer 2** (classical/IRT) decides which items are worth keeping as measurement tools.  
+> **Layer 3** (operational) decides which items keep the score scale stable as the bank and forms evolve.
+
+---
 
 ### 2. Current Implementation Reality
 
-- Semantic layer:
-  - Construct descriptions and anchors exist, with embeddings in Supabase.
-  - The full NLI + embedding gate for every item is not yet implemented.
-- Statistical layer:
-  - No large-scale pilot has been run; classical analyses and IRT are not yet applied to real data.
-  - A measurement expert has already suggested starting with **simpler, fixed-form designs and classical analyses** before committing to a specific IRT model or full CAT. This is consistent with moving from CTT → IRT → CAT over time.
-- Operational layer:
-  - No FRIs selected yet.
-  - No live operational item bank or linking or CAT in production.
+- **Semantic layer:**
+  - Facet descriptions exist and are used as the premise in an NLI-based construct fidelity check for generated stems (positive and reverse).
+  - Embeddings for facet descriptions and anchors are stored in Supabase.
+  - Anchors exist conceptually and technically but are not yet used in a principled semantic-neighborhood workflow (see C-02).
+
+- **Statistical layer:**
+  - No large-scale pilot has been run yet.  
+  - No CTT or IRT analyses have been applied to real respondent data.  
+  - A measurement expert has already recommended starting with fixed or planned-missing forms and classical analyses before committing to a specific IRT model or full CAT, which this framework accommodates.
+
+- **Operational layer:**
+  - No FRIs have been selected.  
+  - No live operational item bank, linking design, or CAT engine is in production.
+
+Right now, layer 1 is partially implemented (NLI construct-fidelity checks at generation time); layers 2 and 3 are design-level only.
+
+---
 
 ### 3. Questions / Validation Needed from Experts
 
-We want targeted input on how to make this practical, given AI-generated items and our staged plan:
+We want focused input on how to make this framework practical and “good enough” for our context (low-stakes strengths assessment with AI-generated items):
 
-- For a first-wave pilot of AI-generated items, what **minimal but sufficient set of analyses** would you run to assess consistency across facets and forms (e.g., which CTT indices, which factor models)?
-- When moving from CTT to IRT, which polytomous models would you consider good first candidates in this context, and what criteria would you use to decide whether they add enough value to justify the extra complexity?
-- How many FRIs per facet, and what kinds of monitoring, would you consider “good enough” for maintaining linking in a low-stakes, evolving strengths assessment?
+1. **For the first AI-generated pilot:**
+   - What minimal but sufficient set of analyses would you run to judge consistency across facets and forms?
+   - Which CTT indices and factor models would you consider mandatory vs “nice to have”?
+
+2. **Transition from CTT to IRT:**
+   - In this setting, which polytomous models would you consider first, and why?  
+   - What criteria would you use to decide that IRT is adding enough value to justify the extra complexity (beyond what CTT and factor analysis give us)?
+
+3. **Facet Reference Items (FRIs):**
+   - How many FRIs per facet would you consider reasonable for linking and monitoring in a multi-facet strengths assessment like this?  
+   - What kind of ongoing monitoring of FRI behavior (e.g., fit, parameters, DIF) would you expect before you were comfortable saying “this scale is stable over time”?
+
+---
 
 ### 4. Promotion Criteria
 
-- Agreement from measurement experts that this layered framework is sound and realistic for our scale.
-- At least one pilot showing:
-  - Semantic gates reduce obviously off-construct items.
-  - Classical analyses and early IRT models produce coherent facet-level scales.
-  - FRIs can be identified and appear stable across subsets.
+This concept would be considered ready to promote into the main white paper (and implemented in code and process) when:
+
+- At least one measurement expert confirms that this layered framework is sound and realistic for our use case and volumes.
+- We have run at least one pilot showing that:
+  - The semantic gate (NLI and, eventually, embeddings/anchors) reduces obviously off-construct items.  
+  - Classical analyses and early IRT models produce coherent facet-level scales that align with the intended ontology.  
+  - A preliminary set of FRIs per facet can be identified and appears reasonably stable across subsamples or calibration waves.
+
+At that point, this three-layer consistency framework would become part of the “canonical” description of how OpenStrengths maintains consistency across AI-generated items, forms, domains, and facets.
 
 ---
 
@@ -296,9 +404,9 @@ We want targeted input on how to make this practical, given AI-generated items a
 
 ### 1. Concept Summary
 
-A central question for our advisors is: **“How is the examinee profile used to drive adaptive item selection and test assembly (including exposure controls)?”**
+Our advisors posed a central question: **"How is the examinee profile used to drive adaptive item selection and test assembly (including exposure controls)?"**
 
-Our working plan is **staged**, not “jump straight to full CAT”:
+Our working plan is **staged**, not "jump straight to full CAT":
 
 1. **Stage 0 – Fixed or planned-missing forms (no adaptation)**  
    - Early pilots use fixed or planned-missing designs:
