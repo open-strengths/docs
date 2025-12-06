@@ -1,8 +1,28 @@
 # OpenStrengths Construct Validation Plan v1.0
 
+## Overview
+
+This Construct Validation Plan is an expert-facing protocol for validating OpenStrengths' canonical model of six domains and 36 facets. Its purpose is to evaluate conceptual clarity, coverage, and separation of constructs, and to identify risks of facet or domain cross-loading before item pool generation and psychometric field testing. For broader program context, vision, and technical architecture, please refer to the OpenStrengths white paper.
+
+### What This Is Not
+
+This is not a general project overview. It does not cover mission, population scale, platform architecture, or AI pipeline design. This document focuses exclusively on construct validation methodology.
+
+### Expected Expert Outputs
+
+Subject matter experts reviewing this plan will be asked to:
+
+1. Confirm or refine domain definitions
+2. Confirm or refine facet definitions
+3. Identify overlaps, gaps, or cross-loading risks
+4. Recommend merges, splits, or renames where warranted
+5. Validate the hierarchical structure (6 domains, 36 facets)
+
+---
+
 ## 1. Purpose and outcomes
 
-This plan defines the exact procedure OpenStrengths will use to validate the conceptual model for the strengths assessment before any item pilots, calibration, or adaptive testing. The outcomes of this plan are:
+This plan defines the exact procedure for validating the conceptual model before any item pilots, calibration, or adaptive testing. The outcomes of this plan are:
 
 1. A validated construct model for six domains and thirty-six facets with clear, non-overlapping, behaviorally anchored definitions.
 2. A documented content validity study with expert judgments, agreement statistics, and a revision log.
@@ -33,9 +53,9 @@ OpenStrengths organizes strengths into six domains. Current working domain label
 
 ### 3.2 Facets
 
-Each domain contains multiple facets. The target total across all domains is thirty-six facets. Insert the current canonical list into the table below before circulating to experts.
+Each domain contains six facets, for a total of 36 facets across all domains. The table below presents the complete canonical model.
 
-| Domain | Facet name | Draft facet definition (1-2 sentences) | Rationale for inclusion (1-2 sentences) |
+| Domain | Facet name | Facet definition | Rationale for inclusion |
 | :---- | :---- | :---- | :---- |
 | Insight | Curiosity | Actively seeks out new knowledge and experiences. | Represents a distinct motivational state (the "want to know") that predicts information-seeking behavior independent of openness to experience or learning ability. |
 | Insight | Perspective | Understands situations from a broad or different point of view. | Rooted in Theory of Mind research as the differentiated cognitive ability to shift viewpoints, serving as one component of wisdom rather than wisdom itself. |
@@ -74,7 +94,7 @@ Each domain contains multiple facets. The target total across all domains is thi
 | Influence | Assertiveness | Stands up for one's own needs, rights, or views directly and respectfully. | Ability to communicate emotions and wants without infringing others' rights, requiring healthy boundaries through effective communication as behavioral skill. |
 | Influence | Influence | Persuades and shapes decisions or attitudes. | The process where emotions, opinions, or behaviors are affected by others through persuasion, serving as mechanism through which leadership operates. |
 
-The table above contains all 36 facets in canonical order. Definitions are precise, behaviorally anchored, and written to avoid cross-loading.
+All facet definitions are behaviorally anchored and designed to minimize cross-loading. Rationales reference established theoretical frameworks to justify each facet's inclusion as a distinct construct.
 
 ### 3.3 Design principles to be validated
 
@@ -255,7 +275,7 @@ All actions are recorded in the revision log with the evidence that motivated th
 3. Analysis workbook with indices, heatmaps, and summaries
 4. Revision log and decision record
 5. Final domain and facet definitions v1 with change annotations
-6. Public-facing summary suitable for funders and partners
+6. Summary report of validation findings
 
 ## 9. Timeline
 
