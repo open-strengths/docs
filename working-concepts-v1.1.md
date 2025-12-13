@@ -16,12 +16,9 @@ Concepts here:
 
 Each concept has a `Status` field using one of:
 
-- `Draft` – initial idea, may be incomplete or inconsistent.
-- `Needs SME Review` – stable enough for expert review; waiting on feedback.
-- `Under Review` – currently being discussed / evaluated with experts.
-- `Validated` – agreed in principle by experts; ready to be promoted into canonical docs.
-- `In Implementation` – being actively built in the product.
-- `Deprecated` – concept was rejected, replaced, or folded into another idea.
+- `Draft` – internal idea, not yet shown to any SME.
+- `In SME Review` – has been shared with at least one SME, and feedback is being incorporated.
+- `SME Feedback Incorporated` – updated based on SME comments; next changes will depend on data or future phases.
 
 Status values are expected to change over time as experts review these concepts and as pilots / studies are conducted.
 
@@ -31,13 +28,13 @@ Status values are expected to change over time as experts review these concepts 
 
 | ID   | Area                        | Concept                                                                 | Status            | Related White Paper Sections                                      |
 |------|-----------------------------|-------------------------------------------------------------------------|-------------------|--------------------------------------------------------------------|
-| C-00 | Platform / Engine           | Domain-agnostic construct-seeded generation engine                      | In Implementation | Part 2 – STEM Adapter (implicit), overall architecture             |
-| C-01 | Item Generation             | Construct-seeded AI item-generation pipeline (reasoning chain)          | Needs SME Review  | Part 2 – STEM Adapter; "The Safety Question"                       |
-| C-02 | Item Generation             | Anchors + embeddings as a semantic neighborhood for each construct      | Draft             | Part 2 – "Safety Question" (implied)                               |
-| C-03 | Consistency & Linking       | Consistency framework (semantic → classical/IRT → operational) + FRIs   | Draft             | Part 2 – "Safety Question"; Roadmap – Phase 1 & 2                  |
-| C-04 | Adaptation                  | Staged adaptive design (fixed → routed → CAT, with exposure control)    | Draft             | Part 2 – STEM Adapter (adaptive claims); Roadmap – Phase 1         |
-| C-05 | Personalization vs Construct| Profile flags as eligibility / wording constraints (not part of trait)  | Needs SME Review  | Part 2 – User Classification System; STEM Adapter                  |
-| C-06 | Validation Design           | Semantic-governance study (LLM gates vs SMEs on content validity)       | Draft             | Roadmap – Expert Validation; "The Safety Question"                 |
+| C-00 | Platform / Engine           | Domain-agnostic construct-seeded generation engine                      | In SME Review (Cho) | Part 2 – STEM Adapter (implicit), overall architecture             |
+| C-01 | Item Generation             | Construct-seeded AI item-generation pipeline (reasoning chain)          | In SME Review (Cho) | Part 2 – STEM Adapter; "The Safety Question"                       |
+| C-02 | Item Generation             | Anchors + embeddings as a semantic neighborhood for each construct      | In SME Review (Cho) | Part 2 – "Safety Question" (implied)                               |
+| C-03 | Consistency & Linking       | Consistency framework (semantic → classical/IRT → operational) + FRIs   | In SME Review (Cho) | Part 2 – "Safety Question"; Roadmap – Phase 1 & 2                  |
+| C-04 | Adaptation                  | Staged adaptive design (fixed → routed → CAT, with exposure control)    | In SME Review (Cho) | Part 2 – STEM Adapter (adaptive claims); Roadmap – Phase 1         |
+| C-05 | Personalization vs Construct| Profile flags as eligibility / wording constraints (not part of trait)  | In SME Review (Cho) | Part 2 – User Classification System; STEM Adapter                  |
+| C-06 | Validation Design           | Semantic-governance study (LLM gates vs SMEs on content validity)       | In SME Review (Cho) | Roadmap – Expert Validation; "The Safety Question"                 |
 | C-07 | Validation Design           | Predictive & consequential validity strategy in means-tested populations| Draft             | Executive Summary; Roadmap – later phases                          |
 | C-08 | Personalization, Fairness, Calibration | Item Models and Variants (Equivalence vs Distinct Items)     | Draft             | Part 2 – STEM Adapter; "The Safety Question"                       |
 
@@ -46,7 +43,7 @@ Status values are expected to change over time as experts review these concepts 
 ## C-00 – Domain-Agnostic Construct-Seeded Generation Engine
 
 **Area:** Platform / Engine
-**Status:** In Implementation
+**Status:** In SME Review (Cho)
 **Related White Paper Sections:** Part 2 – STEM Adapter (implicitly as "STEM-like engine"), overall architecture
 
 ### 1. Concept Summary
@@ -108,7 +105,7 @@ We want to focus expert input on questions that materially affect whether this e
 ## C-01 – Construct-Seeded AI Item-Generation Pipeline (Reasoning Chain)
 
 **Area:** Item Generation
-**Status:** Needs SME Review
+**Status:** In SME Review (Cho)
 **Related White Paper Sections:** Part 2 – STEM Adapter; "The Safety Question: How Do We Know AI Doesn't Change What's Being Measured?"
 
 ### 1. Concept Summary
@@ -177,7 +174,7 @@ We are specifically interested in whether this division of labor is **psychometr
 ## C-02 – Anchors + Embeddings as Semantic Neighborhoods
 
 **Area:** Item Generation
-**Status:** Draft
+**Status:** In SME Review (Cho)
 **Related White Paper Sections:** Part 2 – "The Safety Question" (implicitly); future technical notes
 
 ### 1. Concept Summary
@@ -258,7 +255,7 @@ We assume embeddings and anchors are only **supporting tools** for content work,
 ## C-03 – Consistency Framework (Semantic → Classical/IRT → Operational) + FRIs
 
 **Area:** Consistency & Linking
-**Status:** Draft
+**Status:** In SME Review (Cho)
 **Related White Paper Sections:** Part 2 – "The Safety Question"; Roadmap – Phase 1 & 2
 
 ### 1. Concept Summary
@@ -404,7 +401,7 @@ At that point, this three-layer consistency framework would become part of the "
 ## C-04 – Staged Adaptive Design (Fixed → Routed → CAT, with Exposure Control)
 
 **Area:** Adaptation
-**Status:** Draft
+**Status:** In SME Review (Cho)
 **Related White Paper Sections:** Part 2 – STEM Adapter (adaptive claims); Roadmap – Phase 1
 
 ### 1. Concept Summary
@@ -466,7 +463,7 @@ Throughout all stages:
 ## C-05 – Profile Flags as Eligibility / Wording Constraints (Not Part of Trait)
 
 **Area:** Personalization vs Construct
-**Status:** Needs SME Review
+**Status:** In SME Review (Cho)
 **Related White Paper Sections:** Part 2 – User Classification System; Pre-assessment; STEM Adapter
 
 ### 1. Concept Summary
@@ -510,7 +507,7 @@ By default, variants generated from the same item model using different incident
 ## C-06 – Semantic-Governance Study (LLM Gates vs SMEs)
 
 **Area:** Validation Design
-**Status:** Draft
+**Status:** In SME Review (Cho)
 **Related White Paper Sections:** Roadmap – Expert Validation; "The Safety Question"
 
 ### 1. Concept Summary
