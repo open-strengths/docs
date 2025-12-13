@@ -4,6 +4,8 @@ _Last updated: December 12, 2025_
 
 This document captures **working technical concepts** for the OpenStrengths platform that are **not yet fully validated** or finalized. It is an internal / expert-facing companion to the public white paper (v3.1).
 
+**Relationship to the Construct Validation Packet:** This memo is complementary to the construct validation packet. The packet deals with *what* is measured (the six-domain, thirty-six-facet ontology); this memo deals with *how* AI-assisted item generation and psychometric methods behave given that ontology.
+
 Concepts here:
 
 - May be partially implemented in code, partially on paper.
@@ -37,6 +39,8 @@ Status values are expected to change over time as experts review these concepts 
 | C-06 | Validation Design           | Semantic-governance study (LLM gates vs SMEs on content validity)       | In SME Review (Cho) | Roadmap – Expert Validation; "The Safety Question"                 |
 | C-07 | Validation Design           | Predictive & consequential validity strategy in means-tested populations| Draft             | Executive Summary; Roadmap – later phases                          |
 | C-08 | Personalization, Fairness, Calibration | Item Models and Variants (Equivalence vs Distinct Items)     | Draft             | Part 2 – STEM Adapter; "The Safety Question"                       |
+| C-09 | Validity Argument, Consequences, Design | Score Uses, Stakes, and Decision Structures                | Draft             | Executive Summary; Roadmap; "The Safety Question"                  |
+| C-10 | Validity, Response Process, Accessibility | Response Process & Accessibility for Target Population      | Draft             | Executive Summary; Roadmap; User Classification System             |
 
 ---
 
@@ -370,6 +374,8 @@ Right now, layer 1 is partially implemented (NLI construct-fidelity checks at ge
 
 We want focused input on how to make this framework practical and "good enough" for our context (low-stakes strengths assessment with AI-generated items):
 
+Our primary calibration sample will be adults in means-tested programs recruited via partner agencies (for example workforce development, housing supports). Generalizability to other populations or contexts will require explicit checks and, where necessary, separate calibration or DIF analyses.
+
 1. **For the first AI-generated pilot:**
    - What minimal but sufficient set of analyses would you run to judge consistency across facets and forms?
    - Which CTT indices and factor models would you consider mandatory vs "nice to have"?
@@ -672,5 +678,289 @@ Item-model documentation will record these decisions so they can be revisited as
 
 - From a measurement perspective, what minimum set of analyses would you consider sufficient to justify pooling variants from a single item model for scoring and calibration?
 - Are there feature types (for example context, timeframe, valence) that you would rarely or never treat as incidental in a strengths inventory like this?
+
+---
+
+## C-09 – Score Uses, Stakes, and Decision Structures
+
+**Area:** Validity Argument, Consequences, Design
+**Status:** Draft
+
+### 1. Concept Summary
+
+This concept clarifies how OpenStrengths scores are intended to be used in practice, and at what stakes, so that the psychometric design and validation work can be aligned with those uses.
+
+At a high level, we distinguish between:
+
+- **Descriptive profile uses** – ranking or grouping facets to support self-understanding, coaching, and guidance, without direct pass/fail decisions.
+- **Decision and triage uses** – using scores (or bands of scores) to trigger program actions, recommendations, or eligibility pathways.
+- **High-stakes classifications** – formal cut-score decisions with significant consequences (for example licensure, employment, exclusion).
+
+OpenStrengths is initially positioned in the **descriptive profile + low- to moderate-stakes triage** space, not as a high-stakes licensing or accountability instrument.
+
+### 2. Intended Uses of Scores: Risk-Adjusted Framework
+
+We organize score uses into two allowed tiers plus a set of explicitly prohibited uses. Each allowed tier has a corresponding **evidence bar** and **governance commitment**.
+
+#### Tier 1 – Self-Insight / Coaching (Allowed)
+
+**Use Cases:**
+- Each person receives a **36-facet profile**, typically presented as a rank-ordered list (highest to lowest) within six domains.
+- Reporting is **strengths-oriented**: lower scores indicate relatively less expressed strengths, not "deficits" or diagnostic labels.
+- Primary contexts:
+  - Self-reflection and personal development.
+  - Conversations with coaches, mentors, or case managers.
+  - Linking to qualitative narratives and skill-building suggestions (for example "how this facet might show up at work").
+
+**Stakes:**
+- Scores inform individuals and helpers.
+- No direct decision consequences: scores do not, by themselves, deny services, impose sanctions, or trigger formal interventions.
+
+**Evidence Bar (Tier 1):**
+- Reliability at the facet level sufficient to support stable rank ordering and banding.
+- Internal structure (EFA/CFA) showing that facets and domains behave as intended.
+- Basic convergent and discriminant validity (for example correlations with related constructs).
+- Initial fairness checks (group-level DIF and invariance analyses by key demographics).
+- Qualitative feedback from test takers and practitioners on interpretability and respect.
+
+**Current Status:**
+- **This is where OpenStrengths v1 is confined at launch.**
+- All current and near-term deployments operate exclusively in Tier 1.
+
+---
+
+#### Tier 2 – Support Targeting / Extra Help (Conditionally Allowed)
+
+**Use Cases:**
+- In contexts like housing authorities, workforce development, or other means-tested services, scores may inform:
+  - **Recommendations** (for example suggesting programs, coaching modules, or supports that align with a person's strengths).
+  - **Triage flags** (for example "may benefit from extra support with follow-through" as a prompt for a human worker, not an automated gate).
+- Implementation uses:
+  - **Score bands or quantiles** on facets or domains (for example "higher expressed," "typical," "lower expressed") rather than hard pass/fail thresholds.
+  - **Composite indicators** where helpful (for example combinations of stability and drive facets for certain types of interventions).
+
+**Stakes:**
+- Scores guide extra help and tailored opportunities.
+- **Supportive and additive only**: scores may suggest *more* support, outreach, or resources, never *less* access to existing services or benefits.
+- Human workers retain final decision authority.
+
+**Evidence Bar (Tier 2):**
+- All Tier 1 evidence, plus:
+- Predictive validity for relevant outcomes (for example program engagement, persistence, self-reported progress).
+- Governance rules explicitly documented (for example what kinds of flags are permitted, who can override, audit trails).
+- Ongoing bias monitoring by demographic and program context.
+- Evidence that triage recommendations do not systematically disadvantage specific groups.
+
+**Current Status:**
+- **Not yet deployed.**
+- Any move to Tier 2 requires completion of the Tier 2 evidence program and explicit partner agreement on documented governance rules.
+
+---
+
+#### Prohibited Uses (Explicit Red Line)
+
+The following uses are **explicitly out of scope** for OpenStrengths and will be **prohibited by design and by policy**:
+
+- Any use of scores as the sole or primary basis for **denying, reducing, or terminating** housing, income, food, health, or related benefits.
+- Any use of scores as a **hiring/firing, licensure, or exclusion tool**.
+- Any use where an adverse classification from OpenStrengths directly **triggers sanctions**.
+- Any formal **pass/fail classifications** with legal or policy consequences.
+
+**Why These Are Prohibited:**
+
+OpenStrengths is **not designed or validated** as a high-stakes selection or sanctioning instrument, and we do not intend to support such uses. High-stakes uses would require a fundamentally different validity and fairness program, different content and score scales, and legal and policy review that are not part of the current instrument's scope.
+
+---
+
+#### Fit-for-Purpose, Risk-Adjusted Validation
+
+The framework above reflects a fundamental design principle:
+
+> **The level of psychometric scrutiny and governance is proportional to decision risk.**
+>
+> Early deployments are restricted to Tier 1 uses unless and until Tier 2 evidence and governance structures are co-designed with partners and reviewed by measurement experts. Prohibited uses remain categorically out of scope.
+
+### 3. Implications for Validity and Design
+
+Given these intended uses:
+
+1. **Construct and content validity** (C-00, C-01, construct validation packet)
+   - The six-domain, thirty-six-facet ontology must support meaningful interpretations of *relative* strengths across the profile.
+   - Facet descriptions and items must be clearly interpretable for the target population and the professionals who will use the reports.
+
+2. **Internal structure and reliability**
+   - For profile uses, reliability at the **facet level** is important enough to support stable rankings and bands, even if domains are sometimes aggregated for communication.
+   - The planned move from classical test theory to IRT is motivated by **precision and comparability** across forms and time, not by high-stakes decisions.
+
+3. **Fairness and differential impact**
+   - Even at low- to moderate-stakes, we need evidence that scores behave comparably across key groups (for example by demographic variables and by program context), especially when scores inform triage or recommendations.
+   - DIF analyses and invariance checks become part of the routine evidence base, particularly as the item bank and populations expand.
+
+4. **Consequential validity**
+   - Because the target population includes individuals on means-tested services, we treat consequences as central:
+     - Are profiles and recommendations experienced as helpful and respectful?
+     - Do they support engagement, agency, and skill-building rather than stigma or fatalism?
+   - This suggests mixed-method evaluation (for example qualitative feedback from test takers and practitioners) alongside psychometric evidence.
+
+5. **Predictive and external criteria validity**
+   - To support Tier 2 uses and to demonstrate that facet/domain scores have meaningful real-world correlates, we plan to examine relationships between scores and external outcomes (for example program engagement, persistence, completion, self-reported progress, or employment changes).
+   - This work will build on the foundational Tier 1 evidence base and is critical for any move beyond purely descriptive profile uses.
+
+### 4. Relationship to Other Concepts
+
+- **Construct Model and Validation Packet**
+  The construct validation work with university partners (for example domain/facet definitions and SME review) is the foundation for any meaningful score interpretation in this use framework.
+
+- **C-03 – Three-Layer Consistency**
+  The internal and operational consistency checks described in C-03 are tied to ensuring that:
+  - Facet scores can be trusted for profile ranking and banding.
+  - Longitudinal and cross-form comparisons remain defensible as the bank evolves.
+
+- **C-04 / C-05 – Adaptation and Profile Flags**
+  Adaptive delivery and personalization are constrained by the intended uses:
+  - Profile flags may influence which items are seen and how they are worded, but they do not enter the latent trait model.
+  - Any routing or CAT logic must preserve the comparability and interpretability of facet scores for their intended descriptive and triage roles.
+
+### 5. Questions for Advisors
+
+- Given these intended uses (profile + low/moderate-stakes triage, no current high-stakes pass/fail decisions), what would you consider the **minimal adequate validity program** in the early phases?
+- Are there specific risks or unintended consequences you would flag for this population and use case that should be monitored from the outset (for example particular facets more sensitive to cultural or contextual interpretation)?
+- If, in some settings, stakeholders request more decision-like uses (for example thresholds for program eligibility tiers), what conditions and additional evidence would you view as necessary before supporting those uses?
+
+---
+
+## C-10 – Response Process & Accessibility for Target Population
+
+**Area:** Validity, Response Process, Accessibility
+**Status:** Draft
+
+### 1. Concept Summary
+
+This concept describes the planned work to ensure that OpenStrengths items and score reports are **understandable, respectful, and culturally appropriate** for the target population: adults with lower educational attainment, many served by means-tested programs, often in rural or underserved contexts, and including individuals with trauma histories.
+
+Response-process validity asks: **Do test takers interpret items in the way we intend?** This is critical for our population even at Tier 1 (low-stakes) uses, because misinterpretation undermines the meaning of scores and can erode trust or engagement.
+
+Unlike purely psychometric analyses (factor structure, reliability, DIF), response-process work is **qualitative and user-centered**. It complements, but does not replace, statistical validation.
+
+---
+
+### 2. Planned Studies and Methods
+
+#### 2.1 Cognitive Interviews / Think-Alouds
+
+**Goal:** Understand how target users interpret item language, navigate response scales, and make sense of score reports.
+
+**Sample:**
+- Adults currently or recently enrolled in means-tested services (for example workforce development, housing supports, SNAP, TANF).
+- Rural and underserved contexts.
+- Mix of literacy levels and trauma exposure.
+- Diverse demographic representation (race, ethnicity, age, gender, disability status).
+
+**Protocol:**
+- Present a subset of items (positive and reverse stems, across facets).
+- Ask participants to:
+  - Read the item aloud and explain what they think it means.
+  - Identify any confusing, triggering, or culturally inappropriate language.
+  - Choose a response and explain their reasoning.
+- Present a sample score report and ask:
+  - What does this profile tell you about yourself?
+  - How would you use this information?
+  - Does the language feel respectful and strengths-oriented, or stigmatizing?
+
+**Analysis:**
+- Identify items where intended meaning diverges from participant interpretation.
+- Flag language that triggers distress, confusion, or cultural mismatch.
+- Document participants' emotional and cognitive reactions to report framing.
+
+---
+
+#### 2.2 Reading Level and Language Simplification
+
+**Goal:** Ensure items are accessible to adults with lower literacy levels without changing the underlying construct.
+
+**Approach:**
+- Use automated readability tools (for example Flesch-Kincaid, SMOG) as a first screen, targeting Grade 6–8 reading level for final items.
+- Use LLMs to propose simplified phrasings of items that flag as too complex.
+- Submit LLM-proposed simplifications to:
+  - **SME review** (do they preserve construct alignment?).
+  - **User feedback** (are they clearer for target readers?).
+- Final decision on which simplifications to adopt rests with human reviewers informed by both SME and user input.
+
+**Feedback Loop:**
+- Findings feed back into **item models** (C-08), updating reading-level constraints and approved phrasing templates.
+- Items that cannot be simplified without distorting the construct are flagged for possible retirement or restriction to higher-literacy subsamples.
+
+---
+
+#### 2.3 Trauma-Sensitive Item Design
+
+**Goal:** Minimize triggering or re-traumatizing language while preserving construct coverage.
+
+**Approach:**
+- Review all items (especially those touching on stress, interpersonal conflict, or self-regulation) with a trauma-informed care specialist.
+- Flag items that:
+  - Use language implying blame or failure.
+  - Reference specific trauma scenarios (abuse, violence, loss) unnecessarily.
+  - Could be interpreted as intrusive or coercive.
+- For flagged items:
+  - Revise phrasing to focus on strengths and agency rather than deficits.
+  - Offer context-neutral alternatives where possible (for example "in difficult situations" rather than "when facing violence").
+  - Where revision is not feasible without losing construct meaning, mark the item with a `trauma_sensitive: true` flag so it can be excluded for individuals who opt into trauma-sensitive versions.
+
+**Governance:**
+- Trauma-sensitive exclusions are implemented via profile flags (C-05) at generation or selection time.
+- Exclusions are documented and audited to ensure they do not systematically distort facet coverage or introduce new biases.
+
+---
+
+#### 2.4 Cultural Interpretation and Contextual Appropriateness
+
+**Goal:** Ensure that facet descriptions and items reflect culturally diverse expressions of strengths, not just dominant-culture norms.
+
+**Approach:**
+- Engage community partners and focus groups representing the target population's diversity (race, ethnicity, region, immigrant status).
+- Present facet definitions and sample items, and ask:
+  - Do these descriptions resonate with how strengths show up in your community or context?
+  - Are there ways of expressing this strength that are not captured by these items?
+  - Are any items culturally biased or inappropriate?
+- Use findings to:
+  - Expand the diversity of anchor statements and item prompts within each facet's item models.
+  - Identify facets where cultural interpretation varies significantly, flagging them for careful DIF analysis in pilots.
+
+---
+
+### 3. Relationship to Other Concepts
+
+- **C-05 – Profile Flags**
+  Accessibility features (reading level, trauma-sensitive wording) are implemented as profile flags that affect which items are eligible and how they are phrased, without changing the latent trait model.
+
+- **C-08 – Item Models and Variants**
+  Findings from response-process work inform the **incidental features** allowed within item models (for example reading level, trauma sensitivity) and help distinguish those from **radical features** that would change what is being measured.
+
+- **C-03 – Consistency Framework (Semantic Layer)**
+  Response-process feedback complements the NLI and embedding checks by validating that items are not only semantically aligned with constructs but also **interpretable by real users**.
+
+- **C-09 – Score Uses and Stakes**
+  Because the target population includes individuals in vulnerable contexts, response-process validity is treated as **essential even at Tier 1 (low-stakes) uses**, not as a luxury reserved for high-stakes testing.
+
+---
+
+### 4. Current Implementation Reality
+
+- **Not yet implemented:**
+  - No cognitive interviews or think-alouds have been conducted.
+  - No formal trauma-informed review has been completed.
+  - Readability screening and LLM-based simplification exist as prototype capabilities but are not yet part of the standard item-generation or approval workflow.
+
+- **Design-level only:**
+  - The workflows described here are intended plans that will be piloted before the first large-scale deployment.
+
+---
+
+### 5. Questions for Advisors
+
+- In your experience, what is the **minimum sample size and diversity** for cognitive interviews or think-alouds to provide actionable evidence for response-process validity in a strengths assessment like this?
+- Are there specific **red flags** or failure modes you would watch for when using AI to propose simplified or trauma-sensitive item phrasings (for example construct drift, unintended tone shifts)?
+- Given our target population and Tier 1 uses, how would you prioritize response-process work relative to other early validation activities (for example pilot psychometrics, DIF analyses)?
 
 ---
