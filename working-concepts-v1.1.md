@@ -2,9 +2,7 @@
 
 _Last updated: December 12, 2025_
 
-This document captures **working technical concepts** for the OpenStrengths platform that are **not yet fully validated** or finalized. It is an internal / expert-facing companion to the public white paper (v3.1).
-
-**Relationship to the Construct Validation Packet:** This memo is complementary to the construct validation packet. The packet deals with *what* is measured (the six-domain, thirty-six-facet ontology); this memo deals with *how* AI-assisted item generation and psychometric methods behave given that ontology.
+This document is a **technical companion to the OpenStrengths white paper (v3.1)**. It captures working concepts for the AI and measurement architecture that are **not yet finalized** and that we intend to refine with subject-matter experts (SMEs) before promoting them into the white paper. By keeping these concepts in a separate working document, we can iterate with SMEs on technical design questions—item generation, calibration, adaptive delivery, fairness monitoring—without revising the white paper with every change. Once a concept is validated and stable, it may be promoted into the white paper as canonical guidance.
 
 Concepts here:
 
@@ -46,8 +44,12 @@ Status values are expected to change over time as experts review these concepts 
 
 ## C-00 – Domain-Agnostic Construct-Seeded Generation Engine
 
-**Area:** Platform / Engine
+**Area:** Platform / Engine Architecture
 **Status:** In SME Review (Cho)
+**Origin:**
+- Internal concept drafted prior to external SME review; documents existing TypeScript architecture and intended design.
+- Under review with Jake Cho as part of broader discussion of how AI-generated items align with construct specifications.
+
 **Related White Paper Sections:** Part 2 – STEM Adapter (implicitly as "STEM-like engine"), overall architecture
 
 ### 1. Concept Summary
@@ -104,12 +106,24 @@ We want to focus expert input on questions that materially affect whether this e
 - Demonstrated use of the engine on at least one ontology beyond the OpenStrengths model (e.g., a small external construct set).
 - Expert agreement that a construct-seeded, domain-agnostic architecture is acceptable in principle, given appropriate safeguards and clearly defined boundary conditions.
 
+### 5. Questions & Status
+
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-00.Q1 | Can a construct-seeded, domain-agnostic engine generalize safely beyond the OpenStrengths ontology, or are there boundary conditions where it should not be used? | SME (Cho) + Internal | In progress | See §3: seeking expert input on boundary conditions for clinical or high-stakes contexts. |
+| C-00.Q2 | What additional fields (beyond name, description, poles, anchors) would be essential in the construct specification schema for downstream validity? | SME (Cho) | Pending | To be discussed with SMEs; may include intended population, hypothesized correlates/opposites, explicit exclusions. |
+| C-00.Q3 | Is the current TypeScript implementation of construct-seeded generation adequately flexible to support external ontologies? | Internal (Zach) | Answered | Yes, data model supports custom construct specs; "bring your own ontology" API not yet exposed but architecturally feasible. See §2. |
+
 ---
 
 ## C-01 – Construct-Seeded AI Item-Generation Pipeline (Reasoning Chain)
 
 **Area:** Item Generation
 **Status:** In SME Review (Cho)
+**Origin:**
+- Internal concept drafted prior to external SME review; documents reasoning chain for AI-assisted item generation.
+- Under review with Jake Cho as part of validating the division of labor between human-defined constructs and AI-generated items.
+
 **Related White Paper Sections:** Part 2 – STEM Adapter; "The Safety Question: How Do We Know AI Doesn't Change What's Being Measured?"
 
 ### 1. Concept Summary
@@ -173,12 +187,25 @@ We are specifically interested in whether this division of labor is **psychometr
 - At least one measurement expert confirms that this reasoning chain is acceptable as a basis for item authoring, given proper semantic and psychometric checks.
 - We have run at least one small pilot showing that construct-seeded, AI-written items behave roughly as expected at the factor structure level.
 
+### 5. Questions & Status
+
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-01.Q1 | Is the "constructs first, AI second" division of labor psychometrically acceptable for a low-stakes strengths assessment? | SME (Cho) | In progress | See §1 and §3; awaiting SME confirmation that reasoning chain is sound. |
+| C-01.Q2 | What specific failure modes (narrow coverage, construct drift) should be tested in early pilots? | SME (Cho) | Pending | To be discussed with SMEs before first pilot. |
+| C-01.Q3 | What minimum checks beyond standard content review are needed when running first pilot with AI-generated items? | SME (Cho) | Pending | May include additional SME panels or structured cognitive interviews; see C-10. |
+| C-01.Q4 | Is the current NLI-based construct-fidelity gate implemented and working? | Internal (Zach) | Answered | Yes, implemented in TypeScript app; checks entailment for positive stems and contradiction for reverse stems. See §2. |
+
 ---
 
 ## C-02 – Anchors + Embeddings as Semantic Neighborhoods
 
 **Area:** Item Generation
 **Status:** In SME Review (Cho)
+**Origin:**
+- Internal concept drafted prior to external SME review; extends semantic validation beyond NLI to include embedding-based neighborhood checks.
+- Designed to support both content screening and anchor selection workflow.
+
 **Related White Paper Sections:** Part 2 – "The Safety Question" (implicitly); future technical notes
 
 ### 1. Concept Summary
@@ -254,12 +281,25 @@ We assume embeddings and anchors are only **supporting tools** for content work,
 - A documented anchor-selection workflow (including SME review and, where relevant, empirical checks) tested on at least one pilot dataset.
 - Evidence that the semantic neighborhood defined by description plus anchors correlates sensibly with SME assessments of on- vs off-construct items across multiple facets.
 
+### 5. Questions & Status
+
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-02.Q1 | Where have semantic/embedding tools been useful for content validity work, and where are there red flags? | SME (Cho) | Pending | Seeking expert input on appropriate use cases and limitations. |
+| C-02.Q2 | What documentation/audit trail would SMEs want to see to ensure embeddings don't substitute for expert judgment? | SME (Cho) | Pending | May include anchor selection logs, thresholds used, SME review records. |
+| C-02.Q3 | How many anchors per facet are "enough" to define a stable semantic neighborhood? | SME (Cho) + Internal | Pending | Need expert guidance on anchor set size and behavioral diversity. |
+| C-02.Q4 | Is the anchor workflow (§2.1) currently implemented? | Internal (Zach) | Answered | Partially: data structures exist, embeddings stored in Supabase, but principled selection workflow not yet operational. See §2. |
+
 ---
 
 ## C-03 – Consistency Framework (Semantic → Classical/IRT → Operational) + FRIs
 
 **Area:** Consistency & Linking
 **Status:** In SME Review (Cho)
+**Origin:**
+- Created in response to Jake Cho's central question: "How will you know your AI-generated items behave consistently across forms, domains, and facets?"
+- Synthesizes three-layer approach (semantic → statistical → operational) with hybrid calibrated-bank stance.
+
 **Related White Paper Sections:** Part 2 – "The Safety Question"; Roadmap – Phase 1 & 2
 
 ### 1. Concept Summary
@@ -401,6 +441,16 @@ This concept would be considered ready to promote into the main white paper (and
   - A preliminary set of FRIs per facet can be identified and appears reasonably stable across subsamples or calibration waves.
 
 At that point, this three-layer consistency framework would become part of the "canonical" description of how OpenStrengths maintains consistency across AI-generated items, forms, domains, and facets.
+
+### 5. Questions & Status
+
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-03.Q1 | What minimal but sufficient analyses should be run to judge consistency across facets and forms in the first AI-generated pilot? | SME (Cho) | In progress | See §3; seeking expert input on mandatory vs "nice to have" CTT indices and factor models. |
+| C-03.Q2 | Which polytomous IRT models should be considered first, and what criteria justify moving from CTT to IRT? | SME (Cho) | Pending | Candidate models: graded response or partial credit; criteria to be defined with expert input. |
+| C-03.Q3 | How many FRIs per facet are reasonable for linking and monitoring in a 36-facet assessment? | SME (Cho) | Pending | Need expert guidance on FRI set size and ongoing monitoring expectations. |
+| C-03.Q4 | Is the NLI construct-fidelity gate currently operational? | Internal (Zach) | Answered | Yes, implemented for generation; items failing NLI gate do not enter candidate pool. See §2. |
+| C-03.Q5 | Will the primary calibration sample be adults in means-tested programs? | Internal (Robert) | Answered | Yes, recruited via partner agencies; generalizability to other populations requires explicit checks. See §3. |
 
 ---
 
