@@ -1,6 +1,6 @@
-# OpenStrengths Technical Notes (Working Concepts) v1.2
+# OpenStrengths Technical Notes (Working Concepts) v1.1
 
-_Last updated: December 14, 2025_
+_Last updated: December 12, 2025_
 
 This document is a **technical companion to the OpenStrengths white paper (v3.1)**. It captures working concepts for the AI and measurement architecture that are **not yet finalized** and that we intend to refine with subject-matter experts (SMEs) before promoting them into the white paper. By keeping these concepts in a separate working document, we can iterate with SMEs on technical design questions—item generation, calibration, adaptive delivery, fairness monitoring—without revising the white paper with every change. Once a concept is validated and stable, it may be promoted into the white paper as canonical guidance.
 
@@ -28,13 +28,13 @@ Status values are expected to change over time as experts review these concepts 
 
 | ID   | Area                        | Concept                                                                 | Status            | Related White Paper Sections                                      |
 |------|-----------------------------|-------------------------------------------------------------------------|-------------------|--------------------------------------------------------------------|
-| C-00 | Platform / Engine           | Domain-agnostic construct-seeded generation engine                      | In SME Review (External SME #1) | Part 2 – STEM Adapter (implicit), overall architecture             |
-| C-01 | Item Generation             | Construct-seeded AI item-generation pipeline (reasoning chain)          | In SME Review (External SME #1) | Part 2 – STEM Adapter; "The Safety Question"                       |
-| C-02 | Item Generation             | Anchors + embeddings as a semantic neighborhood for each construct      | In SME Review (External SME #1) | Part 2 – "Safety Question" (implied)                               |
-| C-03 | Consistency & Linking       | Consistency framework (semantic → classical/IRT → operational) + FRIs   | In SME Review (External SME #1) | Part 2 – "Safety Question"; Roadmap – Phase 1 & 2                  |
-| C-04 | Adaptation                  | Staged adaptive design (fixed → routed → CAT, with exposure control)    | In SME Review (External SME #1) | Part 2 – STEM Adapter (adaptive claims); Roadmap – Phase 1         |
-| C-05 | Personalization vs Construct| Profile flags as eligibility / wording constraints (not part of trait)  | In SME Review (External SME #1) | Part 2 – User Classification System; STEM Adapter                  |
-| C-06 | Validation Design           | Semantic-governance study (LLM gates vs SMEs on content validity)       | In SME Review (External SME #1) | Roadmap – Expert Validation; "The Safety Question"                 |
+| C-00 | Platform / Engine           | Domain-agnostic construct-seeded generation engine                      | In SME Review (Cho) | Part 2 – STEM Adapter (implicit), overall architecture             |
+| C-01 | Item Generation             | Construct-seeded AI item-generation pipeline (reasoning chain)          | In SME Review (Cho) | Part 2 – STEM Adapter; "The Safety Question"                       |
+| C-02 | Item Generation             | Anchors + embeddings as a semantic neighborhood for each construct      | In SME Review (Cho) | Part 2 – "Safety Question" (implied)                               |
+| C-03 | Consistency & Linking       | Consistency framework (semantic → classical/IRT → operational) + FRIs   | In SME Review (Cho) | Part 2 – "Safety Question"; Roadmap – Phase 1 & 2                  |
+| C-04 | Adaptation                  | Staged adaptive design (fixed → routed → CAT, with exposure control)    | In SME Review (Cho) | Part 2 – STEM Adapter (adaptive claims); Roadmap – Phase 1         |
+| C-05 | Personalization vs Construct| Profile flags as eligibility / wording constraints (not part of trait)  | In SME Review (Cho) | Part 2 – User Classification System; STEM Adapter                  |
+| C-06 | Validation Design           | Semantic-governance study (LLM gates vs SMEs on content validity)       | In SME Review (Cho) | Roadmap – Expert Validation; "The Safety Question"                 |
 | C-07 | Validation Design           | Predictive & consequential validity strategy in means-tested populations| Draft             | Executive Summary; Roadmap – later phases                          |
 | C-08 | Personalization, Fairness, Calibration | Item Models and Variants (Equivalence vs Distinct Items)     | Draft             | Part 2 – STEM Adapter; "The Safety Question"                       |
 | C-09 | Validity Argument, Consequences, Design | Score Uses, Stakes, and Decision Structures                | Draft             | Executive Summary; Roadmap; "The Safety Question"                  |
@@ -45,10 +45,10 @@ Status values are expected to change over time as experts review these concepts 
 ## C-00 – Domain-Agnostic Construct-Seeded Generation Engine
 
 **Area:** Platform / Engine Architecture
-**Status:** In SME Review (External SME #1)
+**Status:** In SME Review (Cho)
 **Origin:**
 - Internal concept drafted prior to external SME review; documents existing TypeScript architecture and intended design.
-- Under review with an external measurement-science advisor as part of broader discussion of how AI-generated items align with construct specifications.
+- Under review with Jake Cho as part of broader discussion of how AI-generated items align with construct specifications.
 
 **Related White Paper Sections:** Part 2 – STEM Adapter (implicitly as "STEM-like engine"), overall architecture
 
@@ -110,8 +110,8 @@ We want to focus expert input on questions that materially affect whether this e
 
 | ID | Question | Source | Status | Answer / Reference |
 |----|----------|--------|--------|-------------------|
-| C-00.Q1 | Can a construct-seeded, domain-agnostic engine generalize safely beyond the OpenStrengths ontology, or are there boundary conditions where it should not be used? | External SME #1 + Internal | In progress | See §3: seeking expert input on boundary conditions for clinical or high-stakes contexts. |
-| C-00.Q2 | What additional fields (beyond name, description, poles, anchors) would be essential in the construct specification schema for downstream validity? | External SME #1 | Pending | To be discussed with SMEs; may include intended population, hypothesized correlates/opposites, explicit exclusions. |
+| C-00.Q1 | Can a construct-seeded, domain-agnostic engine generalize safely beyond the OpenStrengths ontology, or are there boundary conditions where it should not be used? | SME (Cho) + Internal | In progress | See §3: seeking expert input on boundary conditions for clinical or high-stakes contexts. |
+| C-00.Q2 | What additional fields (beyond name, description, poles, anchors) would be essential in the construct specification schema for downstream validity? | SME (Cho) | Pending | To be discussed with SMEs; may include intended population, hypothesized correlates/opposites, explicit exclusions. |
 | C-00.Q3 | Is the current TypeScript implementation of construct-seeded generation adequately flexible to support external ontologies? | Internal (Zach) | Answered | Yes, data model supports custom construct specs; "bring your own ontology" API not yet exposed but architecturally feasible. See §2. |
 
 ---
@@ -119,10 +119,10 @@ We want to focus expert input on questions that materially affect whether this e
 ## C-01 – Construct-Seeded AI Item-Generation Pipeline (Reasoning Chain)
 
 **Area:** Item Generation
-**Status:** In SME Review (External SME #1)
+**Status:** In SME Review (Cho)
 **Origin:**
 - Internal concept drafted prior to external SME review; documents reasoning chain for AI-assisted item generation.
-- Under review with an external measurement-science advisor as part of validating the division of labor between human-defined constructs and AI-generated items.
+- Under review with Jake Cho as part of validating the division of labor between human-defined constructs and AI-generated items.
 
 **Related White Paper Sections:** Part 2 – STEM Adapter; "The Safety Question: How Do We Know AI Doesn't Change What's Being Measured?"
 
@@ -191,9 +191,9 @@ We are specifically interested in whether this division of labor is **psychometr
 
 | ID | Question | Source | Status | Answer / Reference |
 |----|----------|--------|--------|-------------------|
-| C-01.Q1 | Is the "constructs first, AI second" division of labor psychometrically acceptable for a low-stakes strengths assessment? | External SME #1 | In progress | See §1 and §3; awaiting SME confirmation that reasoning chain is sound. |
-| C-01.Q2 | What specific failure modes (narrow coverage, construct drift) should be tested in early pilots? | External SME #1 | Pending | To be discussed with SMEs before first pilot. |
-| C-01.Q3 | What minimum checks beyond standard content review are needed when running first pilot with AI-generated items? | External SME #1 | Pending | May include additional SME panels or structured cognitive interviews; see C-10. |
+| C-01.Q1 | Is the "constructs first, AI second" division of labor psychometrically acceptable for a low-stakes strengths assessment? | SME (Cho) | In progress | See §1 and §3; awaiting SME confirmation that reasoning chain is sound. |
+| C-01.Q2 | What specific failure modes (narrow coverage, construct drift) should be tested in early pilots? | SME (Cho) | Pending | To be discussed with SMEs before first pilot. |
+| C-01.Q3 | What minimum checks beyond standard content review are needed when running first pilot with AI-generated items? | SME (Cho) | Pending | May include additional SME panels or structured cognitive interviews; see C-10. |
 | C-01.Q4 | Is the current NLI-based construct-fidelity gate implemented and working? | Internal (Zach) | Answered | Yes, implemented in TypeScript app; checks entailment for positive stems and contradiction for reverse stems. See §2. |
 
 ---
@@ -201,7 +201,7 @@ We are specifically interested in whether this division of labor is **psychometr
 ## C-02 – Anchors + Embeddings as Semantic Neighborhoods
 
 **Area:** Item Generation
-**Status:** In SME Review (External SME #1)
+**Status:** In SME Review (Cho)
 **Origin:**
 - Internal concept drafted prior to external SME review; extends semantic validation beyond NLI to include embedding-based neighborhood checks.
 - Designed to support both content screening and anchor selection workflow.
@@ -285,9 +285,9 @@ We assume embeddings and anchors are only **supporting tools** for content work,
 
 | ID | Question | Source | Status | Answer / Reference |
 |----|----------|--------|--------|-------------------|
-| C-02.Q1 | Where have semantic/embedding tools been useful for content validity work, and where are there red flags? | External SME #1 | Pending | Seeking expert input on appropriate use cases and limitations. |
-| C-02.Q2 | What documentation/audit trail would SMEs want to see to ensure embeddings don't substitute for expert judgment? | External SME #1 | Pending | May include anchor selection logs, thresholds used, SME review records. |
-| C-02.Q3 | How many anchors per facet are "enough" to define a stable semantic neighborhood? | External SME #1 + Internal | Pending | Need expert guidance on anchor set size and behavioral diversity. |
+| C-02.Q1 | Where have semantic/embedding tools been useful for content validity work, and where are there red flags? | SME (Cho) | Pending | Seeking expert input on appropriate use cases and limitations. |
+| C-02.Q2 | What documentation/audit trail would SMEs want to see to ensure embeddings don't substitute for expert judgment? | SME (Cho) | Pending | May include anchor selection logs, thresholds used, SME review records. |
+| C-02.Q3 | How many anchors per facet are "enough" to define a stable semantic neighborhood? | SME (Cho) + Internal | Pending | Need expert guidance on anchor set size and behavioral diversity. |
 | C-02.Q4 | Is the anchor workflow (§2.1) currently implemented? | Internal (Zach) | Answered | Partially: data structures exist, embeddings stored in Supabase, but principled selection workflow not yet operational. See §2. |
 
 ---
@@ -295,9 +295,9 @@ We assume embeddings and anchors are only **supporting tools** for content work,
 ## C-03 – Consistency Framework (Semantic → Classical/IRT → Operational) + FRIs
 
 **Area:** Consistency & Linking
-**Status:** In SME Review (External SME #1)
+**Status:** In SME Review (Cho)
 **Origin:**
-- Created in response to questions from an external measurement-science advisor about how we ensure AI-generated items behave consistently across forms, domains, and facets.
+- Created in response to Jake Cho's central question: "How will you know your AI-generated items behave consistently across forms, domains, and facets?"
 - Synthesizes three-layer approach (semantic → statistical → operational) with hybrid calibrated-bank stance.
 
 **Related White Paper Sections:** Part 2 – "The Safety Question"; Roadmap – Phase 1 & 2
@@ -446,9 +446,9 @@ At that point, this three-layer consistency framework would become part of the "
 
 | ID | Question | Source | Status | Answer / Reference |
 |----|----------|--------|--------|-------------------|
-| C-03.Q1 | What minimal but sufficient analyses should be run to judge consistency across facets and forms in the first AI-generated pilot? | External SME #1 | In progress | See §3; seeking expert input on mandatory vs "nice to have" CTT indices and factor models. |
-| C-03.Q2 | Which polytomous IRT models should be considered first, and what criteria justify moving from CTT to IRT? | External SME #1 | Pending | Candidate models: graded response or partial credit; criteria to be defined with expert input. |
-| C-03.Q3 | How many FRIs per facet are reasonable for linking and monitoring in a 36-facet assessment? | External SME #1 | Pending | Need expert guidance on FRI set size and ongoing monitoring expectations. |
+| C-03.Q1 | What minimal but sufficient analyses should be run to judge consistency across facets and forms in the first AI-generated pilot? | SME (Cho) | In progress | See §3; seeking expert input on mandatory vs "nice to have" CTT indices and factor models. |
+| C-03.Q2 | Which polytomous IRT models should be considered first, and what criteria justify moving from CTT to IRT? | SME (Cho) | Pending | Candidate models: graded response or partial credit; criteria to be defined with expert input. |
+| C-03.Q3 | How many FRIs per facet are reasonable for linking and monitoring in a 36-facet assessment? | SME (Cho) | Pending | Need expert guidance on FRI set size and ongoing monitoring expectations. |
 | C-03.Q4 | Is the NLI construct-fidelity gate currently operational? | Internal (Zach) | Answered | Yes, implemented for generation; items failing NLI gate do not enter candidate pool. See §2. |
 | C-03.Q5 | Will the primary calibration sample be adults in means-tested programs? | Internal (Robert) | Answered | Yes, recruited via partner agencies; generalizability to other populations requires explicit checks. See §3. |
 
@@ -457,11 +457,7 @@ At that point, this three-layer consistency framework would become part of the "
 ## C-04 – Staged Adaptive Design (Fixed → Routed → CAT, with Exposure Control)
 
 **Area:** Adaptation
-**Status:** In SME Review (External SME #1)
-**Origin:**
-- Created in response to questions from an external measurement-science advisor about how examinee profiles drive adaptive item selection and test assembly (including exposure controls).
-- Incorporates expert advice to start with simpler designs (fixed/planned-missing) before full CAT.
-
+**Status:** In SME Review (Cho)
 **Related White Paper Sections:** Part 2 – STEM Adapter (adaptive claims); Roadmap – Phase 1
 
 ### 1. Concept Summary
@@ -518,24 +514,12 @@ Throughout all stages:
 - Expert agreement on the staged approach and on the key design parameters for each stage.
 - Pilot or simulation results showing that routing and CAT do not materially distort the facet score distributions compared to fixed-form baselines.
 
-### 5. Questions & Status
-
-| ID | Question | Source | Status | Answer / Reference |
-|----|----------|--------|--------|-------------------|
-| C-04.Q1 | Is a staged path (fixed → routed → CAT) a sensible trajectory for a multi-facet strengths assessment? | External SME #1 | In progress | See §1 and §3; seeking expert validation of staged approach. |
-| C-04.Q2 | What would be a reasonable number of routing items and follow-up items per facet for Stage 1 adaptive prototypes? | External SME #1 | Pending | To be determined with expert input before Stage 1 implementation. |
-| C-04.Q3 | What level of exposure control is "good enough" for low-stakes personal-development use cases? | External SME #1 | Pending | Simple caps on item usage and randomization may suffice; seeking expert confirmation. |
-| C-04.Q4 | Does the codebase support provisional θ and SEM tracking? | Internal (Zach) | Answered | Yes, scoring engine exists but not yet used for information-based item selection. All current flows are fixed-form. See §2. |
-
 ---
 
 ## C-05 – Profile Flags as Eligibility / Wording Constraints (Not Part of Trait)
 
 **Area:** Personalization vs Construct
-**Status:** In SME Review (External SME #1)
-**Origin:**
-- Created in response to questions from an external measurement-science advisor about how profile-based variants are generated and whether they function as equivalent items for scoring.
-- Incorporates expert guidance to treat personalization features as incidental (not part of the trait model) but to validate that claim empirically via DIF and invariance analyses.
+**Status:** In SME Review (Cho)
 **Related White Paper Sections:** Part 2 – User Classification System; Pre-assessment; STEM Adapter
 
 ### 1. Concept Summary
@@ -574,24 +558,12 @@ By default, variants generated from the same item model using different incident
 - Expert agreement that this stance is acceptable given proper monitoring.
 - At least one DIF / invariance analysis showing that personalization decisions do not introduce unacceptable bias across key groups.
 
-### 5. Questions & Status
-
-| ID | Question | Source | Status | Answer / Reference |
-|----|----------|--------|--------|-------------------|
-| C-05.Q1 | Is treating profile flags solely as eligibility/wording constraints (not trait-model predictors) sufficient to preserve construct interpretability? | External SME #1 | In progress | See §1 and §3; seeking expert validation of this design rule. |
-| C-05.Q2 | What types of DIF and invariance analyses are minimally necessary to validate that personalization does not introduce unacceptable bias? | External SME #1 | Pending | To be determined with expert input before pilot analysis. |
-| C-05.Q3 | Are there specific constructs or facets that should never be personalized via profile flags? | External SME #1 | Pending | Seeking guidance on boundary conditions for personalization. |
-| C-05.Q4 | Does the current pre-assessment prototype capture sufficient profile information for intended personalization? | Internal (Zach) | Answered | Yes, role_context, reading_level, and trauma_sensitive flags are implemented; additional flags can be added as needed. See §2. |
-
 ---
 
 ## C-06 – Semantic-Governance Study (LLM Gates vs SMEs)
 
 **Area:** Validation Design
-**Status:** In SME Review (External SME #1)
-**Origin:**
-- Internal concept developed to address the question: "How do we know the AI-based semantic gates (NLI, embeddings) are trustworthy for filtering generated items?"
-- Under review with an external measurement-science advisor as part of planning the initial validation roadmap with university partners.
+**Status:** In SME Review (Cho)
 **Related White Paper Sections:** Roadmap – Expert Validation; "The Safety Question"
 
 ### 1. Concept Summary
@@ -628,24 +600,12 @@ High-level study design:
 - Study design reviewed and endorsed by at least one measurement expert.
 - At least one completed study with interpretable results guiding our semantic-gating policy.
 
-### 5. Questions & Status
-
-| ID | Question | Source | Status | Answer / Reference |
-|----|----------|--------|--------|-------------------|
-| C-06.Q1 | What level of agreement between SME ratings and AI semantic gates would be considered acceptable for using AI gates as first-line screening? | External SME #1 | Pending | To be discussed with experts before study design is finalized. |
-| C-06.Q2 | How many items, constructs, and SMEs are needed for a semantic-governance study to provide actionable evidence? | External SME #1 | Pending | Sample size and design to be determined with expert guidance. |
-| C-06.Q3 | Which governance decisions (thresholds, mandatory SME review for certain constructs) can be informed by this study? | External SME #1 + Internal | In progress | See §1; seeking expert input on scope and decision authority. |
-| C-06.Q4 | Has any preliminary comparison of AI gates vs human judgment been conducted? | Internal (Zach) | Answered | Yes, informal spot-checks have been performed but no formal study yet. See §2. |
-
 ---
 
 ## C-07 – Predictive & Consequential Validity Strategy in Means-Tested Populations
 
 **Area:** Validation Design
 **Status:** Draft
-**Origin:**
-- Internal concept developed to outline the predictive and consequential validity program for the target population (adults in means-tested programs).
-- Reflects the project's commitment to validating not only psychometric properties but also real-world outcomes and potential unintended consequences.
 **Related White Paper Sections:** Executive Summary; Roadmap – later phases
 
 ### 1. Concept Summary
@@ -683,24 +643,12 @@ Examples:
 - A prioritized list of predictive / consequential validity studies agreed upon with advisors and implementation partners.
 - At least one study designed and, where applicable, IRB/ethics-reviewed.
 
-### 5. Questions & Status
-
-| ID | Question | Source | Status | Answer / Reference |
-|----|----------|--------|--------|-------------------|
-| C-07.Q1 | Which outcome domains (engagement, completion, employment, wellbeing) should be prioritized for predictive validity studies? | External SME #1 + Internal | Pending | To be determined with expert advisors and implementation partners. |
-| C-07.Q2 | What study designs (longitudinal, quasi-experimental, natural experiments) are realistic yet informative in resource-constrained real-world settings? | External SME #1 | Pending | Design feasibility to be discussed with experts before pilot studies. |
-| C-07.Q3 | How should we predefine acceptable vs unacceptable consequences of using strengths profiles in means-tested contexts? | External SME #1 + External SME #2 | In progress | Relates to C-09 tier framework; seeking expert guidance on consequence monitoring. |
-| C-07.Q4 | Have any field partners or contexts been identified for predictive validity studies? | Internal (Robert) | Answered | Yes, candidate partners in workforce development and housing supports have been identified; no formal agreements yet. See §2. |
-
 ---
 
 ## C-08 – Item Models and Variants (Equivalence vs Distinct Items)
 
 **Area:** Personalization, Fairness, Calibration
 **Status:** Draft
-**Origin:**
-- Created in response to questions from an external measurement-science advisor about how personalized variants are generated, how they relate to one another, and whether they can be pooled for calibration.
-- Introduces the item model concept as a structured way to define allowed variation and to distinguish radical (construct-changing) from incidental (surface-level) features.
 
 ### 1. Concept Summary
 
@@ -776,14 +724,10 @@ SMEs will review and approve item models rather than only individual items. For 
 
 Item-model documentation will record these decisions so they can be revisited as empirical data accumulates.
 
-### 5. Questions & Status
+### 5. Questions for Advisors
 
-| ID | Question | Source | Status | Answer / Reference |
-|----|----------|--------|--------|-------------------|
-| C-08.Q1 | What minimum set of analyses (DIF, invariance, parameter comparisons) would justify pooling variants from a single item model for calibration? | External SME #1 | Pending | To be determined with expert input before pilot calibration. |
-| C-08.Q2 | Are there feature types (context, timeframe, valence) that should rarely or never be treated as incidental in a strengths inventory? | External SME #1 | Pending | Seeking expert guidance on boundary conditions for incidental features. |
-| C-08.Q3 | Should SMEs review item models as templates, individual variants, or both? | External SME #1 | In progress | See §4; current plan is to review models plus sample variants, seeking validation of this approach. |
-| C-08.Q4 | Does the current system architecture support explicit item model representation and variant tagging? | Internal (Zach) | Answered | Yes, the data model supports item models conceptually; explicit schema and tooling for model management are design-level only. See §2. |
+- From a measurement perspective, what minimum set of analyses would you consider sufficient to justify pooling variants from a single item model for scoring and calibration?
+- Are there feature types (for example context, timeframe, valence) that you would rarely or never treat as incidental in a strengths inventory like this?
 
 ---
 
@@ -791,9 +735,6 @@ Item-model documentation will record these decisions so they can be revisited as
 
 **Area:** Validity Argument, Consequences, Design
 **Status:** Draft
-**Origin:**
-- Created in response to questions from an external psychometrics advisor about intended score uses and how those uses determine the required level of psychometric rigor.
-- Incorporates guidance to structure validation work around a risk-adjusted framework, with clear tiers of use and corresponding evidence requirements.
 
 ### 1. Concept Summary
 
@@ -930,14 +871,11 @@ Given these intended uses:
   - Profile flags may influence which items are seen and how they are worded, but they do not enter the latent trait model.
   - Any routing or CAT logic must preserve the comparability and interpretability of facet scores for their intended descriptive and triage roles.
 
-### 5. Questions & Status
+### 5. Questions for Advisors
 
-| ID | Question | Source | Status | Answer / Reference |
-|----|----------|--------|--------|-------------------|
-| C-09.Q1 | Given the intended uses (profile + low/moderate-stakes triage, no high-stakes pass/fail), what is the minimal adequate validity program for early phases? | External SME #2 + External SME #1 | In progress | See §3 and Tier 1/2 evidence bars; seeking expert validation of sufficiency. |
-| C-09.Q2 | Are there specific risks or unintended consequences for this population and use case that should be monitored from the outset? | External SME #2 | Pending | Seeking guidance on early-warning indicators for consequential validity. |
-| C-09.Q3 | If stakeholders request more decision-like uses (thresholds for eligibility tiers), what additional evidence would be necessary? | External SME #2 + External SME #1 | Pending | Would require move to Tier 2; conditions and evidence bar outlined in §2 but pending expert review. |
-| C-09.Q4 | Are the Tier 1 and Tier 2 distinctions clear and appropriate for the target population and partners? | Internal (Robert) + External SME #2 | In progress | Framework outlined in §2; seeking validation from implementation partners and measurement experts. |
+- Given these intended uses (profile + low/moderate-stakes triage, no current high-stakes pass/fail decisions), what would you consider the **minimal adequate validity program** in the early phases?
+- Are there specific risks or unintended consequences you would flag for this population and use case that should be monitored from the outset (for example particular facets more sensitive to cultural or contextual interpretation)?
+- If, in some settings, stakeholders request more decision-like uses (for example thresholds for program eligibility tiers), what conditions and additional evidence would you view as necessary before supporting those uses?
 
 ---
 
@@ -945,9 +883,6 @@ Given these intended uses:
 
 **Area:** Validity, Response Process, Accessibility
 **Status:** Draft
-**Origin:**
-- Created in response to questions from an external psychometrics advisor about ensuring items and reports are understandable and appropriate for the target population, especially adults with lower educational attainment and trauma histories.
-- Incorporates expert guidance that response-process validity is essential even for low-stakes uses and should be addressed through cognitive interviews, readability checks, and trauma-sensitive design.
 
 ### 1. Concept Summary
 
@@ -1072,13 +1007,10 @@ Unlike purely psychometric analyses (factor structure, reliability, DIF), respon
 
 ---
 
-### 5. Questions & Status
+### 5. Questions for Advisors
 
-| ID | Question | Source | Status | Answer / Reference |
-|----|----------|--------|--------|-------------------|
-| C-10.Q1 | What is the minimum sample size and diversity for cognitive interviews to provide actionable response-process validity evidence for this assessment? | External SME #2 | Pending | To be determined with expert guidance before pilot cognitive interview study. |
-| C-10.Q2 | What red flags or failure modes should we watch for when using AI to propose simplified or trauma-sensitive phrasings (construct drift, tone shifts)? | External SME #2 + External SME #1 | Pending | Seeking expert input on guardrails for AI-assisted item revision. |
-| C-10.Q3 | How should response-process work be prioritized relative to other early validation activities (pilot psychometrics, DIF analyses)? | External SME #2 | Pending | Seeking guidance on sequencing and resource allocation for validation roadmap. |
-| C-10.Q4 | Are readability screening and trauma-sensitive flagging capabilities currently implemented? | Internal (Zach) | Answered | Prototype capabilities exist but are not yet integrated into standard item-generation workflow. See §4. |
+- In your experience, what is the **minimum sample size and diversity** for cognitive interviews or think-alouds to provide actionable evidence for response-process validity in a strengths assessment like this?
+- Are there specific **red flags** or failure modes you would watch for when using AI to propose simplified or trauma-sensitive item phrasings (for example construct drift, unintended tone shifts)?
+- Given our target population and Tier 1 uses, how would you prioritize response-process work relative to other early validation activities (for example pilot psychometrics, DIF analyses)?
 
 ---
