@@ -1,6 +1,6 @@
-# OpenStrengths Technical Notes (Working Concepts) v1.1
+# OpenStrengths Technical Notes (Working Concepts) v1.2
 
-_Last updated: December 12, 2025_
+_Last updated: December 14, 2025_
 
 This document is a **technical companion to the OpenStrengths white paper (v3.1)**. It captures working concepts for the AI and measurement architecture that are **not yet finalized** and that we intend to refine with subject-matter experts (SMEs) before promoting them into the white paper. By keeping these concepts in a separate working document, we can iterate with SMEs on technical design questions—item generation, calibration, adaptive delivery, fairness monitoring—without revising the white paper with every change. Once a concept is validated and stable, it may be promoted into the white paper as canonical guidance.
 
@@ -458,6 +458,10 @@ At that point, this three-layer consistency framework would become part of the "
 
 **Area:** Adaptation
 **Status:** In SME Review (Cho)
+**Origin:**
+- Created in response to Jake Cho's question: "How is the examinee profile used to drive adaptive item selection and test assembly (including exposure controls)?"
+- Incorporates expert advice to start with simpler designs (fixed/planned-missing) before full CAT.
+
 **Related White Paper Sections:** Part 2 – STEM Adapter (adaptive claims); Roadmap – Phase 1
 
 ### 1. Concept Summary
@@ -514,12 +518,24 @@ Throughout all stages:
 - Expert agreement on the staged approach and on the key design parameters for each stage.
 - Pilot or simulation results showing that routing and CAT do not materially distort the facet score distributions compared to fixed-form baselines.
 
+### 5. Questions & Status
+
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-04.Q1 | Is a staged path (fixed → routed → CAT) a sensible trajectory for a multi-facet strengths assessment? | SME (Cho) | In progress | See §1 and §3; seeking expert validation of staged approach. |
+| C-04.Q2 | What would be a reasonable number of routing items and follow-up items per facet for Stage 1 adaptive prototypes? | SME (Cho) | Pending | To be determined with expert input before Stage 1 implementation. |
+| C-04.Q3 | What level of exposure control is "good enough" for low-stakes personal-development use cases? | SME (Cho) | Pending | Simple caps on item usage and randomization may suffice; seeking expert confirmation. |
+| C-04.Q4 | Does the codebase support provisional θ and SEM tracking? | Internal (Zach) | Answered | Yes, scoring engine exists but not yet used for information-based item selection. All current flows are fixed-form. See §2. |
+
 ---
 
 ## C-05 – Profile Flags as Eligibility / Wording Constraints (Not Part of Trait)
 
 **Area:** Personalization vs Construct
 **Status:** In SME Review (Cho)
+**Origin:**
+- Created in response to Jake Cho's questions about how profile-based variants are generated and whether they function as equivalent items for scoring.
+- Incorporates expert guidance to treat personalization features as incidental (not part of the trait model) but to validate that claim empirically via DIF and invariance analyses.
 **Related White Paper Sections:** Part 2 – User Classification System; Pre-assessment; STEM Adapter
 
 ### 1. Concept Summary
@@ -558,12 +574,24 @@ By default, variants generated from the same item model using different incident
 - Expert agreement that this stance is acceptable given proper monitoring.
 - At least one DIF / invariance analysis showing that personalization decisions do not introduce unacceptable bias across key groups.
 
+### 5. Questions & Status
+
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-05.Q1 | Is treating profile flags solely as eligibility/wording constraints (not trait-model predictors) sufficient to preserve construct interpretability? | SME (Cho) | In progress | See §1 and §3; seeking expert validation of this design rule. |
+| C-05.Q2 | What types of DIF and invariance analyses are minimally necessary to validate that personalization does not introduce unacceptable bias? | SME (Cho) | Pending | To be determined with expert input before pilot analysis. |
+| C-05.Q3 | Are there specific constructs or facets that should never be personalized via profile flags? | SME (Cho) | Pending | Seeking guidance on boundary conditions for personalization. |
+| C-05.Q4 | Does the current pre-assessment prototype capture sufficient profile information for intended personalization? | Internal (Zach) | Answered | Yes, role_context, reading_level, and trauma_sensitive flags are implemented; additional flags can be added as needed. See §2. |
+
 ---
 
 ## C-06 – Semantic-Governance Study (LLM Gates vs SMEs)
 
 **Area:** Validation Design
 **Status:** In SME Review (Cho)
+**Origin:**
+- Internal concept developed to address the question: "How do we know the AI-based semantic gates (NLI, embeddings) are trustworthy for filtering generated items?"
+- Under review with Jake Cho as part of planning the initial validation roadmap with university partners.
 **Related White Paper Sections:** Roadmap – Expert Validation; "The Safety Question"
 
 ### 1. Concept Summary
@@ -600,12 +628,24 @@ High-level study design:
 - Study design reviewed and endorsed by at least one measurement expert.
 - At least one completed study with interpretable results guiding our semantic-gating policy.
 
+### 5. Questions & Status
+
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-06.Q1 | What level of agreement between SME ratings and AI semantic gates would be considered acceptable for using AI gates as first-line screening? | SME (Cho) | Pending | To be discussed with experts before study design is finalized. |
+| C-06.Q2 | How many items, constructs, and SMEs are needed for a semantic-governance study to provide actionable evidence? | SME (Cho) | Pending | Sample size and design to be determined with expert guidance. |
+| C-06.Q3 | Which governance decisions (thresholds, mandatory SME review for certain constructs) can be informed by this study? | SME (Cho) + Internal | In progress | See §1; seeking expert input on scope and decision authority. |
+| C-06.Q4 | Has any preliminary comparison of AI gates vs human judgment been conducted? | Internal (Zach) | Answered | Yes, informal spot-checks have been performed but no formal study yet. See §2. |
+
 ---
 
 ## C-07 – Predictive & Consequential Validity Strategy in Means-Tested Populations
 
 **Area:** Validation Design
 **Status:** Draft
+**Origin:**
+- Internal concept developed to outline the predictive and consequential validity program for the target population (adults in means-tested programs).
+- Reflects the project's commitment to validating not only psychometric properties but also real-world outcomes and potential unintended consequences.
 **Related White Paper Sections:** Executive Summary; Roadmap – later phases
 
 ### 1. Concept Summary
@@ -643,12 +683,24 @@ Examples:
 - A prioritized list of predictive / consequential validity studies agreed upon with advisors and implementation partners.
 - At least one study designed and, where applicable, IRB/ethics-reviewed.
 
+### 5. Questions & Status
+
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-07.Q1 | Which outcome domains (engagement, completion, employment, wellbeing) should be prioritized for predictive validity studies? | SME (Cho) + Internal | Pending | To be determined with expert advisors and implementation partners. |
+| C-07.Q2 | What study designs (longitudinal, quasi-experimental, natural experiments) are realistic yet informative in resource-constrained real-world settings? | SME (Cho) | Pending | Design feasibility to be discussed with experts before pilot studies. |
+| C-07.Q3 | How should we predefine acceptable vs unacceptable consequences of using strengths profiles in means-tested contexts? | SME (Cho) + SME (Hong) | In progress | Relates to C-09 tier framework; seeking expert guidance on consequence monitoring. |
+| C-07.Q4 | Have any field partners or contexts been identified for predictive validity studies? | Internal (Robert) | Answered | Yes, candidate partners in workforce development and housing supports have been identified; no formal agreements yet. See §2. |
+
 ---
 
 ## C-08 – Item Models and Variants (Equivalence vs Distinct Items)
 
 **Area:** Personalization, Fairness, Calibration
 **Status:** Draft
+**Origin:**
+- Created in response to Jake Cho's questions about how personalized variants are generated, how they relate to one another, and whether they can be pooled for calibration.
+- Introduces the item model concept as a structured way to define allowed variation and to distinguish radical (construct-changing) from incidental (surface-level) features.
 
 ### 1. Concept Summary
 
@@ -724,10 +776,14 @@ SMEs will review and approve item models rather than only individual items. For 
 
 Item-model documentation will record these decisions so they can be revisited as empirical data accumulates.
 
-### 5. Questions for Advisors
+### 5. Questions & Status
 
-- From a measurement perspective, what minimum set of analyses would you consider sufficient to justify pooling variants from a single item model for scoring and calibration?
-- Are there feature types (for example context, timeframe, valence) that you would rarely or never treat as incidental in a strengths inventory like this?
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-08.Q1 | What minimum set of analyses (DIF, invariance, parameter comparisons) would justify pooling variants from a single item model for calibration? | SME (Cho) | Pending | To be determined with expert input before pilot calibration. |
+| C-08.Q2 | Are there feature types (context, timeframe, valence) that should rarely or never be treated as incidental in a strengths inventory? | SME (Cho) | Pending | Seeking expert guidance on boundary conditions for incidental features. |
+| C-08.Q3 | Should SMEs review item models as templates, individual variants, or both? | SME (Cho) | In progress | See §4; current plan is to review models plus sample variants, seeking validation of this approach. |
+| C-08.Q4 | Does the current system architecture support explicit item model representation and variant tagging? | Internal (Zach) | Answered | Yes, the data model supports item models conceptually; explicit schema and tooling for model management are design-level only. See §2. |
 
 ---
 
@@ -735,6 +791,9 @@ Item-model documentation will record these decisions so they can be revisited as
 
 **Area:** Validity Argument, Consequences, Design
 **Status:** Draft
+**Origin:**
+- Created in response to Hong Jiao's question: "What are the intended uses of scores, and how do those uses determine the required level of psychometric rigor?"
+- Incorporates guidance to structure validation work around a risk-adjusted framework, with clear tiers of use and corresponding evidence requirements.
 
 ### 1. Concept Summary
 
@@ -871,11 +930,14 @@ Given these intended uses:
   - Profile flags may influence which items are seen and how they are worded, but they do not enter the latent trait model.
   - Any routing or CAT logic must preserve the comparability and interpretability of facet scores for their intended descriptive and triage roles.
 
-### 5. Questions for Advisors
+### 5. Questions & Status
 
-- Given these intended uses (profile + low/moderate-stakes triage, no current high-stakes pass/fail decisions), what would you consider the **minimal adequate validity program** in the early phases?
-- Are there specific risks or unintended consequences you would flag for this population and use case that should be monitored from the outset (for example particular facets more sensitive to cultural or contextual interpretation)?
-- If, in some settings, stakeholders request more decision-like uses (for example thresholds for program eligibility tiers), what conditions and additional evidence would you view as necessary before supporting those uses?
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-09.Q1 | Given the intended uses (profile + low/moderate-stakes triage, no high-stakes pass/fail), what is the minimal adequate validity program for early phases? | SME (Jiao) + SME (Cho) | In progress | See §3 and Tier 1/2 evidence bars; seeking expert validation of sufficiency. |
+| C-09.Q2 | Are there specific risks or unintended consequences for this population and use case that should be monitored from the outset? | SME (Jiao) | Pending | Seeking guidance on early-warning indicators for consequential validity. |
+| C-09.Q3 | If stakeholders request more decision-like uses (thresholds for eligibility tiers), what additional evidence would be necessary? | SME (Jiao) + SME (Cho) | Pending | Would require move to Tier 2; conditions and evidence bar outlined in §2 but pending expert review. |
+| C-09.Q4 | Are the Tier 1 and Tier 2 distinctions clear and appropriate for the target population and partners? | Internal (Robert) + SME (Jiao) | In progress | Framework outlined in §2; seeking validation from implementation partners and measurement experts. |
 
 ---
 
@@ -883,6 +945,9 @@ Given these intended uses:
 
 **Area:** Validity, Response Process, Accessibility
 **Status:** Draft
+**Origin:**
+- Created in response to Hong Jiao's question: "How will you ensure that items and reports are understandable and appropriate for the target population, especially adults with lower educational attainment and trauma histories?"
+- Incorporates expert guidance that response-process validity is essential even for low-stakes uses and should be addressed through cognitive interviews, readability checks, and trauma-sensitive design.
 
 ### 1. Concept Summary
 
@@ -1007,10 +1072,13 @@ Unlike purely psychometric analyses (factor structure, reliability, DIF), respon
 
 ---
 
-### 5. Questions for Advisors
+### 5. Questions & Status
 
-- In your experience, what is the **minimum sample size and diversity** for cognitive interviews or think-alouds to provide actionable evidence for response-process validity in a strengths assessment like this?
-- Are there specific **red flags** or failure modes you would watch for when using AI to propose simplified or trauma-sensitive item phrasings (for example construct drift, unintended tone shifts)?
-- Given our target population and Tier 1 uses, how would you prioritize response-process work relative to other early validation activities (for example pilot psychometrics, DIF analyses)?
+| ID | Question | Source | Status | Answer / Reference |
+|----|----------|--------|--------|-------------------|
+| C-10.Q1 | What is the minimum sample size and diversity for cognitive interviews to provide actionable response-process validity evidence for this assessment? | SME (Jiao) | Pending | To be determined with expert guidance before pilot cognitive interview study. |
+| C-10.Q2 | What red flags or failure modes should we watch for when using AI to propose simplified or trauma-sensitive phrasings (construct drift, tone shifts)? | SME (Jiao) + SME (Cho) | Pending | Seeking expert input on guardrails for AI-assisted item revision. |
+| C-10.Q3 | How should response-process work be prioritized relative to other early validation activities (pilot psychometrics, DIF analyses)? | SME (Jiao) | Pending | Seeking guidance on sequencing and resource allocation for validation roadmap. |
+| C-10.Q4 | Are readability screening and trauma-sensitive flagging capabilities currently implemented? | Internal (Zach) | Answered | Prototype capabilities exist but are not yet integrated into standard item-generation workflow. See §4. |
 
 ---
