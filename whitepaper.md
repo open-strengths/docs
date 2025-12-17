@@ -1680,9 +1680,9 @@ This only works if people tell us when we're wrong.
 ## Contact & Next Steps
 
 **For all inquiries:**
-- Email: [To be added]
-- Website: [To be added]
-- GitHub: [Repository coming Q1 2026]
+- Email: team@openstrengths.org
+- Website: https://openstrengths.org
+- GitHub: https://github.com/open-strengths
 - Updates: [Newsletter/blog coming Q1 2026]
 
 **For researchers:**
@@ -1882,7 +1882,7 @@ Full bibliography available in technical documentation.
 
 **Questions? Feedback? Brutal criticism? We want to hear it.**
 
-**Contact:** [To be added]
+**Contact:** team@openstrengths.org
 
 ---
 
