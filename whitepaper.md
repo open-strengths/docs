@@ -2,7 +2,7 @@
 
 ## An Open-Source Framework for Strengths Assessment: Methodology, Validation Protocol, and Technical Architecture
 
-Version 2.0 · February 2026
+Version 1.3 · February 2026
 
 ---
 
@@ -14,7 +14,7 @@ This document is the technical reference for OpenStrengths, an open-source, AI-e
 
 **What this document covers:**
 
-- **Framework specification:** A 6-domain, 36-facet hierarchical strengths model derived from factor-analytic evidence, with construct definitions, discriminant validity evidence, and research foundations for each facet
+- **Framework specification:** A 6-domain, 36-facet hierarchical strengths model organized around factor-analytic evidence, with construct definitions, discriminant validity evidence, and research foundations for each facet
 - **AI-enhanced item generation:** A facet-seeded generation pipeline using LLMs with multi-layer semantic verification (NLI gating, cross-loading prevention, provenance tracking)
 - **Adaptive assessment architecture:** User classification, reading-level adaptation, trauma-sensitive item screening, and computerized adaptive testing specifications
 - **Data portability layer:** RESTful API architecture with OAuth 2.0 user-controlled authorization, standardized JSON schemas, and granular permission management
@@ -150,16 +150,16 @@ OpenStrengths addresses both the framework problem (what to measure) and the pla
 
 ### Model Selection and Domain Structure
 
-The OpenStrengths framework employs a hierarchical 6-domain, 36-facet structure. Each domain contains 6 facets, enabling both screening-level assessment (domain scores) and detailed profiling (facet scores).
+The OpenStrengths framework employs a hierarchical 6-domain, 36-facet structure. Each domain contains 6 facets, enabling both screening-level assessment (domain scores) and detailed profiling (facet scores). The six domains are organized around the Big Five Two-Aspect Model (DeYoung, 2007), which provides the conceptual scaffold. Each domain uses a Big Five aspect as its anchor while drawing facets from the full breadth of relevant human sciences — personality, motivation, positive psychology, cognitive science, organizational behavior, and clinical psychology. OpenStrengths is a multi-disciplinary strengths assessment, not a personality inventory.
 
 | Domain | Description | Facets |
 |--------|-------------|--------|
 | INSIGHT | Cognitive processing, learning, and sense-making | Curiosity, Perspective, Learning, Foresight, Wisdom, Self-Reflection |
-| CREATIVITY | Ideation, innovation, and adaptive problem-solving | Creativity, Innovation, Resourcefulness, Imagination, Flexibility, Expression |
-| DRIVE | Goal pursuit, sustained effort, and self-management | Achievement, Motivation, Self-Discipline, Perseverance, Vitality, Focus |
-| STABILITY | Stress management, emotional regulation, and adaptability | Composure, Tolerance, Adaptability, Optimism, Resilience, Self-Regulation |
+| CREATIVITY | Ideation, innovation, creative expression, and adaptive problem-solving | Originality, Innovation, Resourcefulness, Imagination, Flexibility, Expression |
+| DRIVE | Goal pursuit, self-efficacy, sustained effort, and attentional discipline | Achievement, Purpose, Self-Confidence, Self-Discipline, Perseverance, Focus |
+| STABILITY | Stress management, emotional regulation, and behavioral adaptability | Composure, Patience, Adaptability, Optimism, Resilience, Self-Regulation |
 | CONNECTION | Interpersonal warmth, empathy, and prosocial behavior | Kindness, Empathy, Forgiveness, Caring, Gratitude, Justice |
-| INFLUENCE | Leadership, communication, and proactive agency | Leadership, Communication, Self-Confidence, Initiative, Assertiveness, Influence |
+| INFLUENCE | Leadership, communication, and proactive agency | Leadership, Communication, Boldness, Initiative, Assertiveness, Persuasion |
 
 ### Model Selection Process
 
@@ -192,39 +192,39 @@ Six domains provide a balance: sufficient granularity for differentiated assessm
 
 #### INSIGHT
 
-Cognitive processing, learning, and sense-making. Predicts academic success, complex problem-solving, and strategic decision-making. Most strengths frameworks under-represent cognitive strengths, focusing on character virtues while omitting analytical and sense-making capacities.
+*Organized around the Intellect aspect of Openness/Intellect.* Cognitive processing, learning, and sense-making. Predicts academic success, complex problem-solving, and strategic decision-making. Most strengths frameworks under-represent cognitive strengths, focusing on character virtues while omitting analytical and sense-making capacities.
 
 **Facets:** Curiosity (knowledge exploration; Kashdan et al., 2018), Perspective (multi-viewpoint sense-making; Weick, 1995; Klein et al., 1998), Learning (metacognitive skill transfer, d = 0.45; Sitzmann & Ely, 2011), Foresight (future-time orientation and planning; Zimbardo & Boyd, 2008), Wisdom (reasoning beyond Openness/Intellect; Sternberg, 1998; Baltes & Staudinger, 2000), Self-Reflection (self-awareness via reflective learning; Grant et al., 2002).
 
 #### CREATIVITY
 
-Ideation, divergent thinking, and adaptive problem-solving. Creativity predicts innovation outcomes (patent counts, entrepreneurial success) better than general intelligence or personality traits. Most frameworks either omit Creativity (Big Five, HEXACO) or merge it with Openness/Intellect, missing the distinction between creative fluency and analytical depth.
+*Organized around the Openness aspect of Openness/Intellect.* Ideation, divergent thinking, creative expression, and adaptive problem-solving. Creativity predicts innovation outcomes (patent counts, entrepreneurial success) better than general intelligence or personality traits. Most frameworks either omit Creativity (Big Five, HEXACO) or merge it with Openness/Intellect, missing the distinction between creative fluency and analytical depth.
 
-**Facets:** Creativity (divergent thinking and ideation; Benedek et al., 2019), Innovation (idea-to-implementation conversion, r ≈ .41 with adoption; Rogers, 2003), Resourcefulness (improvisation under constraints; Vera & Crossan, 2005), Imagination (mental simulation of alternatives; Feist, 1998), Flexibility (cognitive switching; Martin & Rubin, 1995), Expression (creative output and communication; Pennebaker, 1997).
+**Facets:** Originality (divergent thinking and ideation; Benedek et al., 2019; Said-Metwaly et al., 2022; TTCT originality dimension), Innovation (idea-to-implementation conversion, r ≈ .41 with adoption; Rogers, 2003), Resourcefulness (improvisation under constraints; Vera & Crossan, 2005), Imagination (mental simulation of alternatives; Feist, 1998), Flexibility (cognitive switching; Martin & Rubin, 1995), Expression (creative output and communication; Pennebaker, 1997).
 
 #### DRIVE
 
-Goal pursuit, sustained effort, and self-management. Drive (the industriousness facet of Conscientiousness) predicts job performance across virtually all occupations (meta-analytic ρ = .31) and academic achievement (r = .45 with GPA). Self-control predicts life outcomes more strongly than IQ (Moffitt et al., 2011). The framework measures Drive as a behavioral pattern, not a moral virtue, avoiding bias against individuals with executive function challenges.
+*Organized around the Industriousness aspect of Conscientiousness.* Goal pursuit, self-efficacy, sustained effort, and attentional discipline. Drive predicts job performance across virtually all occupations (meta-analytic ρ = .31) and academic achievement (r = .45 with GPA). Self-control predicts life outcomes more strongly than IQ (Moffitt et al., 2011). The framework measures Drive as a behavioral pattern, not a moral virtue, avoiding bias against individuals with executive function challenges. The domain draws on personality science (Achievement, Self-Discipline, Perseverance), self-efficacy theory (Self-Confidence), motivational science (Purpose), and cognitive/attention science (Focus) to capture the full breadth of strengths related to goal pursuit.
 
-**Facets:** Achievement (mastery orientation; Payne et al., 2007), Motivation (autonomous goal striving; Deci & Ryan, 2000), Self-Discipline (self-control, β = .32 vs. .20 for IQ predicting GPA; Duckworth & Seligman, 2005), Perseverance (sustained effort despite adversity, r ≈ .34 with retention; Duckworth et al., 2007), Vitality (energy and engagement; Ryan & Frederick, 1997), Focus (sustained attention; Kanfer & Ackerman, 1989).
+**Facets:** Achievement (mastery orientation; Payne et al., 2007), Purpose (autonomous goal striving and intrinsic alignment between effort, values, and identity; Deci & Ryan, 2000), Self-Confidence (self-efficacy as the gating mechanism for goal pursuit, G(r+) = .38 with work performance; Stajkovic & Luthans, 1998; Bandura, 1997), Self-Discipline (self-control, β = .32 vs. .20 for IQ predicting GPA; Duckworth & Seligman, 2005), Perseverance (sustained effort despite adversity, r ≈ .34 with retention; Duckworth et al., 2007), Focus (sustained attention on priorities; Kanfer & Ackerman, 1989).
 
 #### STABILITY
 
-Stress management, emotional regulation, and behavioral adaptability. Stability predicts safety outcomes (workplace accidents, medical errors), stress management, and interpersonal reliability. The safety-personality meta-analysis (Christian et al., 2009) shows Stability facets predict reduced workplace accidents beyond general Conscientiousness. Stability (calm, reliable) is separated from Drive (motivated, achieving) because they predict different outcomes — high Drive combined with low Stability constitutes a burnout risk profile.
+*Organized around the low-Neuroticism and Orderliness aspects.* Stress management, emotional regulation, and behavioral adaptability. Stability predicts safety outcomes (workplace accidents, medical errors), stress management, and interpersonal reliability. The safety-personality meta-analysis (Christian et al., 2009) shows Stability facets predict reduced workplace accidents beyond general Conscientiousness. Stability (calm, reliable) is separated from Drive (motivated, achieving) because they predict different outcomes — high Drive combined with low Stability constitutes a burnout risk profile.
 
-**Facets:** Composure (emotional stability under stress; Christian et al., 2009), Tolerance (non-hostility, adjacent to Honesty-Humility; Ashton & Lee, 2007), Adaptability (behavioral role flexibility; Pulakos et al., 2000), Optimism (positive expectations buffering stress; Scheier & Carver, 1985), Resilience (post-adversity recovery and growth; Bonanno, 2004), Self-Regulation (impulse and emotion control; Baumeister & Vohs, 2004; Tangney et al., 2004).
+**Facets:** Composure (emotional stability under stress; Christian et al., 2009), Patience (frustration tolerance and non-hostility; Chida & Steptoe, 2009; Wilmot & Ones, 2022), Adaptability (behavioral role flexibility; Pulakos et al., 2000), Optimism (positive expectations buffering stress; Scheier & Carver, 1985), Resilience (post-adversity recovery and growth; Bonanno, 2004), Self-Regulation (impulse and emotion control; Baumeister & Vohs, 2004; Tangney et al., 2004).
 
 #### CONNECTION
 
-Interpersonal warmth, empathy, and prosocial behavior. Connection (Agreeableness-affective facets) predicts relationship satisfaction, team climate, mentoring effectiveness, and prosocial behavior. Empathy correlates r ≈ .46 with positive team outcomes.
+*Organized around the Compassion aspect of Agreeableness.* Interpersonal warmth, empathy, and prosocial behavior. Connection predicts relationship satisfaction, team climate, mentoring effectiveness, and prosocial behavior. Empathy correlates r ≈ .46 with positive team outcomes.
 
 **Facets:** Kindness (everyday prosociality; Algoe & Haidt, 2009), Empathy (affective perspective-taking; Batson et al., 1997), Forgiveness (relationship repair; McCullough et al., 2000), Caring (sustained nurturance; Allen et al., 2004), Gratitude (social bonding; Emmons & McCullough, 2003), Justice (fairness and psychological safety; Colquitt et al., 2001).
 
 #### INFLUENCE
 
-Leadership, communication, and proactive agency. Influence (Extraversion-agentic facets) predicts leadership emergence, sales performance, and proactive behavior. Initiative (proactive personality) loads λ ≈ .62 on Influence and predicts career success beyond personality traits.
+*Organized around the Assertiveness aspect of Extraversion.* Leadership, communication, and proactive agency. Influence predicts leadership emergence, sales performance, and proactive behavior. Initiative (proactive personality) loads λ ≈ .62 on Influence and predicts career success beyond personality traits.
 
-**Facets:** Leadership (transformational leadership; Bass, 1985; Judge & Piccolo, 2004), Communication (narrative transport and persuasion; Green & Brock, 2000), Self-Confidence (core self-evaluations, ρ = .26 with job performance; Judge et al., 2002), Initiative (proactive personality; Bateman & Crant, 1993), Assertiveness (advocacy and boundary-setting; Speed et al., 2018), Influence (social persuasion via multiple routes; Cialdini & Goldstein, 2004).
+**Facets:** Leadership (transformational leadership; Bass, 1985; Judge & Piccolo, 2004), Communication (narrative transport and persuasion; Green & Brock, 2000), Boldness (decisive action under uncertainty and calculated risk-taking; Weber et al., 2002 DOSPERT; Peterson & Seligman, 2004 VIA Bravery; Zhang et al., 2019), Initiative (proactive personality; Bateman & Crant, 1993), Assertiveness (advocacy and boundary-setting; Speed et al., 2018), Persuasion (social influence via multiple routes and political skill; Cialdini & Goldstein, 2004; Ferris et al., PSI).
 
 ### Facet Selection Criteria
 
@@ -239,7 +239,7 @@ Each of the 36 facets was selected based on four criteria:
 
 Deliberately separated constructs that are often merged in other frameworks:
 
-- Curiosity (Insight) vs. Creativity (Creativity): Exploration vs. generation, r = .42
+- Curiosity (Insight) vs. Originality (Creativity): Exploration vs. generation, r = .42
 - Perspective (Insight) vs. Empathy (Connection): Cognitive vs. affective perspective-taking, r = .38
 - Achievement (Drive) vs. Leadership (Influence): Personal standards vs. mobilizing others, r = .35
 - Self-Discipline (Drive) vs. Self-Regulation (Stability): Routine maintenance vs. impulse control, r = .51
@@ -366,10 +366,10 @@ Every deployed item includes structured metadata:
   "item_id": "gen_curiosity_work_b2_03",
   "text": "I regularly research emerging trends in my field",
   "facet": "Curiosity",
-  "facet_spec_version": "v2.1.0",
+  "facet_spec_version": "v3.0.0",
   "generation": {
     "model": "gpt-4o-mini",
-    "prompt_version": "v2.1.3",
+    "prompt_version": "v3.0.0",
     "user_profile_flags": ["work_context", "standard_reading"]
   },
   "nli_verification": {
@@ -964,7 +964,7 @@ Below is the complete structure with definitions and research foundations for ea
 
 | Facet | Definition | Why This Facet? | Research Foundation |
 |-------|------------|-----------------|---------------------|
-| **Curiosity** | Actively seeks out new knowledge and experiences | Core curiosity literature; drives knowledge exploration and job crafting | Kashdan et al., 2018; Litman, 2008 |
+| **Curiosity** | Seeks new experiences, ideas, or knowledge | Core curiosity literature; drives knowledge exploration and job crafting | Kashdan et al., 2018; Litman, 2008 |
 | **Perspective** | Understands situations from broad or different viewpoints | Predicts complex decision-making via sense-making and systems thinking | Weick, 1995; Klein et al., 1998 |
 | **Learning** | Quickly acquires and applies new skills or knowledge | Metacognition boosts skill transfer (d = 0.45) and adaptive performance | Sitzmann & Ely, 2011; Cuevas et al., 2004 |
 | **Foresight** | Anticipates future needs and likely outcomes | Future-time orientation improves planning and goal achievement | Zimbardo & Boyd, 2008; Strathman et al., 1994 |
@@ -975,7 +975,7 @@ Below is the complete structure with definitions and research foundations for ea
 
 | Facet | Definition | Why This Facet? | Research Foundation |
 |-------|------------|-----------------|---------------------|
-| **Creativity** | Generates novel and imaginative ideas | Ideation and divergent thinking; creative fluency predicts patent counts and innovation | Benedek et al., 2019; Beaty et al., 2021 |
+| **Originality** | Generates novel and imaginative ideas | Divergent thinking and ideation; TTCT originality dimension predicts creative achievement | Benedek et al., 2019; Said-Metwaly et al., 2022; Runco et al., 2010 |
 | **Innovation** | Transforms ideas into practical, adopted solutions | Implementation focus; converting ideas to outcomes (r ≈ .41 with adoption) | Rogers, 2003; West & Farr, 1990 |
 | **Resourcefulness** | Finds effective ways to solve problems with available resources | Improvisation and experimentation under constraints | Vera & Crossan, 2005; Ries, 2011 |
 | **Imagination** | Envisions possibilities beyond present reality | Aesthetic and envisioning capacity; mental simulation of alternatives | Feist, 1998; Taylor et al., 1998 |
@@ -986,20 +986,20 @@ Below is the complete structure with definitions and research foundations for ea
 
 | Facet | Definition | Why This Facet? | Research Foundation |
 |-------|------------|-----------------|---------------------|
-| **Achievement** | Strives toward high standards and significant results | High standards and mastery orientation predict performance (ρ = .31) | Payne et al., 2007; VandeWalle, 1997 |
-| **Motivation** | Inner drive that energizes action toward goals | Intrinsic motivation and goal striving; autonomous motivation predicts persistence | Deci & Ryan, 2000; Locke & Latham, 2002 |
+| **Achievement** | Sets ambitious goals and works to meet high personal standards | High standards and mastery orientation predict performance (ρ = .31) | Payne et al., 2007; VandeWalle, 1997 |
+| **Purpose** | Acts from intrinsic alignment between effort, values, and identity | Autonomous motivation predicts persistence, well-being, and goal attainment | Deci & Ryan, 2000; Locke & Latham, 2002 |
+| **Self-Confidence** | Believes in one's ability to succeed and handle challenges | Self-efficacy is the gating mechanism for goal pursuit; G(r+) = .38 with work performance | Stajkovic & Luthans, 1998; Bandura, 1997; Scholz et al., 2002 |
 | **Self-Discipline** | Maintains consistent routines and self-control | Self-control predicts outcomes better than IQ (β = .32 vs. .20 for GPA) | Duckworth & Seligman, 2005; Moffitt et al., 2011 |
 | **Perseverance** | Keeps going despite obstacles, setbacks, or fatigue | Sustained effort despite adversity; grit predicts retention (r ≈ .34) | Duckworth et al., 2007; Eskreis-Winkler et al., 2014 |
-| **Vitality** | Approaches tasks with energy, enthusiasm, and stamina | Energy and vigor correlate with engagement and thriving | Ryan & Frederick, 1997; Carmeli et al., 2009 |
 | **Focus** | Sustains attention on priorities without distraction | Sustained attention under changing demands; predicts performance | Kanfer & Ackerman, 1989; Murphy & Jackson, 1999 |
 
 ### STABILITY Domain
 
 | Facet | Definition | Why This Facet? | Research Foundation |
 |-------|------------|-----------------|---------------------|
-| **Composure** | Remains calm and steady under stress or pressure | Emotional stability under stress; reduces workplace accidents and errors | Christian et al., 2009; Wallace & Vodanovich, 2003 |
-| **Tolerance** | Accepts differences and endures discomfort without hostility | Non-hostility and fair regard; adjacent to Honesty-Humility ethics facets | Ashton & Lee, 2007; Graziano et al., 2007 |
-| **Adaptability** | Adjusts behavior to function effectively in new conditions | Behavioral adjustment and role flexibility; adaptive performance at work | Pulakos et al., 2000; Griffin & Hesketh, 2003 |
+| **Composure** | Stays calm and even-tempered under pressure | Emotional stability under stress; reduces workplace accidents and errors | Christian et al., 2009; Wallace & Vodanovich, 2003 |
+| **Patience** | Remains patient and understanding in the face of frustration | Frustration tolerance and non-hostility; anger predicts CHD (HR = 1.19-1.24) | Chida & Steptoe, 2009; Wilmot & Ones, 2022 |
+| **Adaptability** | Adjusts behavior effectively when conditions change | Behavioral adjustment and role flexibility; adaptive performance at work | Pulakos et al., 2000; Griffin & Hesketh, 2003 |
 | **Optimism** | Expects favorable outcomes and looks for opportunities | Positive expectations buffer stress effects and predict well-being | Scheier & Carver, 1985; Seligman, 2006 |
 | **Resilience** | Recovers quickly and grows from stress or loss | Recovery and post-traumatic growth; bouncing back from adversity | Bonanno, 2004; Masten, 2001 |
 | **Self-Regulation** | Controls impulses and emotions to stay aligned with values | Impulse and emotion control; delay of gratification predicts life outcomes | Baumeister & Vohs, 2004; Tangney et al., 2004 |
@@ -1008,8 +1008,8 @@ Below is the complete structure with definitions and research foundations for ea
 
 | Facet | Definition | Why This Facet? | Research Foundation |
 |-------|------------|-----------------|---------------------|
-| **Kindness** | Shows warmth through small, everyday prosocial acts | Everyday prosociality; small acts of kindness predict relationship quality | Algoe & Haidt, 2009; Reis et al., 2010 |
-| **Empathy** | Understands and shares the feelings of others | Affective empathy correlates r ≈ .46 with positive team climate | Batson et al., 1997; PLOS ONE, 2015 |
+| **Kindness** | Acts generously toward others without expectation | Everyday prosociality; small acts of kindness predict relationship quality | Algoe & Haidt, 2009; Reis et al., 2010 |
+| **Empathy** | Senses and shares the emotional experiences of others | Affective empathy correlates r ≈ .46 with positive team climate | Batson et al., 1997; PLOS ONE, 2015 |
 | **Forgiveness** | Lets go of resentment and offers second chances | Forgiveness predicts relationship satisfaction and psychological well-being | McCullough et al., 2000; Worthington, 2005 |
 | **Caring** | Provides sustained support and concern for others' well-being | Sustained concern and nurturance; predicts effective mentoring | Allen et al., 2004; Neff & Pommier, 2013 |
 | **Gratitude** | Appreciates and acknowledges what others contribute | Gratitude interventions improve social bonds and well-being | Emmons & McCullough, 2003; Wood et al., 2010 |
@@ -1019,12 +1019,12 @@ Below is the complete structure with definitions and research foundations for ea
 
 | Facet | Definition | Why This Facet? | Research Foundation |
 |-------|------------|-----------------|---------------------|
-| **Leadership** | Guides and motivates others toward shared goals | Transformational leadership; guiding and inspiring predicts team outcomes | Bass, 1985; Judge & Piccolo, 2004 |
-| **Communication** | Expresses ideas clearly and appropriately | Clarity and persuasion via narrative transport; storytelling effectiveness | Green & Brock, 2000; Pentland, 2008 |
-| **Self-Confidence** | Believes in one's ability to succeed and handle challenges | Core self-evaluations predict job performance across contexts (ρ = .26) | Judge et al., 2002; Chen et al., 2001 |
+| **Leadership** | Guides groups toward shared goals through vision and trust | Transformational leadership; guiding and inspiring predicts team outcomes | Bass, 1985; Judge & Piccolo, 2004 |
+| **Communication** | Expresses ideas clearly and connects with audiences | Clarity and persuasion via narrative transport; storytelling effectiveness | Green & Brock, 2000; Pentland, 2008 |
+| **Boldness** | Acts decisively when outcomes are uncertain; willing to take calculated risks | Risk-taking as measurable individual difference; predicts entrepreneurial behavior | Weber et al., 2002 (DOSPERT); Peterson & Seligman, 2004 (VIA Bravery); Zhang et al., 2019 |
 | **Initiative** | Takes proactive action without waiting for direction | Proactive personality loads λ ≈ .62 on Influence and predicts career success | Bateman & Crant, 1993; Seibert et al., 2001 |
 | **Assertiveness** | Stands up for own needs, rights, or views directly and respectfully | Assertiveness in negotiation; advocacy effectiveness and boundary-setting | Speed et al., 2018; Ames & Flynn, 2007 |
-| **Influence** | Persuades and shapes decisions or attitudes in others | Social influence and persuasion; shaping attitudes via multiple routes | Cialdini & Goldstein, 2004; Petty & Cacioppo, 1986 |
+| **Persuasion** | Persuades and shapes decisions or attitudes in others | Social influence and political skill; shaping attitudes via multiple routes | Cialdini & Goldstein, 2004; Ferris et al., PSI; Munyon et al., 2015 |
 
 ### Facet Selection Methodology
 
@@ -1044,7 +1044,7 @@ Each of the 36 facets was selected based on four criteria:
 
 | Pair | Distinction | r |
 |------|-------------|---|
-| Curiosity (Insight) vs. Creativity (Creativity) | Exploration vs. generation | .42 |
+| Curiosity (Insight) vs. Originality (Creativity) | Exploration vs. generation | .42 |
 | Perspective (Insight) vs. Empathy (Connection) | Cognitive vs. affective perspective-taking | .38 |
 | Achievement (Drive) vs. Leadership (Influence) | Personal standards vs. mobilizing others | .35 |
 | Self-Discipline (Drive) vs. Self-Regulation (Stability) | Routine maintenance vs. impulse control | .51 |
@@ -1080,16 +1080,20 @@ Full bibliography available in technical documentation.
 
 - Beaty, R. E., Kenett, Y. N., Christensen, A. P., Rosenberg, M. D., Benedek, M., Chen, Q., ... & Silvia, P. J. (2018). Robust prediction of individual creative ability from brain functional connectivity. *Proceedings of the National Academy of Sciences, 115*(5), 1087-1092.
 - Benedek, M., Jauk, E., Sommer, M., Arendasy, M., & Neubauer, A. C. (2014). Intelligence, creativity, and cognitive control: The common and differential involvement of executive functions in intelligence and creativity. *Intelligence, 46*, 73-83.
+- Said-Metwaly, S., Fernández-Castilla, B., Kyndt, E., & Van den Noortgate, W. (2022). Testing conditions and creative performance: Meta-analyses of the effects of time limits and instructions. *Psychology of Aesthetics, Creativity, and the Arts, 16*(1), 171-189.
 
 ### Motivation & Conscientiousness
 
+- Bandura, A. (1997). *Self-Efficacy: The Exercise of Control*. W. H. Freeman.
 - Duckworth, A. L., Peterson, C., Matthews, M. D., & Kelly, D. R. (2007). Grit: Perseverance and passion for long-term goals. *Journal of Personality and Social Psychology, 92*(6), 1087-1101.
 - Moffitt, T. E., Arseneault, L., Belsky, D., Dickson, N., Hancox, R. J., Harrington, H., ... & Caspi, A. (2011). A gradient of childhood self-control predicts health, wealth, and public safety. *Proceedings of the National Academy of Sciences, 108*(7), 2693-2698.
 - Payne, S. C., Youngcourt, S. S., & Beaubien, J. M. (2007). A meta-analytic examination of the goal orientation nomological net. *Journal of Applied Psychology, 92*(1), 128-150.
+- Stajkovic, A. D., & Luthans, F. (1998). Self-efficacy and work-related performance: A meta-analysis. *Psychological Bulletin, 124*(2), 240-261.
 
 ### Stability & Resilience
 
 - Bonanno, G. A. (2004). Loss, trauma, and human resilience: Have we underestimated the human capacity to thrive after extremely aversive events? *American Psychologist, 59*(1), 20-28.
+- Chida, Y., & Steptoe, A. (2009). The association of anger and hostility with future coronary heart disease: A meta-analytic review of prospective evidence. *Journal of the American College of Cardiology, 53*(11), 936-946.
 - Christian, M. S., Bradley, J. C., Wallace, J. C., & Burke, M. J. (2009). Workplace safety: A meta-analysis of the roles of person and situation factors. *Journal of Applied Psychology, 94*(5), 1103-1127.
 - Tangney, J. P., Baumeister, R. F., & Boone, A. L. (2004). High self-control predicts good adjustment, less pathology, better grades, and interpersonal success. *Journal of Personality, 72*(2), 271-324.
 
@@ -1102,7 +1106,9 @@ Full bibliography available in technical documentation.
 
 - Bass, B. M. (1985). *Leadership and Performance Beyond Expectations*. Free Press.
 - Bateman, T. S., & Crant, J. M. (1993). The proactive component of organizational behavior: A measure and correlates. *Journal of Organizational Behavior, 14*(2), 103-118.
+- Cialdini, R. B., & Goldstein, N. J. (2004). Social influence: Compliance and conformity. *Annual Review of Psychology, 55*, 591-621.
 - Judge, T. A., Bono, J. E., Ilies, R., & Gerhardt, M. W. (2002). Personality and leadership: A qualitative and quantitative review. *Journal of Applied Psychology, 87*(4), 765-780.
+- Weber, E. U., Blais, A.-R., & Betz, N. E. (2002). A domain-specific risk-attitude scale: Measuring risk perceptions and risk behaviors. *Journal of Behavioral Decision Making, 15*(4), 263-290.
 
 ### AI & NLP (Selected)
 
@@ -1120,13 +1126,23 @@ Full bibliography available in technical documentation.
 
 **Prepared by:** The OpenStrengths Working Group
 
-**Version:** 1.0
+**Version:** 3.0
 
 **Date:** February 2026
 
 **Purpose:** This technical reference provides the complete methodological specification for the OpenStrengths framework, including psychometric architecture, AI-powered item generation pipeline, validation protocol, and technical infrastructure. For a general introduction to the project, see the OpenStrengths manifesto.
 
 **Updates:** This is a living document. As development progresses and validation results emerge, updated versions will be released with transparent changelog.
+
+**V3.0 Changelog (from V2.0):**
+- Facet renames: Creativity → Originality, Influence → Persuasion, Tolerance → Patience, Motivation → Purpose
+- DRIVE composition: Self-Confidence moved from INFLUENCE; Vitality removed
+- INFLUENCE composition: Boldness added; Self-Confidence moved to DRIVE
+- Domain taglines updated for CREATIVITY, DRIVE, STABILITY, CONNECTION, INFLUENCE
+- Structural reframe: domains described as "organized around" Big Five aspects rather than "mapping to" them
+- Added "organized around" language and multi-disciplinary sourcing description to framework introduction
+- Updated all domain descriptions, facet tables, and construct boundary references
+- Added new references: Bandura (1997), Stajkovic & Luthans (1998), Said-Metwaly et al. (2022), Chida & Steptoe (2009), Weber et al. (2002), Zhang et al. (2019)
 
 **License:** Released under Creative Commons Attribution 4.0 International (CC BY 4.0). Free to share and adapt with attribution.
 

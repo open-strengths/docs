@@ -2,7 +2,7 @@
 
 ## Free. Open. Grounded in Science. Yours.
 
-**February 2026**
+Version 1.23 · February 2026
 
 ---
 
@@ -46,7 +46,7 @@ And AI delivers on the part existing tools never did: it talks with you. It resp
 
 But there's nothing underneath it. No framework. No evidence. Just a prediction of what a helpful answer would sound like, delivered with the confidence of someone who actually measured something. These systems are optimized for engagement, not accuracy. Studies show they validate what you want to hear 50 percent more often than a human would, even when you're wrong.
 
-The consequences go deeper than inaccuracy. Early research suggests that sustained AI identity conversations are reshaping how people trust their own judgment. Young people who rely on AI for self-understanding report lower confidence in their own decision-making. Systems designed for engagement create dependency, not clarity. We've written about these risks in depth in our paper, *[AI Is Telling You Who You Are. Should You Trust It?](ai-safety-for-all.md)*
+The consequences go deeper than inaccuracy. Early research suggests that sustained AI identity conversations are reshaping how people trust their own judgment. Young people who rely on AI for self-understanding report lower confidence in their own decision-making. Systems designed for engagement create dependency, not clarity. We've written about these risks in depth in our paper, *[AI Is Telling You Who You Are. Should You Trust It?](https://openstrengths.org/ai-safety)*
 
 People aren't foolish for trusting it. The desire to understand yourself is real, and AI is the first thing that's tried to serve all of it: not just a score, but understanding, application, someone to think it through with.
 
@@ -97,11 +97,11 @@ We kept trying to bring strength assessments into the work we were doing togethe
 OpenStrengths is a free, open, scientifically grounded strengths assessment. It measures 36 facets of human strength across six domains:
 
 - **Insight** — how you process, analyze, and understand
-- **Creativity** — how you imagine, invent, and adapt
-- **Drive** — how you pursue, persist, and achieve
-- **Stability** — how you regulate, endure, and stay grounded
-- **Connection** — how you relate, empathize, and bond
-- **Influence** — how you lead, persuade, and mobilize
+- **Creativity** — how you imagine, create, and express
+- **Drive** — how you focus, persist, and drive toward goals
+- **Stability** — how you regulate, adapt, and stay grounded
+- **Connection** — how you relate, empathize, and care for others
+- **Influence** — how you assert, lead, and persuade
 
 We started by defining what we're measuring: 36 facets, each with a precise description of what it means. AI then generated thousands of questions across every variant of person and context the assessment might encounter. Every item was tested before it entered the library. Does it measure what it claims to? Does it hold up across groups? Does it maintain calibration? If not, it doesn't get in.
 
@@ -115,7 +115,7 @@ Your results come in reports designed to be understood by humans, built to make 
 
 Your results belong to you. Take them to a therapist, a manager, a learning app. Share them with anyone. Revoke access whenever you choose.
 
-We're building it in the open. For anyone who wants to track our progress, follow our research, question our methodology, or see what's ahead, it's all in the [OpenStrengths Technical White Paper](whitepaper.md).
+We're building it in the open. For anyone who wants to track our progress, follow our research, question our methodology, or see what's ahead, it's all in the [OpenStrengths Technical White Paper](https://github.com/open-strengths/docs/blob/main/whitepaper.md).
 
 ---
 
