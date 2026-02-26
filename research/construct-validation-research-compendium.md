@@ -810,9 +810,9 @@ From the existing research PDFs:
 - Gender MI: 44.83% achieve scalar; Age MI: 58.82% achieve scalar
 - **Implication:** Cross-cultural MI is a universal challenge, not unique to OpenStrengths' 6-factor structure
 
-### Cross-Population Construct Durability (from existing OpenStrengths research)
+### Cross-Population Construct Equivalence (from existing OpenStrengths research)
 
-From the existing `cross-population-construct-durability.md`:
+From the existing `cross-population-construct-equivalence.md`:
 - One construct framework for all populations; items adapt but constructs do not
 - Van de Vijver taxonomy: construct bias vs. method bias vs. item bias
 - Age thresholds: 17+ current target; 13 defensible; 10 possible with adaptation; below 10 requires redesign

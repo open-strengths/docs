@@ -57,7 +57,9 @@ Both of these standards point in the same direction: maintain construct definiti
 
 ---
 
-## The Evidence for Construct Durability
+## The Evidence for Construct Equivalence
+
+> **Terminology note (per Dr. Hong Jiao, Feb 24 2026):** The correct term for the construct-level question is *construct equivalence* — whether the same latent construct exists and functions the same way across populations. The related but distinct score-level question is *score comparability* — whether scores from different populations can be directly compared. These are different levels of analysis: construct equivalence is a prerequisite for score comparability, but achieving construct equivalence does not automatically guarantee score comparability.
 
 Why would a single construct serve multiple populations? The evidence comes from several threads.
 
@@ -159,9 +161,9 @@ The question of age boundaries is a specific case of cross-population construct 
 
 Personality traits do not spring into existence at age 18. They develop gradually, becoming more differentiated and stable with age.
 
-Roberts and DelVecchio (2000) compiled 3,217 test-retest correlation coefficients from 152 longitudinal studies. The trajectory is clear:
+Roberts and DelVecchio (2000) compiled 3,217 test-retest reliability coefficients from 152 longitudinal studies, aggregating across a wide range of personality measures — including Big Five instruments (e.g., NEO-PI-R), trait adjective ratings, Q-sort measures, and childhood temperament scales — all coded into Big Five trait domains. Their meta-analytic findings were subsequently confirmed and extended by Bleidorn et al. (2022; k = 189, N = 178,503) using studies with contemporary Big Five measures. The developmental trajectory of personality trait stability is relevant here not because these studies used our instrument, but because they establish the foundational pattern that personality constructs become increasingly stable and differentiable with age — a key consideration for setting age thresholds. The trajectory is clear:
 
-| Age Period | Test-Retest Stability (6.7-year interval) |
+| Age Period | Test-Retest Reliability Coefficient (6.7-year interval) |
 |---|---|
 | Childhood (0-12) | .31 |
 | College years (18-22) | .54 |
@@ -204,7 +206,7 @@ Research consistently finds that between ages 12-14, Conscientiousness and Agree
 
 ## What We Know vs. What We're Extrapolating
 
-Not all 36 facets stand on equal evidentiary footing for cross-population durability. Being honest about this is essential for prioritizing our validation efforts and interpreting our results.
+Not all 36 facets stand on equal evidentiary footing for cross-population construct equivalence. Being honest about this is essential for prioritizing our validation efforts and interpreting our results.
 
 We've tiered our facets by the strength of existing cross-population evidence — not as a judgment of their importance, but as a map of where our confidence is warranted and where it isn't.
 
@@ -235,7 +237,7 @@ These facets map closely to validated scales in the Big Five, HEXACO, or VIA fra
 | Communication | Influence | Related to Big Five Extraversion facets; cross-cultural evidence in communication studies |
 | Assertiveness | Influence | Big Five Extraversion facet; cross-cultural NEO-PI-R data |
 
-For these facets, we have reasonable grounds to expect cross-population durability based on existing evidence. "Reasonable grounds" is not the same as proof — our specific operationalizations still need their own validation — but the underlying constructs are well-established.
+For these facets, we have reasonable grounds to expect cross-population construct equivalence based on existing evidence. "Reasonable grounds" is not the same as proof — our specific operationalizations still need their own validation — but the underlying constructs are well-established.
 
 ### Moderate Precedent (~10 facets)
 
@@ -443,7 +445,9 @@ Park, N., & Peterson, C. (2006). Moral competence and character strengths among 
 
 Rammstedt, B., Kemper, C. J., & Borg, I. (2013). Correcting Big Five personality measurements for acquiescence. *European Journal of Personality, 27*(1), 71-81.
 
-Roberts, B. W., & DelVecchio, W. F. (2000). The rank-order consistency of personality traits from childhood to old age. *Psychological Bulletin, 126*(1), 3-25.
+Roberts, B. W., & DelVecchio, W. F. (2000). The rank-order consistency of personality traits from childhood to old age. *Psychological Bulletin, 126*(1, 3-25.
+
+Bleidorn, W., Schwaba, T., Zheng, A., Hopwood, C. J., Sosa, S. S., Roberts, B. W., & Briley, D. A. (2022). Personality stability and change: A meta-analysis of longitudinal studies. *Psychological Bulletin, 148*(7-8), 588-619.
 
 Scholz, U., Doña, B. G., Sud, S., & Schwarzer, R. (2002). Is general self-efficacy a universal construct? Psychometric findings from 25 countries. *European Journal of Psychological Assessment, 18*(3), 242-251.
 
@@ -461,4 +465,4 @@ Wood, J. K., Gurven, M., & Goldberg, L. R. (2020). Ubiquitous personality-trait 
 
 ---
 
-*This document reflects the research positions of the OpenStrengths founding team as of February 2026. It reviews the evidence for construct durability across populations and age groups, identifies where our specific framework extends beyond existing evidence, and lays out a concrete validation design. For OpenStrengths' design convictions, see the OpenStrengths Manifesto. For complete psychometric specifications, see the OpenStrengths Technical White Paper.*
+*This document reflects the research positions of the OpenStrengths founding team as of February 2026. It reviews the evidence for construct equivalence across populations and age groups, identifies where our specific framework extends beyond existing evidence, and lays out a concrete validation design. For OpenStrengths' design convictions, see the OpenStrengths Manifesto. For complete psychometric specifications, see the OpenStrengths Technical White Paper.*
