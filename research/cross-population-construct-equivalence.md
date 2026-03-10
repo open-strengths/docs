@@ -161,7 +161,9 @@ The question of age boundaries is a specific case of cross-population construct 
 
 Personality traits do not spring into existence at age 18. They develop gradually, becoming more differentiated and stable with age.
 
-Roberts and DelVecchio (2000) compiled 3,217 test-retest reliability coefficients from 152 longitudinal studies, aggregating across a wide range of personality measures — including Big Five instruments (e.g., NEO-PI-R), trait adjective ratings, Q-sort measures, and childhood temperament scales — all coded into Big Five trait domains. Their meta-analytic findings were subsequently confirmed and extended by Bleidorn et al. (2022; k = 189, N = 178,503) using studies with contemporary Big Five measures. The developmental trajectory of personality trait stability is relevant here not because these studies used our instrument, but because they establish the foundational pattern that personality constructs become increasingly stable and differentiable with age — a key consideration for setting age thresholds. The trajectory is clear:
+Before examining specific age thresholds, a general pattern from the broader personality literature is worth noting: trait stability increases with age. Roberts and DelVecchio (2000) compiled 3,217 test-retest reliability coefficients from 152 longitudinal studies, aggregating across Big Five instruments (e.g., NEO-PI-R), trait adjective ratings, Q-sort measures, and childhood temperament scales — all coded into Big Five trait domains. Their meta-analytic findings were subsequently confirmed and extended by Bleidorn et al. (2022; k = 189, N = 178,503) using studies with contemporary Big Five measures.
+
+**Table: Meta-analytic test-retest reliability coefficients from Roberts & DelVecchio (2000)** *(These are aggregated results across multiple instruments and studies — not OpenStrengths empirical data.)*
 
 | Age Period | Test-Retest Reliability Coefficient (6.7-year interval) |
 |---|---|
@@ -170,7 +172,7 @@ Roberts and DelVecchio (2000) compiled 3,217 test-retest reliability coefficient
 | Age 30 | .64 |
 | Ages 50-70 | .74 (plateau) |
 
-Traits become more stable with age, but they are measurable far earlier than adulthood. The question is: at what age does the adult factor structure emerge?
+This trajectory matters for setting age thresholds: younger populations will show lower rank-order stability, which affects how we interpret test-retest results during our own validation. However, stability alone does not determine whether the same factor structure holds at different ages. That question — whether the adult construct structure is recoverable in younger populations — is addressed by the structural evidence below.
 
 ### Age Thresholds From the Evidence
 
